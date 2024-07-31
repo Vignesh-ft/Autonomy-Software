@@ -38,6 +38,7 @@ exports.createTransition = async (req, res) => {
   }
 };
 
+//get the transition from the database
 exports.getTransitions = async (req, res) => {
   try {
     const transitions = await Transition.find();
@@ -54,6 +55,7 @@ exports.getTransitions = async (req, res) => {
   }
 };
 
+//delete the transition data from database
 exports.deleteTransition = async (req, res) => {
   try {
     const transition = await Transition.findByIdAndDelete(req.params.id);
@@ -65,6 +67,8 @@ exports.deleteTransition = async (req, res) => {
   }
 };
 
+
+//updating the transtion data from database
 exports.updateTransition = async (req, res) => {
   try {
     const transition = await Transition.findById(req.params.id);

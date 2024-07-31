@@ -1,50 +1,56 @@
 const bcrypt = require('bcrypt'); // Import bcrypt
 const User = require('../models/userModels'); // Import User model
+const moment = require('moment-timezone');
+
+// Helper function to format date in DD:MM:YYYY HH:MM
+const formatDate = (date) => moment(date).tz('Asia/Kolkata').format('DD:MM:YYYY HH:mm');
 
 // Create user function
 const createUser = async (req, res) => {
   try {
-    const { username, password, role } = req.body;
-
-    console.log('Received user creation request:', { username, password, role });
+    const { username, password, role, createdBy, createdOn } = req.body;
 
     const existingUser = await User.findOne({ username });
     if (existingUser) {
       return res.status(400).json({ error: 'Username already exists' });
     }
 
+    const formattedDate = moment.tz(createdOn, 'DD:MM:YYYY HH:mm', 'Asia/Kolkata').isValid()
+      ? moment.tz(createdOn, 'DD:MM:YYYY HH:mm', 'Asia/Kolkata').toDate()
+      : new Date();
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
     let permissions = {};
     if (role === 'Administrator') {
       permissions = {
-        maps: { enable: true, create: true, edit: true, delete: true , view: true},
-        mission: { enable: true, create: true, edit: true, delete: true , view: true },
-        transition: { enable: true, create: true, edit: true, delete: true , view: true },
-        paths: { enable: true, create: true, edit: true, delete: true , view: true},
+        maps: { enable: true, create: true, edit: true, delete: true, view: true },
+        mission: { enable: true, create: true, edit: true, delete: true, view: true },
+        transition: { enable: true, create: true, edit: true, delete: true, view: true },
+        paths: { enable: true, create: true, edit: true, delete: true, view: true },
       };
     } else if (role === 'User') {
       permissions = {
         maps: { enable: true, create: true, edit: false, delete: false, view: true },
-        mission: { enable: true, create: true, edit: false, delete: false, view: true},
-        transition: { enable: true, create: true, edit: false, delete: false, view: true},
+        mission: { enable: true, create: true, edit: false, delete: false, view: true },
+        transition: { enable: true, create: true, edit: false, delete: false, view: true },
         paths: { enable: true, create: true, edit: false, delete: false, view: true },
       };
     } else if (role === 'Maintainer') {
       permissions = {
-        maps: { enable: true, create: false, edit: false, delete: false,  view: true },
-        mission: { enable: true, create: false, edit: false, delete: false, view: true},
-        transition: { enable: true, create: false, edit: false, delete: false, view: true},
+        maps: { enable: true, create: false, edit: false, delete: false, view: true },
+        mission: { enable: true, create: false, edit: false, delete: false, view: true },
+        transition: { enable: true, create: false, edit: false, delete: false, view: true },
         paths: { enable: true, create: false, edit: false, delete: false, view: true },
       };
     }
-
-    console.log('Setting permissions:', permissions);
 
     const newUser = new User({
       username,
       password: hashedPassword,
       role,
+      createdBy,
+      createdOn: formattedDate,
       permissions
     });
 
@@ -54,7 +60,10 @@ const createUser = async (req, res) => {
       _id: newUser._id,
       username: newUser.username,
       role: newUser.role,
+      createdBy: newUser.createdBy,
+      createdOn: formatDate(newUser.createdOn),
       permissions: newUser.permissions
+      
     });
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -85,8 +94,13 @@ const updateUserPermissions = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({}, 'username role');
-    res.status(200).json(users);
+    const users = await User.find({}, 'username role createdBy createdOn');
+    const formattedTransitions = users.map(user => ({
+      ...user.toObject(),
+      createdOn: formatDate(user.createdOn)
+    }));
+
+    res.status(200).json(formattedTransitions);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }

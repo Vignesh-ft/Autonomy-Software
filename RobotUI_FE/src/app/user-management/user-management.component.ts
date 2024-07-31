@@ -124,18 +124,18 @@ export class UserManagementComponent implements OnInit {
       .then(response => response.json())
       .then((users: any[]) => {
         this.userCredentials = users.map(user => ({
-          userId: user.userId,
+          userId: user._id, // Assuming MongoDB `_id` is used as userId
           userName: user.username,
           userRole: user.role,
-          createdBy: this.cookieValue.name,
-          createdOn: "DD/MM/YYYY HH:MM"
+          createdBy: user.createdBy, // Fetch createdBy from the response
+          createdOn: user.createdOn // Format createdOn date
         }));
       })
       .catch(error => {
         console.error('Error fetching users:', error);
       });
   }
-
+  
   validatePassword(password: string): string {
     if (password.length < 8) {
       return 'Password must be at least 8 characters long.';
@@ -185,12 +185,26 @@ export class UserManagementComponent implements OnInit {
 
     this.userId += 1; // Increment userId
 
+    const cookieValue = this.cookieService.get("_user");
+    let user = "Unknown"; // Default to "Unknown" if cookie is not found
+
+    try {
+      if (cookieValue) {
+        const parsedCookie = JSON.parse(cookieValue);
+        user = parsedCookie.name || "Unknown"; // Use `name` for username
+      }
+    } catch (e) {
+      console.error('Error parsing cookie:', e);
+    }
+
     // Prepare the new user object
     const newUser = {
       userId: this.userId - 1,
       username: this.userName,
       password: this.passWord,
-      role: this.userRole
+      role: this.userRole,
+      createdBy: user, // Replace with actual user if applicable
+      createdAt: new Date().toISOString() // Or use any other date format
     };
 
     console.log('Creating user with:', newUser);
