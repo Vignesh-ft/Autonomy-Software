@@ -1,0 +1,40 @@
+<div class="w-[calc(100vw-100px)] h-[calc(100vh-100px)] flex flex-col gap-10 px-[40px] py-[40px]">
+  <div class="w-full h-full flex gap-10">
+    <!-- Map Canvas -->
+    <div class="w-full h-full rounded-3xl shadow-[0_0_40px_#00000070] relative">
+
+      <div class="flex items-center gap-5 absolute top-10 left-10 px-5 py-4 bg-white shadow-[0_0_10px_#00000040] rounded-lg">
+        @for (option of optionOne; track option) {
+          <span class="flex gap-3 items-center">
+            <p class="text-[14px] font-medium">{{option.title}}</p>
+            <span [ngClass]="{'bg-[#d30001]': !option.state}" (click)="option.clickFn()"  class="w-12 h-8 rounded-full bg-[#a4a4a4] relative flex items-center p-1">
+              <div [ngClass]="{'right-1': !option.state}" class="size-6 bg-white rounded-full absolute"></div>
+            </span>
+          </span>
+        }
+      </div>
+
+    </div>
+    <div class="h-full flex flex-col items-center justify-between" >
+      <!-- button -->
+      <span class="flex flex-col items-center justify-center gap-10">
+        <button class="border-none outline-none text-[14px] text-white bg-[#d30000] font-semibold w-[200px] py-3 rounded-md">GOTO</button>
+        <button class="border-none outline-none text-[14px] text-white bg-[#d30000] font-semibold w-[200px] py-3 rounded-md">EXECUTE MISSION</button>
+      </span>
+
+      <!-- Joystick -->
+      <span>
+
+      </span>
+    </div>
+  </div>
+  <div class="w-[850px] grid grid-cols-4 items-center gap-4">
+    <button class="border-none outline-none text-[14px] text-white bg-[#d30000] font-semibold py-4 rounded-md">FOLLOW</button>
+    <button class="border-none outline-none text-[14px] text-white bg-[#d30000] font-semibold py-4 rounded-md">SCAN</button>
+    <button class="border-none outline-none text-[14px] text-white bg-[#d30000] font-semibold py-4 rounded-md">LOCALIZE</button>
+    <button class="border-none outline-none text-[14px] text-white bg-[#d30000] font-semibold py-4 rounded-md">SHOWPATH</button>
+
+  </div>
+
+</div>
+

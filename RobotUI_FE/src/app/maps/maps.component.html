@@ -1,0 +1,419 @@
+<div
+  [ngClass]="{ 'overflow-hidden': createMapsPopUpState }"
+  class="min-w-full flex flex-col pl-10 pt-10 pr-10 items-center justify-center gap-10"
+>
+  <div class="flex w-full items-center justify-between">
+    <!-- Title -->
+    <span class="flex flex-col items-start justify-center">
+      <p class="text-[38px] font-bold">Maps</p>
+      <p
+        class="text-[16px] font-medium text-[#7B7B7B] flex items-center justify-center gap-2"
+      >
+        Create and Edit Maps
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 25 25"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g clip-path="url(#clip0_513_29001)">
+            <path
+              d="M12.4987 2.08301C6.75495 2.08301 2.08203 6.75592 2.08203 12.4997C2.08203 18.2434 6.75495 22.9163 12.4987 22.9163C18.2424 22.9163 22.9154 18.2434 22.9154 12.4997C22.9154 6.75592 18.2424 2.08301 12.4987 2.08301ZM13.5404 17.708H11.457V11.458H13.5404V17.708ZM13.5404 9.37467H11.457V7.29134H13.5404V9.37467Z"
+              fill="black"
+            />
+          </g>
+          <defs>
+            <clipPath id="clip0_513_29001">
+              <rect width="25" height="25" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </p>
+    </span>
+    <!-- Button -->
+    <span class="flex items-center justify-between gap-10">
+      <span
+        class="flex items-center justify-center h-12 rounded-full shadow-[0_0_10px_#00000030]"
+      >
+        <span
+          class="flex items-center justify-center bg-[#D30000] h-full px-5 rounded-ss-full rounded-es-full"
+        >
+          <p class="text-white font-semibold">Search</p>
+        </span>
+        <input
+          type="text"
+          placeholder="Search"
+          class="flex font-normal border-none outline-none h-full w-[250px] border-2 px-3"
+        />
+        <span
+          class="flex items-center justify-center bg-[#D30000] h-full px-6 rounded-ee-full rounded-se-full"
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M16.6937 14.7322H15.6255L15.2244 14.3973C16.4934 12.8573 17.2949 10.915 17.2949 8.70538C17.2948 3.88379 13.4214 0 8.6142 0C3.8728 0 0 3.88379 0 8.70538C0 13.527 3.8728 17.4107 8.68073 17.4107C10.8176 17.4107 12.8208 16.6071 14.3564 15.335L14.7569 15.6699V16.7411L21.4343 23.4375L23.4375 21.4286L16.6937 14.7322ZM8.68073 14.7322C5.34198 14.7322 2.67102 12.0535 2.67102 8.70538C2.67102 5.35712 5.34198 2.67865 8.68073 2.67865C12.0193 2.67865 14.6904 5.35712 14.6904 8.70538C14.6904 12.0535 12.0193 14.7322 8.68073 14.7322Z"
+              fill="white"
+            />
+          </svg>
+        </span>
+      </span>
+
+      <button
+        (click)="createMapsPopUpOC()"
+        class="w-[130px] flex items-center justify-center gap-2 py-3 text-[14px] rounded-md hover:bg-opacity-90 active:bg-opacity-80 bg-[#D30000] font-semibold text-white"
+      >
+        <svg
+          width="14"
+          height="13"
+          viewBox="0 0 14 13"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M8.03063 0.5H5.9534L5.98535 5.44024H1V7.51195H5.98535V12.5H8.03063V7.51195H13L12.9521 5.44024H8.03063V0.5Z"
+            fill="white"
+            stroke="black"
+            stroke-width="0.1"
+          />
+        </svg>
+        Create Maps
+      </button>
+
+      <button
+        class="w-[130px] flex items-center justify-center gap-2 py-3 text-[14px] rounded-md hover:bg-opacity-90 active:bg-opacity-80 bg-[#D30000] font-semibold text-white"
+      >
+        <svg
+          width="22"
+          height="23"
+          viewBox="0 0 22 23"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11.1353 10.3609C11.1192 10.3403 11.0987 10.3237 11.0752 10.3123C11.0518 10.3009 11.026 10.2949 10.9999 10.2949C10.9739 10.2949 10.9481 10.3009 10.9247 10.3123C10.9012 10.3237 10.8807 10.3403 10.8646 10.3609L8.45834 13.4052C8.4385 13.4305 8.42619 13.4609 8.42282 13.4929C8.41945 13.5249 8.42515 13.5572 8.43927 13.5861C8.45338 13.6151 8.47535 13.6394 8.50266 13.6564C8.52997 13.6734 8.56152 13.6824 8.59369 13.6824H10.1814V18.8902C10.1814 18.9847 10.2587 19.062 10.3533 19.062H11.6423C11.7369 19.062 11.8142 18.9847 11.8142 18.8902V13.6845H13.4062C13.5501 13.6845 13.6296 13.5191 13.5415 13.4074L11.1353 10.3609Z"
+            fill="white"
+            stroke="black"
+            stroke-width="0.1"
+          />
+          <path
+            d="M17.4324 8.37832C16.4484 5.78301 13.9412 3.9375 11.0043 3.9375C8.06738 3.9375 5.56016 5.78086 4.57617 8.37617C2.73496 8.85957 1.375 10.5375 1.375 12.5312C1.375 14.9053 3.29785 16.8281 5.66973 16.8281H6.53125C6.62578 16.8281 6.70312 16.7508 6.70312 16.6562V15.3672C6.70312 15.2727 6.62578 15.1953 6.53125 15.1953H5.66973C4.9457 15.1953 4.26465 14.9074 3.75762 14.3854C3.25273 13.8654 2.98418 13.165 3.00781 12.4389C3.02715 11.8717 3.22051 11.3389 3.5707 10.8898C3.92949 10.4322 4.43223 10.0992 4.99082 9.95098L5.80508 9.73828L6.10371 8.95195C6.28848 8.46211 6.54629 8.00449 6.8707 7.58984C7.19097 7.17886 7.57035 6.81759 7.99648 6.51777C8.87949 5.89688 9.91934 5.56816 11.0043 5.56816C12.0893 5.56816 13.1291 5.89688 14.0121 6.51777C14.4396 6.81855 14.8178 7.17949 15.1379 7.58984C15.4623 8.00449 15.7201 8.46426 15.9049 8.95195L16.2014 9.73613L17.0135 9.95098C18.1779 10.2646 18.9922 11.3238 18.9922 12.5312C18.9922 13.2424 18.715 13.9127 18.2123 14.4154C17.9658 14.6634 17.6725 14.86 17.3494 14.9939C17.0264 15.1278 16.68 15.1962 16.3303 15.1953H15.4688C15.3742 15.1953 15.2969 15.2727 15.2969 15.3672V16.6562C15.2969 16.7508 15.3742 16.8281 15.4688 16.8281H16.3303C18.7021 16.8281 20.625 14.9053 20.625 12.5312C20.625 10.5396 19.2693 8.86387 17.4324 8.37832Z"
+            fill="white"
+            stroke="black"
+            stroke-width="0.1"
+          />
+        </svg>
+        Import Maps
+      </button>
+    </span>
+  </div>
+
+  <div class="w-full h-full flex flex-col items-center justify-start gap-3">
+    <!-- Table Title -->
+    <span
+      class="w-full py-6 text-white font-semibold rounded-[6px] bg-black flex items-center justify-between px-20"
+    >
+      <span class="w-[30%] flex items-center justify-between">
+        <p class="w-[70%] flex items-center justify-start text-[14px]">Name</p>
+      </span>
+      <span
+        class="grid grid-cols-4 w-[60%] items-center justify-between text-[14px]"
+      >
+        <p class="w-full flex items-center justify-center text-[14px]">
+          Location
+        </p>
+        <p class="w-full flex items-center justify-center text-[14px]">
+          Created By
+        </p>
+        <p class="w-full flex items-center justify-center text-[14px]">
+          Created on
+        </p>
+        <p class="w-full flex items-center justify-center text-[14px]">
+          Functions
+        </p>
+      </span>
+      <p class="px-5 py-3 w-[2%]"></p>
+    </span>
+
+    <!-- Table Rows -->
+    <span
+      class="flex xl:h-[300px] 2xl:h-[600px] pb-2 flex-col items-center gap-1 overflow-scroll justify-start w-full MinimalScrollCSS"
+    >
+      @for (maps of mapsData; track maps) {
+      <span
+        [ngClass]="{ 'bg-[#9f9f9fce]': maps.mapId == 0 }"
+        class="w-full twoColors py-3 text-[14px] text-black font-regular rounded-[6px] bg-white hover:shadow-[0_0_10px_#00000040] flex items-center justify-between px-20"
+      >
+        <span class="w-[30%] flex items-center justify-between">
+          <p class="w-[70%] flex items-center justify-start capitalize">
+            {{ maps.mapName }}
+          </p>
+        </span>
+        <span
+          class="grid grid-cols-4 w-[60%] items-center justify-between text-[12px] capitalize"
+        >
+          <p class="w-full flex items-center justify-center">{{ maps.site }}</p>
+          <p class="w-full flex items-center justify-center">
+            {{ maps.createdBy }}
+          </p>
+          <p class="w-full flex items-center justify-center">
+            {{ maps.createdAt }}
+          </p>
+          <div class="w-full flex items-center justify-center gap-2">
+            <!-- Cycle and Tick Icon -->
+            <!-- Need to Write Conditional Statement to crender the SVG, Cycle SVG is Commented and use IF there is any Purpose for it ,Tick Icon is used to render Now-->
+            <svg
+              class="hover:shadow-[0_0_10px_#00000040] hover:duration-200 duration-200 rounded-md"
+              width="28"
+              height="28"
+              viewBox="0 0 36 35"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.52461 17.7021L7.17301 19.1968C6.80169 19.6074 6.83464 20.2416 7.24652 20.6115L14.7316 27.3341C15.1415 27.7022 15.7719 27.6695 16.1415 27.2608L29.827 12.127C30.1983 11.7164 30.1654 11.0822 29.7535 10.7123L28.5884 9.66593C28.1785 9.29778 27.5481 9.33054 27.1785 9.73919L16.1815 21.9C15.8119 22.3086 15.1815 22.3414 14.7716 21.9732L9.93451 17.6289C9.52461 17.2607 8.89415 17.2935 8.52461 17.7021Z"
+                fill="#393939"
+              />
+            </svg>
+            <!-- <svg class="hover:shadow-[0_0_10px_#00000040] hover:duration-200 duration-200 rounded-md" width="28" height="28" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M25.5 13C24.0344 10.0321 20.9861 8 17.4638 8C12.5133 8 8.5 12.0295 8.5 17M9.5 21C10.9656 23.9679 14.0139 26 17.5362 26C22.4867 26 26.5 21.9705 26.5 17M14.5 21H8.5V27M26.5 7V13H20.5" stroke="#393939" stroke-width="2.66667"/>
+                </svg> -->
+
+            <!-- Edit Icon -->
+            <svg class="hover:shadow-[0_0_10px_#00000040] hover:duration-200 duration-200 rounded-md" width="28" height="28" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g clip-path="url(#clip0_1447_31557)">
+                <path d="M7.875 23.407V27.6258H12.0938L24.5362 15.1833L20.3175 10.9645L7.875 23.407ZM27.7987 11.9208C27.903 11.8167 27.9858 11.6931 28.0422 11.557C28.0987 11.4209 28.1277 11.275 28.1277 11.1277C28.1277 10.9803 28.0987 10.8344 28.0422 10.6983C27.9858 10.5622 27.903 10.4386 27.7987 10.3345L25.1663 7.70205C25.0622 7.59775 24.9385 7.51501 24.8025 7.45856C24.6664 7.40211 24.5205 7.37305 24.3731 7.37305C24.2258 7.37305 24.0799 7.40211 23.9438 7.45856C23.8077 7.51501 23.6841 7.59775 23.58 7.70205L21.5212 9.7608L25.74 13.9795L27.7987 11.9208Z" fill="#393939"/>
+              </g>
+              <defs>
+                <clipPath id="clip0_1447_31557">
+                  <rect width="27" height="27" fill="white" transform="translate(4.5 4)"/>
+                </clipPath>
+              </defs>
+            </svg>
+
+            <!-- Close Icon -->
+            <svg (click)="getDeleteId(maps?.mapId)" class="hover:shadow-[0_0_10px_#00000040] hover:duration-200 duration-200 rounded-md" width="28" height="28" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M28.5625 9.00739L26.0551 6.5L17.7812 14.7739L9.50739 6.5L7 9.00739L15.2739 17.2812L7 25.5551L9.50739 28.0625L17.7812 19.7886L26.0551 28.0625L28.5625 25.5551L20.2886 17.2812L28.5625 9.00739Z"
+                fill="#393939"
+              />
+            </svg>
+          </div>
+        </span>
+        <span class="w-[2%]flex items-center justify-center">
+          <p
+            (click)="navigateMap(maps.mapId, maps.mapName)"
+            class="px-2 py-2 size-10 bg-[#D30000] hover:underline text-white font-semibold rounded-md"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              x="0px"
+              y="0px"
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+            >
+              <path
+                d="M 19.980469 2.9902344 A 1.0001 1.0001 0 0 0 19.869141 3 L 15 3 A 1.0001 1.0001 0 1 0 15 5 L 17.585938 5 L 8.2929688 14.292969 A 1.0001 1.0001 0 1 0 9.7070312 15.707031 L 19 6.4140625 L 19 9 A 1.0001 1.0001 0 1 0 21 9 L 21 4.1269531 A 1.0001 1.0001 0 0 0 19.980469 2.9902344 z M 5 3 C 3.9069372 3 3 3.9069372 3 5 L 3 19 C 3 20.093063 3.9069372 21 5 21 L 19 21 C 20.093063 21 21 20.093063 21 19 L 21 13 A 1.0001 1.0001 0 1 0 19 13 L 19 19 L 5 19 L 5 5 L 11 5 A 1.0001 1.0001 0 1 0 11 3 L 5 3 z"
+                fill="white"
+              ></path>
+            </svg>
+          </p>
+        </span>
+      </span>
+      }
+    </span>
+  </div>
+</div>
+
+<!-- Create Maps Popup -->
+<div
+  [ngClass]="{ hidden: !createMapsPopUpState }"
+  class="absolute flex items-center justify-center w-screen box-border min-h-screen bg-[#000000] bg-opacity-90 bg-blur top-0 left-0 z-50 overflow-hidden"
+>
+  <div
+    class="flex w-[700px] flex-col rounded-[20px] gap-10 shadow-[0_0_10px_#00000060] px-14 py-10 bg-[#D9D9D9]"
+  >
+    <!-- Title -->
+    <span class="flex flex-col items-start justify-center">
+      <p class="text-[35px] text-black font-bold">Create New Map</p>
+      <p
+        class="flex items-center justify-center gap-2 text-[14px] font-medium text-[#7B7B7B]"
+      >
+        Create an New Map
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 25 25"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g clip-path="url(#clip0_513_29001)">
+            <path
+              d="M12.4987 2.08301C6.75495 2.08301 2.08203 6.75592 2.08203 12.4997C2.08203 18.2434 6.75495 22.9163 12.4987 22.9163C18.2424 22.9163 22.9154 18.2434 22.9154 12.4997C22.9154 6.75592 18.2424 2.08301 12.4987 2.08301ZM13.5404 17.708H11.457V11.458H13.5404V17.708ZM13.5404 9.37467H11.457V7.29134H13.5404V9.37467Z"
+              fill="black"
+            />
+          </g>
+          <defs>
+            <clipPath id="clip0_513_29001">
+              <rect width="25" height="25" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </p>
+    </span>
+
+    <span class="flex flex-col items-center justify-center gap-10 w-full">
+      <span class="flex flex-col items-start justify-center w-full gap-3">
+        <span
+          class="text-[14px] gap-3 items-center justify-center flex font-semibold"
+          >Name
+          <p class="text-red-500 text-[12px] font-medium">{{ errorMessage }}</p>
+        </span>
+        <input
+          [(ngModel)]="mapsName"
+          type="text"
+          placeholder="Enter map’s name (eg: U1_Shop_Floor_1)"
+          class="w-full px-4 py-2 pt-4 rounded-md bg-white border-none outline-none"
+        />
+      </span>
+
+      <span class="flex items-end justify-between w-full">
+        <!-- dropdown -->
+        <span
+          class="flex items-start gap-3 justify-center relative flex-col"
+          (click)="siteMapOC()"
+        >
+          <p class="text-[14px] font-semibold">Site</p>
+          <span
+            class="relative w-[200px] py-3 bg-white rounded-md px-5 flex items-center justify-between"
+          >
+            <p class="font-semibold text-[12px]">{{ defaultSite }}</p>
+            <svg
+              [ngClass]="{ rotateArrow: siteMapDDstate }"
+              class="duration-300 shadow"
+              width="14"
+              height="15"
+              viewBox="0 0 14 15"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.00007 12.3125L0 5.42194L2.33335 3.125L7.00007 7.71879L11.6667 3.125L14 5.42194L7.00007 12.3125Z"
+                fill="black"
+              />
+            </svg>
+          </span>
+          <span
+            [ngClass]="{ hidden: !siteMapDDstate }"
+            class="absolute flex top-[calc(100%+5px)] flex-col w-full h-36 overflow-y-scroll MinimalScrollCSS p-3 rounded-md bg-white"
+          >
+            @for (map of siteName; track map) {
+            <p
+              (click)="changeSiteName(map.order)"
+              class="w-full px-2 py-2 hover:bg-gray-300 rounded-md"
+            >
+              {{ map.nameTag }}
+            </p>
+            }
+          </span>
+        </span>
+        <span class="flex items-center justify-center gap-5">
+          <button
+            (click)="createMaps()"
+            class="w-[110px] flex items-center justify-center gap-2 py-[8px] text-[12px] rounded-md hover:bg-opacity-90 active:bg-opacity-80 bg-[#D30000] font-semibold text-white"
+          >
+            <svg
+              width="14"
+              height="13"
+              viewBox="0 0 14 13"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.03063 0.5H5.9534L5.98535 5.44024H1V7.51195H5.98535V12.5H8.03063V7.51195H13L12.9521 5.44024H8.03063V0.5Z"
+                fill="white"
+                stroke="black"
+                stroke-width="0.1"
+              />
+            </svg>
+            <p>Create Maps</p>
+          </button>
+
+          <button
+            (click)="createMapsPopUpOC()"
+            class="w-[110px] flex items-center justify-center gap-2 py-2 text-[12px] rounded-md hover:bg-opacity-90 active:bg-opacity-80 bg-transparent border-2 border-[#D30000] font-semibold text-[#D30000]"
+          >
+            <p>Cancel</p>
+          </button>
+        </span>
+      </span>
+    </span>
+  </div>
+</div>
+
+<!-- Delete Maps -->
+<div
+  [ngClass]="{ hidden: !deletePopupState }"
+  class="absolute flex items-center justify-center w-screen box-border h-screen bg-[#000000] bg-opacity-90 bg-blur top-0 left-0 z-50"
+>
+  <div
+    class="w-[600px] bg-white flex flex-col gap-5 rounded-[20px] shadow-[0_0_100px_#00000060] border-l-[22px] border-[#D30000] p-10"
+  >
+    <!-- Title -->
+    <span class="flex flex-col items-start justify-center">
+      <p class="text-[35px] text-black font-bold">Delete</p>
+      <p
+        class="flex items-center justify-center gap-2 text-[14px] font-medium text-[#7B7B7B]"
+      >
+        Delete an user
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 25 25"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g clip-path="url(#clip0_513_29001)">
+            <path
+              d="M12.4987 2.08301C6.75495 2.08301 2.08203 6.75592 2.08203 12.4997C2.08203 18.2434 6.75495 22.9163 12.4987 22.9163C18.2424 22.9163 22.9154 18.2434 22.9154 12.4997C22.9154 6.75592 18.2424 2.08301 12.4987 2.08301ZM13.5404 17.708H11.457V11.458H13.5404V17.708ZM13.5404 9.37467H11.457V7.29134H13.5404V9.37467Z"
+              fill="black"
+            />
+          </g>
+          <defs>
+            <clipPath id="clip0_513_29001">
+              <rect width="25" height="25" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </p>
+    </span>
+
+    <p class="flex text-[16px] font-normal">
+      Are you sure to delete the user ?
+    </p>
+
+    <span class="flex w-full justify-end items-center mt-10">
+      <span class="flex justify-between items-center gap-5">
+        <p
+          (click)="deleteMaps(deleteMapId)"
+          class="cursor-pointer flex px-10 py-2.5 bg-[#D30000] text-white border-2 border-[#D30000] rounded-md"
+        >
+          Delete
+        </p>
+        <p
+          (click)="deletePopUpOpens()"
+          class="cursor-pointer flex px-10 py-2.5 border-2 rounded-md border-[#D30000] text-[#D30000]"
+        >
+          Cancel
+        </p>
+      </span>
+    </span>
+  </div>
+</div>

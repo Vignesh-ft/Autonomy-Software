@@ -1,0 +1,7 @@
+.Hero_section{
+  top:40px;
+  left:50px;
+  width: calc(100% - 61px);
+  height: auto;
+  position: relative;
+}

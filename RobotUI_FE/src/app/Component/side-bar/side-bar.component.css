@@ -1,0 +1,42 @@
+.expandWidth{
+  width: 230px;
+  align-items: start;
+  transition: 600ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+.collapseWidth{
+  width: 70px;
+  transition: 600ms cubic-bezier(0.785, 0.135, 0.15, 0.86);
+}
+
+.rotateArrow {
+  rotate: 180deg;
+  transition: 300ms ease-in;
+}
+
+.alignmentStartChange {
+  align-items: start;
+}
+
+.active {
+  background-color: #D3000030
+}
+
+.justifyChange {
+  justify-content: start;
+}
+
+.appearAnimation {
+  animation-delay: 5000ms;
+  animation: fadingIn 500ms linear;
+}
+
+@keyframes fadingIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+
+}
