@@ -21,8 +21,10 @@ const TransitionSchema = new mongoose.Schema({
   createdOn: {
     type: Date,
     default: Date.now,
-  }
-});
+  },
+ },{
+  versionKey: false
+ });
 
 const Transition = transConnection.model('Transition', TransitionSchema);
 

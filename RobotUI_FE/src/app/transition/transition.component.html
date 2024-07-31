@@ -101,11 +101,11 @@
       @for (tData of transitionData; track tData) {
         <span class="w-full twoColors py-4 text-black hover:shadow-[0_0_20px_#00000040] font-medium rounded-[6px] bg-white flex items-center justify-between px-20">
           <span class="w-[30%] flex items-center justify-between">
-            <p class="w-[70%] flex items-center justify-start text-[12px]">{{tData.transitionName}}</p>
+            <p class="w-[70%] flex items-center justify-start text-[12px]">{{ tData.name }}</p>
           </span>
           <span class="grid grid-cols-5 w-[70%] items-center justify-between text-[14px]">
-            <p class="w-full flex items-center justify-center text-[12px]">{{tData.startPos}}</p>
-            <p class="w-full flex items-center justify-center text-[12px]">{{tData.endPos}}</p>
+            <p class="w-full flex items-center justify-center text-[12px]">{{ tData.startPosition }}</p>
+            <p class="w-full flex items-center justify-center text-[12px]">{{tData.endPosition}}</p>
             <p class="w-full flex items-center justify-center text-[12px]">{{tData.createdBy}}</p>
             <p class="w-full flex items-center justify-center text-[12px]">{{tData.createdOn}}</p>
             <span class="w-full flex items-center justify-center gap-2">
