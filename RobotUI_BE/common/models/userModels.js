@@ -2,9 +2,27 @@ const mongoose = require('mongoose');
 const connection  = require('../dbconfig')
 
 const userSchema = new mongoose.Schema({
-    username: String,
-    password: String,
-    role: String,
+    username: {
+      type: String,
+      require: true,
+      unique: true
+    },
+    password: {
+      type: String,
+      require: true
+    },
+    role: {
+      type: String,
+      require: true
+    },
+    createdBy: {
+      type: String,
+      require: true
+    },
+    createdOn: {
+      type: Date,
+      default: Date.now,
+    },
     permissions: {
         maps: {
           enable: { type: Boolean, default: false },
