@@ -12,7 +12,7 @@ exports.createTransition = async (req, res) => {
     // Check if a transition with the same name already exists
     const existingTransition = await Transition.findOne({ name });
     if (existingTransition) {
-      return res.status(400).json({ message: 'Transition name already exists' });
+      return res.status(400).json({ message: 'Transition with this name already exists' });
     }
     
     const formattedDate = moment.tz(createdOn, 'DD:MM:YYYY HH:mm', 'Asia/Kolkata').isValid()
