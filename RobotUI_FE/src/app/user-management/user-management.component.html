@@ -28,13 +28,13 @@
     <!-- Table Title -->
     <span class="w-full h-[55px] text-[14px] text-white font-semibold rounded-[6px] bg-black flex items-center justify-between px-20">
       <span class="w-[30%] text-[14px] flex items-center justify-between">
-        <p class="w-[70%] text-[14px] flex items-center justify-start">Name</p>
+        <p class=" text-[14px] flex items-center justify-start w-full">Name</p>
       </span>
-      <span class="flex text-[14px] w-[60%] items-center justify-between">
-        <p class="text-[14px] flex items-center justify-start">User Type</p>
-        <p class="text-[14px] flex items-center justify-start">Created By</p>
-        <p class="text-[14px] flex items-center justify-start">Created on</p>
-        <p class="text-[14px] flex items-center justify-start">Options</p>
+      <span class="flex text-[14px] w-[80%] items-center justify-between">
+        <p class="w-full text-[14px] flex items-center justify-center">User Type</p>
+        <p class="w-full text-[14px] flex items-center justify-center">Created By</p>
+        <p class="w-full text-[14px] flex items-center justify-center">Created on</p>
+        <p class="w-full text-[14px] flex items-center justify-center">Options</p>
       </span>
     </span>
     <!-- Table Rows -->
@@ -43,14 +43,14 @@
         @for (user of userCredentials; track user) {
           <span class="w-full twoColors h-[45px] hover:shadow-[0_0_10px_#00000060] hover:duration-300 text-[14px] text-black font-medium rounded-[6px] duration-300 flex items-center justify-between px-20">
             <span class="w-[30%] flex items-center justify-between">
-              <p class="flex items-center justify-start capitalize">{{user!.userName}}</p>
+              <p class="flex items-center justify-start capitalize w-full">{{user!.userName}}</p>
             </span>
-            <span class="flex gap-5 w-[60%] items-center justify-between">
-              <p class="w-full text-[14px] flex items-center justify-start">{{user!.userRole}}</p>
-              <p class="w-full text-[14px] flex items-center justify-start">{{user!.createdBy}}</p>
-              <p class="w-full text-[14px] flex items-center justify-start">{{user!.createdOn}}</p>
+            <span class="flex text-[14px] w-[80%] items-center justify-between">
+              <p class="w-full text-[14px] flex items-center justify-center ">{{user!.userRole}}</p>
+              <p class="w-full text-[14px] flex items-center justify-center capitalize">{{user!.createdBy}}</p>
+              <p class="w-full text-[14px] flex items-center justify-center ">{{user!.createdOn}}</p>
 
-              <span class="flex gap-5 items-center justify-center">
+              <span class="flex gap-5 items-center justify-center w-full">
                 <svg (click)="userPermissionPopUpOpen(user!.userName)" class="cursor-pointer" width="29" height="31" viewBox="0 0 29 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <g clip-path="url(#clip0_1418_29078)">
                   <path d="M6.17578 20.4475V23.9807H9.70898L20.1296 13.5601L16.5964 10.0269L6.17578 20.4475ZM22.8619 10.8278C22.9493 10.7406 23.0186 10.6371 23.0658 10.5231C23.1131 10.4091 23.1375 10.2869 23.1375 10.1635C23.1375 10.0401 23.1131 9.91796 23.0658 9.80398C23.0186 9.69 22.9493 9.58646 22.8619 9.4993L20.6572 7.29458C20.57 7.20724 20.4665 7.13794 20.3525 7.09066C20.2385 7.04338 20.1164 7.01904 19.993 7.01904C19.8696 7.01904 19.7474 7.04338 19.6334 7.09066C19.5194 7.13794 19.4159 7.20724 19.3287 7.29458L17.6045 9.01878L21.1377 12.552L22.8619 10.8278Z" fill="black"/>
@@ -123,7 +123,7 @@
       <span class="w-full flex-col relative flex items-start justify-between gap-3">
         <span class="w-full flex gap-10 items-center justify-center">
           <span class="w-full relative flex items-center justify-end">
-            <input [(ngModel)] = "passWord" type="{{passwordType}}" placeholder="Password" class="bg-transparent w-full font-medium text-[15px] py-2 pt-5 px-5 outline-none border-b-2 border-black">
+            <input [(ngModel)] = "passWord" type="{{passwordState ? 'text':'password'}}" placeholder="Password" class="bg-transparent w-full font-medium text-[15px] py-2 pt-5 px-5 outline-none border-b-2 border-black">
             <p class="absolute text-[10px] right-2 bottom-3 w-14 flex items-center justify-center py-1 rounded-[2px] cursor-pointer" (click)="showPassword()">{{passwordView}}</p>
           </span>
 

@@ -19,6 +19,7 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { TransitionComponent } from './transition/transition.component';
 import { MissionLogComponent } from './mission-log/mission-log.component';
 import { SystemLogComponent } from './system-log/system-log.component';
+import { ErrorLogComponent } from './error-log/error-log.component';
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ import { SystemLogComponent } from './system-log/system-log.component';
     TransitionComponent,
     MissionLogComponent,
     SystemLogComponent,
+    ErrorLogComponent,
   ],
   imports: [
     BrowserModule,

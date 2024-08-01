@@ -13,6 +13,7 @@ import { CreateMapComponent } from './maps/create-map/create-map.component';
 import { ErrorPageComponent } from './error-page/error-page.component';
 import { TransitionComponent } from './transition/transition.component';
 import { MissionLogComponent } from './mission-log/mission-log.component';
+import { SystemLogComponent } from './system-log/system-log.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,11 @@ const routes: Routes = [
         path:'monitoring/mission-log',
         title: 'Mission Log | Monitoring | App',
         component: MissionLogComponent
+      },
+      {
+        path:'monitoring/system-log',
+        title: 'System Log | Monitoring | App',
+        component: SystemLogComponent
       },
       {
         path: 'setup/maps',

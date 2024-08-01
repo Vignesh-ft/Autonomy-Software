@@ -156,6 +156,8 @@ export class UserManagementComponent implements OnInit {
   }
 
   createUser() {
+    this.passwordState = false
+    this.confrimPasswordState = false
     if (this.userName === '') {
       this.errorMessage = '*Username is not entered';
       return;
@@ -303,7 +305,6 @@ export class UserManagementComponent implements OnInit {
 
   userCreatePopUpOpen() {
     this.userRoleOCstate =false
-    this.passwordState = false
     this.userCreatePopUp = !this.userCreatePopUp;
     this.userName = '';
     this.passWord = '';
