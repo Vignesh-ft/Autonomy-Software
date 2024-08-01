@@ -75,7 +75,7 @@
     <!-- rows -->
     <span class="flex h-[60%] flex-col w-full items-center justify-center gap-[5px] overflow-scroll scroll-smooth scrollCSS pb-3 ">
       @for (logData of systemLogData; track logData) {
-        <span class="w-full py-6 text-black font-semibold rounded-[6px] bg-white hover:shadow-[0_0_10px_#00000040] flex items-center justify-between px-12">
+        <span class="w-full py-6 text-black font-semibold rounded-[6px] bg-white hover:shadow-[0_0_10px_#00000040] twoColors flex items-center justify-between px-12">
           <span class="w-[10%] flex items-center justify-center">
             <span [ngClass]="{'bg-green-500':logData.state === 'completed', 'bg-yellow-500': logData.state === 'partially', 'bg-red-500':logData.state === 'break'}" class="size-6 rounded-full"></span>
             <!-- state -->
