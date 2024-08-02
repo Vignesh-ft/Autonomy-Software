@@ -20,7 +20,6 @@ export class TransitionComponent implements OnInit {
       this.cookieValue = null;
     }
     this.fetchTransitions();
-    
   }
 
   transitionName = ""
@@ -125,7 +124,6 @@ export class TransitionComponent implements OnInit {
 
   createPopup() {
     this.createPopupState = !this.createPopupState
-     this.errorMessage = ""
     // Getting the value to default
 
     if(this.transitionName === ""){
@@ -258,12 +256,8 @@ export class TransitionComponent implements OnInit {
       this.createPopupState = false;
     })
     .catch(error => {
-      
-      //console.error('Error creating map:', error);
-    
-      this.errorMessage = error.message; // Display the backend error message
-      console.log(this.errorMessage);
-      
+      console.error('Error creating transition:', error);
+      this.errorMessage = error.message; // Display backend error message
       setTimeout(() => {
         this.errorMessage = "";
       }, 5000);
@@ -271,41 +265,41 @@ export class TransitionComponent implements OnInit {
   }
   
 
-  // validateValue() {
-  //   let isValidate:boolean = false
+  validateValue() {
+    let isValidate:boolean = false
 
-  //   if(this.transitionName === "") {
-  //     this.errorMessage = "*Enter Transition Name"
-  //   }
+    if(this.transitionName === "") {
+      this.errorMessage = "*Enter Transition Name"
+    }
 
-  //   else if(this.startPosition === "No Position is Selected") {
-  //     this.errorMessage = "*Select the Starting Position"
-  //   }
+    else if(this.startPosition === "No Position is Selected") {
+      this.errorMessage = "*Select the Starting Position"
+    }
 
-  //   else if(this.endPosition === "No Position is Selected") {
-  //     this.errorMessage = "*Select the Ending Position"
-  //   }
+    else if(this.endPosition === "No Position is Selected") {
+      this.errorMessage = "*Select the Ending Position"
+    }
 
-  //   else if(this.startPosition === this.endPosition){
-  //     this.errorMessage = "*Give Different Points to create"
-  //   }
+    else if(this.startPosition === this.endPosition){
+      this.errorMessage = "*Give Different Points to create"
+    }
 
-  //   setTimeout(()=>{this.errorMessage = ""},4000)
+    setTimeout(()=>{this.errorMessage = ""},4000)
 
-  //   if(this.transitionName && this.startPosition !== "No Position is Selected" && this.endPosition != "No Position is Selected" && this.startPosition !== this.endPosition )
-  //   {
-  //     isValidate = true
-  //   }
+    if(this.transitionName && this.startPosition !== "No Position is Selected" && this.endPosition != "No Position is Selected" && this.startPosition !== this.endPosition )
+    {
+      isValidate = true
+    }
 
-  //   if(isValidate) {
-  //     this.createTransition()
-  //     this.createPopup()
-  //   }
+    if(isValidate) {
+      this.createTransition()
+      this.createPopup()
+    }
 
 
-  //   this.startPositionPopupOCstate = false
-  //   this.endPositionPopupOCstate = false
-  // }
+    this.startPositionPopupOCstate = false
+    this.endPositionPopupOCstate = false
+  }
 
   editValidateValue() {
     let isValidate:boolean = false
@@ -358,11 +352,37 @@ export class TransitionComponent implements OnInit {
   }
 
 
-  deleteTransition(order:any) {
-    console.log(this.transitionData[order])
-    this.deletePopup()
-  }
-
+    //deleting the transition
+    deleteTransition() {
+      const transitionId = this.deleteTransitionID;
+  
+      fetch(`http://localhost:3000/transitions/${transitionId}`, {
+        method: 'DELETE',
+      })
+      .then(response => {
+        if (!response.ok) {
+          return response.json().then(error => {
+            throw new Error(error.message || 'Failed to delete transition');
+          });
+        }
+        return response.json();
+      })
+      .then(() => {
+        this.transitionData = this.transitionData.filter((transition: any) => transition.transitionId !== transitionId);
+        this.deletePopup(); // Close the delete popup
+      })
+      .catch(error => {
+        console.error('Error deleting transition:', error);
+        this.errorMessage = error.message; // Display backend error message
+        setTimeout(() => {
+          this.errorMessage = "";
+        }, 5000);
+      });
+    }
+    getDeleteTransition(index:number) {
+      this.deletePopup()
+      this.deleteTransitionID = this.transitionData[index].transitionId
+    }
   editPopup() {
     this.editPopupState = !this.editPopupState
   }
