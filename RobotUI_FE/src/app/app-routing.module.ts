@@ -1,3 +1,4 @@
+import { ErrorLogComponent } from './error-log/error-log.component';
 import { MonitoringOptionsComponent } from './monitoring-options/monitoring-options.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -29,7 +30,7 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        component: DashboardComponent
+        component: DashboardComponent,
       },
       {
         path: 'user-management',
@@ -56,6 +57,11 @@ const routes: Routes = [
         path:'monitoring/system-log',
         title: 'System Log | Monitoring | App',
         component: SystemLogComponent
+      },
+      {
+        path:'monitoring/error-log',
+        title: 'Error Log | Monitoring | App',
+        component: ErrorLogComponent
       },
       {
         path: 'setup/maps',
