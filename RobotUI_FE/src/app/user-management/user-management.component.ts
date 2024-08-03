@@ -117,24 +117,51 @@ export class UserManagementComponent implements OnInit {
   userPermissionStateFn(order:number,option:number) {
     this.userPermissionState[order][option]
   }
-
-  //fetch the user details from the database
   fetchUsers(): void {
     fetch('http://localhost:3000/api/users')
       .then(response => response.json())
       .then((users: any[]) => {
-        this.userCredentials = users.map(user => ({
-          userId: user._id, // Assuming MongoDB `_id` is used as userId
-          userName: user.username,
-          userRole: user.role,
-          createdBy: user.createdBy, // Fetch createdBy from the response
-          createdOn: user.createdOn // Format createdOn date
-        }));
+        this.userCredentials = users.map(user => {
+          const dateString = user.createdOn;
+          console.log("Original Date from DB:", dateString);
+  
+          // Split the dateString into date and time parts
+          const [datePart, timePart] = dateString.split(' ');
+  
+          // Split the date part into day, month, and year
+          const [day, month, year] = datePart.split(':').map(Number);
+  
+          // Split the time part into hours and minutes
+          const [hours, minutes] = timePart.split(':').map(Number);
+  
+          // Construct a new Date object
+          const date = new Date(Date.UTC(year, month - 1, day, hours, minutes));
+  
+          // Format the date
+          const formattedDay = String(date.getUTCDate()).padStart(2, '0');
+          const formattedMonth = String(date.getUTCMonth() + 1).padStart(2, '0');
+          const formattedYear = date.getUTCFullYear();
+          const formattedHours = String(date.getUTCHours()).padStart(2, '0');
+          const formattedMinutes = String(date.getUTCMinutes()).padStart(2, '0');
+          const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear} ${formattedHours}:${formattedMinutes}`;
+  
+          console.log("Formatted Date:", formattedDate);
+  
+          return {
+            userId: user._id, // Assuming MongoDB `_id` is used as userId
+            userName: user.username,
+            userRole: user.role,
+            createdBy: user.createdBy, // Fetch createdBy from the response
+            createdOn: formattedDate // Format createdOn date
+          };
+        });
       })
       .catch(error => {
         console.error('Error fetching users:', error);
       });
   }
+  
+  
   
   validatePassword(password: string): string {
     if (password.length < 8) {

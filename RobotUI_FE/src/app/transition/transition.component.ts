@@ -135,27 +135,52 @@ export class TransitionComponent implements OnInit {
   }
 
 
-  //fetching from the db
   fetchTransitions(): void {
-    console.log("fetching!");
     fetch('http://localhost:3000/transitions')
       .then(response => response.json())
       .then((transitions: any[]) => {
-        console.log("Fetched transitions:", transitions); // Log raw data
-        this.transitionData = transitions.map(transition => ({
-          transitionId: transition._id,
-          name: transition.name || 'N/A', // Default value if property is missing
-          startPosition: transition.startPosition || 'N/A', // Default value if property is missing
-          endPosition: transition.endPosition || 'N/A', // Default value if property is missing
-          createdBy: transition.createdBy || 'Unknown', // Default value if property is missing
-          createdOn: transition.createdOn || 'Unknown' // Default value if property is missing
-        }));
-        
+        this.transitionData = transitions.map(transition => {
+          const dateString = transition.createdOn;
+          console.log("Original Date from DB:", dateString);
+  
+          // Split the dateString into date and time parts
+          const [datePart, timePart] = dateString.split(' ');
+  
+          // Split the date part into day, month, and year
+          const [day, month, year] = datePart.split(':').map(Number);
+  
+          // Split the time part into hours and minutes
+          const [hours, minutes] = timePart.split(':').map(Number);
+  
+          // Construct a new Date object
+          const date = new Date(Date.UTC(year, month - 1, day, hours, minutes));
+  
+          // Format the date
+          const formattedDay = String(date.getUTCDate()).padStart(2, '0');
+          const formattedMonth = String(date.getUTCMonth() + 1).padStart(2, '0');
+          const formattedYear = date.getUTCFullYear();
+          const formattedHours = String(date.getUTCHours()).padStart(2, '0');
+          const formattedMinutes = String(date.getUTCMinutes()).padStart(2, '0');
+          const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear} ${formattedHours}:${formattedMinutes}`;
+  
+          console.log("Formatted Date:", formattedDate);
+  
+          return {
+            transitionId: transition._id, // Assuming MongoDB `_id` is used as transitionId
+            name: transition.name || 'N/A',
+            startPosition: transition.startPosition || 'N/A',
+            endPosition: transition.endPosition || 'N/A',
+            createdBy: transition.createdBy || 'Unknown',
+            createdOn: formattedDate // Format createdOn date
+          };
+        });
       })
       .catch(error => {
         console.error('Error fetching transitions:', error);
       });
-}
+  }
+  
+  
 
 
 //creating the new transition
@@ -382,6 +407,7 @@ export class TransitionComponent implements OnInit {
     getDeleteTransition(index:number) {
       this.deletePopup()
       this.deleteTransitionID = this.transitionData[index].transitionId
+
     }
   editPopup() {
     this.editPopupState = !this.editPopupState

@@ -8,6 +8,7 @@ const mapRoutes = require('./application/routes/mapRoutes')
 const transitionRoutes = require('./application/routes/transitionRoutes')
 require('dotenv').config();
 
+
 const app = express();
 const port = process.env.PORT || 3000;
 
