@@ -123,7 +123,6 @@ export class UserManagementComponent implements OnInit {
       .then((users: any[]) => {
         this.userCredentials = users.map(user => {
           const dateString = user.createdOn;
-          console.log("Original Date from DB:", dateString);
   
           // Split the dateString into date and time parts
           const [datePart, timePart] = dateString.split(' ');
@@ -145,7 +144,6 @@ export class UserManagementComponent implements OnInit {
           const formattedMinutes = String(date.getUTCMinutes()).padStart(2, '0');
           const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear} ${formattedHours}:${formattedMinutes}`;
   
-          console.log("Formatted Date:", formattedDate);
   
           return {
             userId: user._id, // Assuming MongoDB `_id` is used as userId

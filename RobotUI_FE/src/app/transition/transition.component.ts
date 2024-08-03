@@ -38,7 +38,7 @@ export class TransitionComponent implements OnInit {
 
 
   // Edit Option Parameters
-  editTransitionId = 0
+  editTransitionId = ""
   editTransitionName = ""
   editStartPos = ""
   editEndPos = ""
@@ -135,51 +135,47 @@ export class TransitionComponent implements OnInit {
   }
 
 
-  fetchTransitions(): void {
-    fetch('http://localhost:3000/transitions')
-      .then(response => response.json())
-      .then((transitions: any[]) => {
-        this.transitionData = transitions.map(transition => {
-          const dateString = transition.createdOn;
-          console.log("Original Date from DB:", dateString);
-  
-          // Split the dateString into date and time parts
-          const [datePart, timePart] = dateString.split(' ');
-  
-          // Split the date part into day, month, and year
-          const [day, month, year] = datePart.split(':').map(Number);
-  
-          // Split the time part into hours and minutes
-          const [hours, minutes] = timePart.split(':').map(Number);
-  
-          // Construct a new Date object
-          const date = new Date(Date.UTC(year, month - 1, day, hours, minutes));
-  
-          // Format the date
-          const formattedDay = String(date.getUTCDate()).padStart(2, '0');
-          const formattedMonth = String(date.getUTCMonth() + 1).padStart(2, '0');
-          const formattedYear = date.getUTCFullYear();
-          const formattedHours = String(date.getUTCHours()).padStart(2, '0');
-          const formattedMinutes = String(date.getUTCMinutes()).padStart(2, '0');
-          const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear} ${formattedHours}:${formattedMinutes}`;
-  
-          console.log("Formatted Date:", formattedDate);
-  
-          return {
-            transitionId: transition._id, // Assuming MongoDB `_id` is used as transitionId
-            name: transition.name || 'N/A',
-            startPosition: transition.startPosition || 'N/A',
-            endPosition: transition.endPosition || 'N/A',
-            createdBy: transition.createdBy || 'Unknown',
-            createdOn: formattedDate // Format createdOn date
-          };
-        });
-      })
-      .catch(error => {
-        console.error('Error fetching transitions:', error);
+ fetchTransitions(): void {
+  fetch('http://localhost:3000/transitions')
+    .then(response => response.json())
+    .then((transitions: any[]) => {
+      this.transitionData = transitions.map(transition => {
+        const dateString = transition.createdOn;
+
+        // Split the dateString into date and time parts
+        const [datePart, timePart] = dateString.split(' ');
+
+        // Split the date part into day, month, and year
+        const [day, month, year] = datePart.split(':').map(Number);
+
+        // Split the time part into hours and minutes
+        const [hours, minutes] = timePart.split(':').map(Number);
+
+        // Construct a new Date object
+        const date = new Date(Date.UTC(year, month - 1, day, hours, minutes));
+
+        // Format the date
+        const formattedDay = String(date.getUTCDate()).padStart(2, '0');
+        const formattedMonth = String(date.getUTCMonth() + 1).padStart(2, '0');
+        const formattedYear = date.getUTCFullYear();
+        const formattedHours = String(date.getUTCHours()).padStart(2, '0');
+        const formattedMinutes = String(date.getUTCMinutes()).padStart(2, '0');
+        const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear} ${formattedHours}:${formattedMinutes}`;
+
+        return {
+          transitionId: transition._id, // Assuming MongoDB `_id` is used as transitionId
+          name: transition.name || 'N/A',
+          startPosition: transition.startPosition || 'N/A',
+          endPosition: transition.endPosition || 'N/A',
+          createdBy: transition.createdBy || 'Unknown',
+          createdOn: formattedDate // Format createdOn date
+        };
       });
-  }
-  
+    })
+    .catch(error => {
+    });
+}
+
   
 
 
@@ -327,49 +323,120 @@ export class TransitionComponent implements OnInit {
   }
 
   editValidateValue() {
-    let isValidate:boolean = false
-
-    if(this.editTransitionName === "") {
-      this.errorMessage = "*Enter Transition Name"
+    let isValidate = false;
+    console.log("Validating Edit Transition");
+  
+    // Check if editTransitionName is empty
+    if (this.editTransitionName === "") {
+      this.errorMessage = "*Enter Transition Name";
+      console.log("Validation failed: Transition Name is empty");
     }
-
-    else if(this.editStartPos === this.editEndPos){
-      this.errorMessage = "*Give Different Points to create"
+    // Check if start and end positions are the same
+    else if (this.editStartPos === this.editEndPos) {
+      this.errorMessage = "*Give Different Points to create";
+      console.log("Validation failed: Start and End positions are the same");
     }
-
-    setTimeout(()=>{this.errorMessage = ""},4000)
-
-    if(this.editTransitionName && this.editEndPos !== this.editStartPos )
-    {
-      isValidate = true
+    // If validation passes
+    else {
+      isValidate = true;
     }
-
-    if(isValidate) {
-      this.editTransition(this.editTransitionId)
-      this.editPopup()
+  
+    // Clear the error message after a delay
+    setTimeout(() => {
+      this.errorMessage = "";
+    }, 4000);
+  
+    // Call editTransition if validation is successful
+    if (isValidate) {
+      console.log("Validation successful. Calling editTransition");
+      this.editTransition(this.editTransitionId);
+      this.editPopup(); // Close the edit popup
     }
-
-
-    this.startPositionPopupOCstate = false
-    this.endPositionPopupOCstate = false
+  
+    // Close the position popups
+    this.startPositionPopupOCstate = false;
+    this.endPositionPopupOCstate = false;
   }
+  
+  
 
 
-  getEditTransition(index:number) {
-    this.editPopup()
-    this.editTransitionId = this.transitionData[index].transitionId
-    this.editTransitionName = this.transitionData[index].transitionName
-    this.editStartPos = this.transitionData[index].startPos
-    this.editEndPos = this.transitionData[index].endPos
-    console.log([this.editTransitionName, this.editTransitionId, this.editStartPos, this.editEndPos])
-    console.log(index)
+  getEditTransition(transitionId: number) {
+    console.log("Transition ID:", transitionId);
+    const transition = this.transitionData.find((t: any) => t.transitionId === transitionId);
+    
+    if (transition) {
+      console.log("Transition Name:", transition.name);
+  
+      // Populate the edit fields with transition data
+      this.editTransitionId = transition.transitionId;
+      this.editTransitionName = transition.name;
+      this.editStartPos = transition.startPosition;
+      this.editEndPos = transition.endPosition;
+  
+      // Open the edit popup
+      this.editPopup();
+    } else {
+      console.error("Transition not found with ID:", transitionId);
+    }
   }
-
-  editTransition(index:number){
-    this.transitionData[index].transitionName = this.editTransitionName
-    this.transitionData[index].startPos = this.editStartPos
-    this.transitionData[index].endPos = this.editEndPos
+  
+  editTransition(transitionId: string) {
+    if (!transitionId) {
+      console.error("No transition ID set for editing");
+      return;
+    }
+  
+    const updatedTransition = {
+      name: this.editTransitionName,
+      startPosition: this.editStartPos,
+      endPosition: this.editEndPos
+    };
+  
+    console.log("Updating transition with ID:", transitionId);
+    console.log("Data to be updated:", updatedTransition);
+  
+    fetch(`http://localhost:3000/transitions/${transitionId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(updatedTransition),
+    })
+    .then(response => {
+      if (!response.ok) {
+        return response.json().then(error => {
+          throw new Error(error.message || 'Failed to update transition');
+        });
+      }
+      return response.json();
+    })
+    .then((updatedTransitionFromServer: any) => {
+      const index = this.transitionData.findIndex((transition: any) => transition.transitionId === transitionId);
+      if (index !== -1) {
+        this.transitionData[index] = {
+          ...this.transitionData[index],
+          name: updatedTransitionFromServer.name,
+          startPosition: updatedTransitionFromServer.startPosition,
+          endPosition: updatedTransitionFromServer.endPosition
+        };
+      }
+      this.editTransitionName = "";
+      this.editStartPos = "";
+      this.editEndPos = "";
+      this.editPopupState = false;
+    })
+    .catch(error => {
+      console.error('Error updating transition:', error);
+      this.errorMessage = error.message;
+      setTimeout(() => {
+        this.errorMessage = "";
+      }, 5000);
+    });
   }
+  
+  
 
   getTransitionId(order:any) {
     this.deleteTransitionID = order
