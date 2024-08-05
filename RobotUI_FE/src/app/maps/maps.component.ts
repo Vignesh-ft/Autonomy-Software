@@ -74,19 +74,38 @@ export class MapsComponent implements OnInit  {
     fetch('http://localhost:3000/maps')
       .then(response => response.json())
       .then((maps: any[]) => {
-        this.mapsData = maps.map(map => ({
-          mapId: map._id, // MongoDB _id field
-          mapName: map.name,
-          site: map.site,
-          createdBy: map.createdBy,
-          createdAt: map.createdAt
-        }));
+        this.mapsData = maps.map(map => {
+          const dateString = map.createdAt;
+          console.log("Original Date from DB:", dateString);
+  
+          // Parse the ISO date string into a Date object
+          const date = new Date(dateString);
+  
+          // Format the date
+          const formattedDay = String(date.getUTCDate()).padStart(2, '0');
+          const formattedMonth = String(date.getUTCMonth() + 1).padStart(2, '0');
+          const formattedYear = date.getUTCFullYear();
+          const formattedHours = String(date.getUTCHours()).padStart(2, '0');
+          const formattedMinutes = String(date.getUTCMinutes()).padStart(2, '0');
+          const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear} ${formattedHours}:${formattedMinutes}`; // change the format if you want
+  
+          console.log("Formatted Date:", formattedDate);
+  
+          return {
+            mapId: map._id, // MongoDB _id field
+            mapName: map.name,
+            site: map.site,
+            createdBy: map.createdBy,
+            createdAt: formattedDate // Format createdAt date
+          };
+        });
+        console.log('Fetched maps:', this.mapsData);
       })
       .catch(error => {
         console.error('Error fetching maps:', error);
       });
   }
-
+  
   createMaps() {
     if (this.mapsName) {
       // Fetch username from cookies
