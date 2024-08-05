@@ -35,8 +35,10 @@
 * {
   font-family: 'Graphik', Arial, sans-serif;
   font-size: 12px;
-
 }
+
+
 ::-webkit-scrollbar{
   width: 0px;
 }
+

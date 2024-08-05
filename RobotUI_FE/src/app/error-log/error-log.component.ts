@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './error-log.component.css'
 })
 export class ErrorLogComponent {
-  ErrorLogData = [
+  errorLogData = [
   {
     errororder: 0,
     moduleName:"Mission Controller 1",
@@ -34,7 +34,24 @@ export class ErrorLogComponent {
   ]
 
 
-  DeleteErrorLogId:any
+  deleteErrorLogId:any
+  errorPopupState = false
+  deleteAllState = false
+
+
+  getDeleteErrorId(order:any) {
+    this.deleteErrorLogId = order
+    this.errorPopup()
+  }
+
+
+  errorPopup() {
+    this.errorPopupState = !this.errorPopupState
+  }
+
+  deleteAllPopup() {
+    this.deleteAllState = !this.deleteAllState
+  }
 
 
 
@@ -44,4 +61,16 @@ export class ErrorLogComponent {
       console.log("Downloaded Just text for testing")
     },4000)
   }
+
+
+  deleteErrorLog(id:any) {
+    this.errorLogData = this.errorLogData.filter(log => log.errororder !== id)
+    this.errorPopup()
+  }
+
+  deleteAll() {
+    this.errorLogData = []
+    this.deleteAllPopup()
+  }
+
 }

@@ -12,25 +12,24 @@ export class DashboardComponent {
     {
       title: "Publish / Pose",
       clickFn: this.publishToogle.bind(this),
-      state: () => {return !this.publishToogleButton}
+      state: this.publishToogleButton
     },
     {
       title: "Enable Camera",
       clickFn: this.cameraToogle.bind(this),
-      state: () => {return !this.cameraToogleButton}
+      state: this.cameraToogleButton
     }
   ]
 
 
   publishToogle() {
     this.publishToogleButton = !this.publishToogleButton
-    console.log("Hello")
-    return this.publishToogleButton
+    this.optionOne[0].state = this.publishToogleButton
 
   }
 
   cameraToogle() {
     this.cameraToogleButton = !this.cameraToogleButton
-    return this.cameraToogleButton
+    this.optionOne[1].state = this.cameraToogleButton
   }
 }

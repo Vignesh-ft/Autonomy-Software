@@ -32,6 +32,8 @@ export class UserManagementComponent implements OnInit {
   passwordView = "SHOW"
   confrimPasswordView = "SHOW"
 
+
+
   ngOnInit(): void {
     try {
       this.cookieValue = JSON.parse(this.cookieService.get("_user"));
@@ -118,6 +120,15 @@ export class UserManagementComponent implements OnInit {
     this.userPermissionState[order][option]
   }
 
+  resetPassword() {
+    this.passwordState = false
+    this.confrimPasswordState = false
+    this.passwordType = "password"
+    this.confrimPasswordType = "password";
+    this.passwordView = "SHOW"
+    this.confrimPasswordType = "SHOW"
+  }
+
   //fetch the user details from the database
   fetchUsers(): void {
     fetch('http://localhost:3000/api/users')
@@ -135,7 +146,7 @@ export class UserManagementComponent implements OnInit {
         console.error('Error fetching users:', error);
       });
   }
-  
+
   validatePassword(password: string): string {
     if (password.length < 8) {
       return 'Password must be at least 8 characters long.';
@@ -156,8 +167,8 @@ export class UserManagementComponent implements OnInit {
   }
 
   createUser() {
-    this.passwordState = false
-    this.confrimPasswordState = false
+    console.log(this.passwordState, this.confrimPasswordState)
+    this.resetPassword()
     if (this.userName === '') {
       this.errorMessage = '*Username is not entered';
       return;
@@ -309,12 +320,14 @@ export class UserManagementComponent implements OnInit {
     this.passwordState = !this.passwordState;
     this.passwordType = this.passwordState ? 'text' : 'password';
     this.passwordView = this.passwordState ? 'HIDE' : 'SHOW'
+    console.log("PASS State: ",this.passwordState)
   }
 
   showConfrimPassword() {
     this.confrimPasswordState = !this.confrimPasswordState;
     this.confrimPasswordType = this.confrimPasswordState ? 'text' : 'password';
     this.confrimPasswordView = this.confrimPasswordState ? 'HIDE' : 'SHOW'
+    console.log("CPASS State: ",this.confrimPasswordState)
   }
 
   userCreatePopUpOpen() {
@@ -324,8 +337,7 @@ export class UserManagementComponent implements OnInit {
     this.passWord = '';
     this.confrimPassword = '';
     this.userRole = 'User';
-    this.passwordState = false
-    this.confrimPasswordState = false
+    this.resetPassword()
     console.log(this.passwordState, this.confrimPasswordState)
   }
 

@@ -15,6 +15,8 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { TransitionComponent } from './transition/transition.component';
 import { MissionLogComponent } from './mission-log/mission-log.component';
 import { SystemLogComponent } from './system-log/system-log.component';
+import { PathsAndGuidesComponent } from './paths-and-guides/paths-and-guides.component';
+import { MissionsComponent } from './missions/missions.component';
 
 const routes: Routes = [
   {
@@ -69,9 +71,19 @@ const routes: Routes = [
         component: MapsComponent
       },
       {
+        path: 'setup/paths-and-guides',
+        title: 'P&G | Setup | App',
+        component: PathsAndGuidesComponent
+      },
+      {
         path: 'setup/transitions',
         title: 'Transition | Setup | App',
         component: TransitionComponent
+      },
+      {
+        path: 'setup/missions',
+        title: 'Missions | Setup | App',
+        component: MissionsComponent
       },
       {
         path: 'setup/maps/create-map',

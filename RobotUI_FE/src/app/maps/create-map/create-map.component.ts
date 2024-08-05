@@ -188,7 +188,6 @@ export class CreateMapComponent {
     console.log(this.idParam);
     console.log(this.selectedPoint);
 
-
     if (this.selectedPoint) {
       fetch(`http://localhost:3000/maps/${this.idParam}`, {
         method: 'PUT',
@@ -224,6 +223,8 @@ export class CreateMapComponent {
         this.errorMessage = '';
       }, 5000);
     }
+
+    this.uploadMapPopup()
   }
 
 
