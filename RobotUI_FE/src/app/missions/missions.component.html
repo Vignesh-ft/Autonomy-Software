@@ -32,6 +32,7 @@
     <!-- Button -->
     <span class="flex items-center justify-between gap-10">
       <button
+        (click)="createPopup()"
         class="px-3 flex items-center justify-center gap-2 py-3 text-[14px] rounded-md hover:bg-opacity-90 active:bg-opacity-80 bg-[#D30000] font-semibold text-white"
       >
         <svg
@@ -52,6 +53,7 @@
       </button>
 
       <button
+      (click)="missionQueuePopup()"
         class="w-[130px] flex items-center justify-center gap-2 py-3 text-[14px] rounded-md hover:bg-opacity-90 active:bg-opacity-80 bg-transparent border-2 border-[#D30000] font-semibold text-[#d30000]"
       >
         Mission Queue
@@ -72,45 +74,242 @@
       <span class="w-[42%] flex items-center justify-between text-[14px]">
         <p class="w-[40%] flex justify-center items-center text-[14px] text-white">Created By</p>
         <p class="w-full flex justify-center items-center text-[14px] text-white">Created On</p>
-        <p class="w-full flex justify-center items-center text-[14px] text-white">Functions</p>
+        <p class="w-[40%] flex justify-center items-center text-[14px] text-white">Functions</p>
       </span>
     </span>
 
     <!-- Table Rows -->
     <span class="flex flex-col w-full items-center justify-center gap-[5px] overflow-scroll scroll-smooth scrollCSS h-full pb-3 ">
       <!-- Row - 1 -->
-      <span class="w-full h-[55px] text-[14px] text-black font-semibold rounded-[6px] bg-white flex items-center justify-between px-14 gap-2">
-        <p class="flex w-[16%] justify-start items-center text-[12px]">Charge</p>
-        <span class="w-[42%] flex items-center justify-between">
-          <p class="w-full flex justify-center items-center text-[12px] text-black">Urapakkam Shop Floor</p>
-          <p class="w-full flex justify-center items-center text-[12px] text-black">Urapakkam</p>
-          <p class="w-full flex justify-center items-center text-[12px] text-black">MATE U1</p>
-        </span>
-        <span class="w-[42%] flex items-center justify-between">
-          <p class="w-[40%] flex justify-center items-center text-[12px] text-black">Operator</p>
-          <p class="w-full flex justify-center items-center text-[12px] text-black">DD/MM/YYYY HH:MM</p>
-          <span class="w-full flex justify-center gap-3 items-center text-[12px] text-black">
-            <svg width="28" height="28" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <g clip-path="url(#clip0_1603_24752)">
-              <path d="M7.375 23.4061V27.6248H11.5938L24.0362 15.1823L19.8175 10.9636L7.375 23.4061ZM27.2987 11.9198C27.403 11.8157 27.4858 11.6921 27.5422 11.556C27.5987 11.4199 27.6277 11.274 27.6277 11.1267C27.6277 10.9794 27.5987 10.8335 27.5422 10.6974C27.4858 10.5613 27.403 10.4376 27.2987 10.3336L24.6663 7.70107C24.5622 7.59678 24.4385 7.51404 24.3025 7.45758C24.1664 7.40113 24.0205 7.37207 23.8731 7.37207C23.7258 7.37207 23.5799 7.40113 23.4438 7.45758C23.3077 7.51404 23.1841 7.59678 23.08 7.70107L21.0212 9.75982L25.24 13.9786L27.2987 11.9198Z" fill="black"/>
-              </g>
-              <defs>
-              <clipPath id="clip0_1603_24752">
-              <rect width="27" height="27" fill="white" transform="translate(4 4)"/>
-              </clipPath>
-              </defs>
-            </svg>
+       @for (mData of missionData; track mData) {
+        <span class="w-full h-[55px] text-[14px] text-black font-medium twoColors rounded-[6px] bg-white flex items-center justify-between px-14 gap-2">
+          <p class="flex w-[16%] justify-start items-center text-[12px]">{{mData.missionName}}</p>
+          <span class="w-[42%] flex items-center justify-between">
+            <p class="w-full flex justify-center items-center text-[12px] text-black">{{mData.mapName}}</p>
+            <p class="w-full flex justify-center items-center text-[12px] text-black">{{mData.site}}</p>
+            <p class="w-full flex justify-center items-center text-[12px] text-black">{{mData.location}}</p>
+          </span>
+          <span class="w-[42%] flex items-center justify-between">
+            <p class="w-[40%] flex justify-center items-center text-[12px] text-black">{{mData.createdBy}}</p>
+            <p class="w-full flex justify-center items-center text-[12px] text-black">{{mData.createdOn}}</p>
+            <span class="w-[40%] flex justify-center gap-3 items-center text-[12px] text-black">
+              <svg class="cursor-pointer" width="28" height="28" viewBox="0 0 35 35" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_1603_24752)">
+                <path d="M7.375 23.4061V27.6248H11.5938L24.0362 15.1823L19.8175 10.9636L7.375 23.4061ZM27.2987 11.9198C27.403 11.8157 27.4858 11.6921 27.5422 11.556C27.5987 11.4199 27.6277 11.274 27.6277 11.1267C27.6277 10.9794 27.5987 10.8335 27.5422 10.6974C27.4858 10.5613 27.403 10.4376 27.2987 10.3336L24.6663 7.70107C24.5622 7.59678 24.4385 7.51404 24.3025 7.45758C24.1664 7.40113 24.0205 7.37207 23.8731 7.37207C23.7258 7.37207 23.5799 7.40113 23.4438 7.45758C23.3077 7.51404 23.1841 7.59678 23.08 7.70107L21.0212 9.75982L25.24 13.9786L27.2987 11.9198Z" fill="black"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_1603_24752">
+                <rect width="27" height="27" fill="white" transform="translate(4 4)"/>
+                </clipPath>
+                </defs>
+              </svg>
 
-            <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M11.25 5.75H11C11.1375 5.75 11.25 5.6375 11.25 5.5V5.75H20.75V5.5C20.75 5.6375 20.8625 5.75 21 5.75H20.75V8H23V5.5C23 4.39688 22.1031 3.5 21 3.5H11C9.89687 3.5 9 4.39688 9 5.5V8H11.25V5.75ZM27 8H5C4.44687 8 4 8.44688 4 9V10C4 10.1375 4.1125 10.25 4.25 10.25H6.1375L6.90938 26.5938C6.95938 27.6594 7.84063 28.5 8.90625 28.5H23.0938C24.1625 28.5 25.0406 27.6625 25.0906 26.5938L25.8625 10.25H27.75C27.8875 10.25 28 10.1375 28 10V9C28 8.44688 27.5531 8 27 8ZM22.8531 26.25H9.14688L8.39062 10.25H23.6094L22.8531 26.25Z" fill="black"/>
-            </svg>
+              <svg (click)="deletePopup()" class="cursor-pointer" width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.25 5.75H11C11.1375 5.75 11.25 5.6375 11.25 5.5V5.75H20.75V5.5C20.75 5.6375 20.8625 5.75 21 5.75H20.75V8H23V5.5C23 4.39688 22.1031 3.5 21 3.5H11C9.89687 3.5 9 4.39688 9 5.5V8H11.25V5.75ZM27 8H5C4.44687 8 4 8.44688 4 9V10C4 10.1375 4.1125 10.25 4.25 10.25H6.1375L6.90938 26.5938C6.95938 27.6594 7.84063 28.5 8.90625 28.5H23.0938C24.1625 28.5 25.0406 27.6625 25.0906 26.5938L25.8625 10.25H27.75C27.8875 10.25 28 10.1375 28 10V9C28 8.44688 27.5531 8 27 8ZM22.8531 26.25H9.14688L8.39062 10.25H23.6094L22.8531 26.25Z" fill="black"/>
+              </svg>
+
+              <svg (click)="navigateMission( mData.missionId,mData.missionName)" class="cursor-pointer active:cursor-alias" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" fill="none" height="24" viewBox="0 0 24 24">
+                <path d="M 19.980469 2.9902344 A 1.0001 1.0001 0 0 0 19.869141 3 L 15 3 A 1.0001 1.0001 0 1 0 15 5 L 17.585938 5 L 8.2929688 14.292969 A 1.0001 1.0001 0 1 0 9.7070312 15.707031 L 19 6.4140625 L 19 9 A 1.0001 1.0001 0 1 0 21 9 L 21 4.1269531 A 1.0001 1.0001 0 0 0 19.980469 2.9902344 z M 5 3 C 3.9069372 3 3 3.9069372 3 5 L 3 19 C 3 20.093063 3.9069372 21 5 21 L 19 21 C 20.093063 21 21 20.093063 21 19 L 21 13 A 1.0001 1.0001 0 1 0 19 13 L 19 19 L 5 19 L 5 5 L 11 5 A 1.0001 1.0001 0 1 0 11 3 L 5 3 z" fill="black"></path>
+              </svg>
+            </span>
           </span>
         </span>
-      </span>
+       }
+
     </span>
 
   </div>
 
+</div>
+
+
+<!-- Create Mission -->
+<div [ngClass]="{ hidden: !createMissionPopupState }" class="absolute flex items-center justify-center w-screen box-border min-h-screen bg-[#000000] bg-opacity-90 bg-blur top-0 left-0 z-50 overflow-hidden">
+  <div class="flex w-[60%] flex-col rounded-[20px] gap-10 shadow-[0_0_50px_#00000060] px-14 py-10 bg-[#D9D9D9]">
+    <!-- Title -->
+    <span class="flex flex-col items-start justify-center">
+      <p class="text-[35px] text-black font-bold">Create New Map</p>
+      <p
+        class="flex items-center justify-center gap-2 text-[14px] font-medium text-[#7B7B7B]"
+      >
+        Create an New Map
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 25 25"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g clip-path="url(#clip0_513_29001)">
+            <path
+              d="M12.4987 2.08301C6.75495 2.08301 2.08203 6.75592 2.08203 12.4997C2.08203 18.2434 6.75495 22.9163 12.4987 22.9163C18.2424 22.9163 22.9154 18.2434 22.9154 12.4997C22.9154 6.75592 18.2424 2.08301 12.4987 2.08301ZM13.5404 17.708H11.457V11.458H13.5404V17.708ZM13.5404 9.37467H11.457V7.29134H13.5404V9.37467Z"
+              fill="black"
+            />
+          </g>
+          <defs>
+            <clipPath id="clip0_513_29001">
+              <rect width="25" height="25" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </p>
+    </span>
+
+    <span class="flex flex-col items-center justify-center gap-10 w-full">
+      <span class="flex flex-col items-start justify-center w-full gap-3">
+        <span
+          class="text-[14px] gap-3 items-center justify-center flex font-semibold"
+          >Name
+          <p class="text-red-500 text-[12px] font-medium">{{ errorMessage }}</p>
+        </span>
+        <input
+          [(ngModel)]="missionName"
+          type="text"
+          placeholder="Enter map’s name (eg: U1_Shop_Floor_1)"
+          class="w-full px-4 py-2 pt-4 rounded-md bg-white border-none outline-none"
+        />
+      </span>
+
+      <span class="flex items-end justify-between w-full">
+        <!-- dropdown -->
+        <span
+          class="flex items-start gap-3 justify-center relative flex-col"
+        >
+          <p class="text-[14px] font-semibold">Map Name</p>
+          <span
+            (click)="createPopupDD()"
+            class="relative w-[200px] py-3 bg-white rounded-md px-5 flex items-center justify-between cursor-pointer"
+          >
+            <p class="font-semibold text-[12px]">{{defaultSite}}</p>
+            <svg
+            [ngClass]="{'rotateArrow':createMissionDropDown}"
+              class="duration-300 shadow"
+              width="14"
+              height="15"
+              viewBox="0 0 14 15"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M7.00007 12.3125L0 5.42194L2.33335 3.125L7.00007 7.71879L11.6667 3.125L14 5.42194L7.00007 12.3125Z"
+                fill="black"
+              />
+            </svg>
+          </span>
+          <span
+            [ngClass]="{ hidden: !createMissionDropDown }"
+            class="absolute flex top-[calc(100%+5px)] flex-col w-full h-36 overflow-y-scroll MinimalScrollCSS p-3 rounded-md bg-white"
+          >
+            @for (mission of dropDownOptions; track mission) {
+            <p
+              (click)="changeSiteName(mission.ddOrder)"
+              class="w-full px-2 py-2 hover:bg-gray-300 rounded-md cursor-pointer"
+            >
+              {{ mission.title }}
+            </p>
+            }
+          </span>
+        </span>
+        <span class="flex items-center justify-center gap-5">
+          <button
+            (click)="createMission()"
+            class="px-3 flex items-center justify-center gap-2 py-[8px] text-[12px] rounded-md hover:bg-opacity-90 active:bg-opacity-80 bg-[#D30000] font-semibold text-white"
+          >
+            <svg
+              width="14"
+              height="13"
+              viewBox="0 0 14 13"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M8.03063 0.5H5.9534L5.98535 5.44024H1V7.51195H5.98535V12.5H8.03063V7.51195H13L12.9521 5.44024H8.03063V0.5Z"
+                fill="white"
+                stroke="black"
+                stroke-width="0.1"
+              />
+            </svg>
+            <p>Create Mission</p>
+          </button>
+
+          <button
+          (click)="createPopup()"
+            class="w-[110px] flex items-center justify-center gap-2 py-2 text-[12px] rounded-md hover:bg-opacity-90 active:bg-opacity-80 bg-transparent border-2 border-[#D30000] font-semibold text-[#D30000]"
+          >
+            <p>Cancel</p>
+          </button>
+        </span>
+      </span>
+    </span>
+  </div>
+</div>
+
+<!-- Mission Queue -->
+<div [ngClass]="{ hidden: !missionQueueState }" class="absolute flex items-center justify-center w-screen box-border min-h-screen bg-[#000000] bg-opacity-90 bg-blur top-0 left-0 z-50 overflow-hidden">
+  <div class="flex w-[60%] flex-col rounded-[20px] gap-10 shadow-[0_0_50px_#00000060] px-14 py-10 bg-[#D9D9D9]">
+    <p>There is an Doubt in this section</p>
+    <p (click)="missionQueuePopup()" class="bg-red-700 cursor-pointer flex items-center py-2 rounded justify-center w-20 text-white">Close</p>
+  </div>
+</div>
+
+<!-- delete Mission -->
+<div
+[ngClass]="{ hidden: !deleteMissionPopupState }"
+class="absolute flex items-center justify-center w-screen box-border h-screen bg-[#000000] bg-opacity-90 bg-blur top-0 left-0 z-50"
+>
+<div
+  class="w-[600px] bg-white flex flex-col gap-5 rounded-[20px] shadow-[0_0_100px_#00000060] border-l-[22px] border-[#D30000] p-10"
+>
+  <!-- Title -->
+  <span class="flex flex-col items-start justify-center">
+    <p class="text-[35px] text-black font-bold">Delete</p>
+    <p
+      class="flex items-center justify-center gap-2 text-[14px] font-medium text-[#7B7B7B]"
+    >
+      Delete an mission
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 25 25"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g clip-path="url(#clip0_513_29001)">
+          <path
+            d="M12.4987 2.08301C6.75495 2.08301 2.08203 6.75592 2.08203 12.4997C2.08203 18.2434 6.75495 22.9163 12.4987 22.9163C18.2424 22.9163 22.9154 18.2434 22.9154 12.4997C22.9154 6.75592 18.2424 2.08301 12.4987 2.08301ZM13.5404 17.708H11.457V11.458H13.5404V17.708ZM13.5404 9.37467H11.457V7.29134H13.5404V9.37467Z"
+            fill="black"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_513_29001">
+            <rect width="25" height="25" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </p>
+  </span>
+
+  <p class="flex text-[16px] font-normal">
+    Are you sure to delete the mission ?
+  </p>
+
+  <span class="flex w-full justify-end items-center mt-10">
+    <span class="flex justify-between items-center gap-5">
+      <p
+      (click)="deletePopup()"
+        class="cursor-pointer flex px-10 py-2.5 bg-[#D30000] text-white border-2 border-[#D30000] rounded-md"
+      >
+        Delete
+      </p>
+      <p
+        (click)="deletePopup()"
+        class="cursor-pointer flex px-10 py-2.5 border-2 rounded-md border-[#D30000] text-[#D30000]"
+      >
+        Cancel
+      </p>
+    </span>
+  </span>
+</div>
 </div>
 
 

@@ -17,6 +17,7 @@ import { MissionLogComponent } from './mission-log/mission-log.component';
 import { SystemLogComponent } from './system-log/system-log.component';
 import { PathsAndGuidesComponent } from './paths-and-guides/paths-and-guides.component';
 import { MissionsComponent } from './missions/missions.component';
+import { CreateMissionsComponent } from './missions/create-missions/create-missions.component';
 
 const routes: Routes = [
   {
@@ -89,6 +90,11 @@ const routes: Routes = [
         path: 'setup/maps/create-map',
         title: 'Maps | Setup | App',
         component: CreateMapComponent
+      },
+      {
+        path: 'setup/missions/create-missions',
+        title: 'Missions | Setup | App',
+        component: CreateMissionsComponent
       }
     ]
   },
