@@ -83,6 +83,18 @@ export class MapsComponent implements OnInit  {
           // Parse the ISO date string into a Date object
           const date = new Date(dateString);
 
+
+          const [datePart, timePart] = dateString.split(' ');
+
+          // Split the date part into day, month, and year
+          const [day, month, year] = datePart.split(':').map(Number);
+
+          // Split the time part into hours and minutes
+          const [hours, minutes] = timePart.split(':').map(Number);
+
+          // Construct a new Date object
+          const date = new Date(Date.UTC(year, month - 1, day, hours, minutes));
+
           // Format the date
           const formattedDay = String(date.getUTCDate()).padStart(2, '0');
           const formattedMonth = String(date.getUTCMonth() + 1).padStart(2, '0');
