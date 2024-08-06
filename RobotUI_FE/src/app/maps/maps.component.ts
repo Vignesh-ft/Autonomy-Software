@@ -78,8 +78,16 @@ export class MapsComponent implements OnInit  {
           const dateString = map.createdAt;
           console.log("Original Date from DB:", dateString);
   
-          // Parse the ISO date string into a Date object
-          const date = new Date(dateString);
+          const [datePart, timePart] = dateString.split(' ');
+
+          // Split the date part into day, month, and year
+          const [day, month, year] = datePart.split(':').map(Number);
+  
+          // Split the time part into hours and minutes
+          const [hours, minutes] = timePart.split(':').map(Number);
+  
+          // Construct a new Date object
+          const date = new Date(Date.UTC(year, month - 1, day, hours, minutes));
   
           // Format the date
           const formattedDay = String(date.getUTCDate()).padStart(2, '0');
@@ -87,7 +95,7 @@ export class MapsComponent implements OnInit  {
           const formattedYear = date.getUTCFullYear();
           const formattedHours = String(date.getUTCHours()).padStart(2, '0');
           const formattedMinutes = String(date.getUTCMinutes()).padStart(2, '0');
-          const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear} ${formattedHours}:${formattedMinutes}`; // change the format if you want
+          const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear} ${formattedHours}:${formattedMinutes}`;
   
           console.log("Formatted Date:", formattedDate);
   
