@@ -71,6 +71,5 @@ export class TopBarComponent {
   this.flagSvg = this.flags[order].flagComp;
   this.flagName = this.flags[order].nameTag;
   this.languageChange();
-  console.log(this.flags[order])
   }
 }

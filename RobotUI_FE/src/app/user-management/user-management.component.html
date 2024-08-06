@@ -39,6 +39,7 @@
     </span>
     <!-- Table Rows -->
     <span class="flex flex-col w-full items-center justify-center gap-[5px] overflow-scroll scroll-smooth scrollCSS h-full px-[6px] pb-3 ">
+      @if(userCredentials.length === 0){<p class="flex items-center py-5 text-[14px] text-[#9e9e9e]">- No data Found -</p>}
       @if(userCredentials.length != 0) {
         @for (user of userCredentials; track user) {
           <span class="w-full twoColors h-[45px] hover:shadow-[0_0_10px_#00000060] hover:duration-300 text-[14px] text-black font-medium rounded-[6px] duration-300 flex items-center justify-between px-20">
@@ -62,7 +63,7 @@
                   </defs>
                 </svg>
 
-                <svg (click)="getDeleteUser(user!.userName)"  class="cursor-pointer" width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <svg (click)="getDeleteUser(user!.userName, user!.userRole)"  class="cursor-pointer" width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path d="M11.25 5.75H11C11.1375 5.75 11.25 5.6375 11.25 5.5V5.75H20.75V5.5C20.75 5.6375 20.8625 5.75 21 5.75H20.75V8H23V5.5C23 4.39688 22.1031 3.5 21 3.5H11C9.89687 3.5 9 4.39688 9 5.5V8H11.25V5.75ZM27 8H5C4.44687 8 4 8.44688 4 9V10C4 10.1375 4.1125 10.25 4.25 10.25H6.1375L6.90938 26.5938C6.95938 27.6594 7.84063 28.5 8.90625 28.5H23.0938C24.1625 28.5 25.0406 27.6625 25.0906 26.5938L25.8625 10.25H27.75C27.8875 10.25 28 10.1375 28 10V9C28 8.44688 27.5531 8 27 8ZM22.8531 26.25H9.14688L8.39062 10.25H23.6094L22.8531 26.25Z" fill="black"/>
                 </svg>
 
@@ -237,7 +238,7 @@
 
     <span class="flex w-full justify-end items-center mt-10">
       <span class="flex justify-between items-center gap-5">
-        <p (click)="deleteUser(deleteUserName)" class="cursor-pointer flex px-10 py-2.5 bg-[#D30000] text-white border-2 border-[#D30000] rounded-md ">Delete</p>
+        <p (click)="deleteUser(deleteUserName,deleteUserRole)" class="cursor-pointer flex px-10 py-2.5 bg-[#D30000] text-white border-2 border-[#D30000] rounded-md ">Delete</p>
         <p (click)="deleteUserPopUp()" class="cursor-pointer flex px-10 py-2.5 border-2 rounded-md border-[#D30000] text-[#D30000]">Cancel</p>
       </span>
     </span>

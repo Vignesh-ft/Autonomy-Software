@@ -144,6 +144,7 @@
     <span
       class="flex xl:h-[300px] 2xl:h-[600px] pb-2 flex-col items-center gap-1 overflow-scroll justify-start w-full MinimalScrollCSS"
     >
+    @if(mapsData.length === 0){<p class="flex items-center py-5 text-[14px] text-[#9e9e9e]">- No data Found -</p>}
       @for (maps of mapsData; track maps) {
       <span
         [ngClass]="{ 'bg-[#9f9f9fce]': maps.mapId == 0 }"

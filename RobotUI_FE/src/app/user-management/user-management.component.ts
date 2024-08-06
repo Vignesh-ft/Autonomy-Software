@@ -31,6 +31,7 @@ export class UserManagementComponent implements OnInit {
   deleteUserName = "";
   passwordView = "SHOW"
   confrimPasswordView = "SHOW"
+  deleteUserRole = ""
 
 
 
@@ -126,7 +127,7 @@ export class UserManagementComponent implements OnInit {
     this.passwordType = "password"
     this.confrimPasswordType = "password";
     this.passwordView = "SHOW"
-    this.confrimPasswordType = "SHOW"
+    this.confrimPasswordView = "SHOW"
   }
 
   //fetch the user details from the database
@@ -290,7 +291,12 @@ export class UserManagementComponent implements OnInit {
 
 
   //Deleting the user credentials from the database
-  deleteUser(username: string) {
+  deleteUser(username: any, userRole:any) {
+    if(this.userCredentials.length < 1 && userRole === "Administrator" || userRole === "Administrator" ){
+      alert("Should have atleast one admin")
+      this.deleteUserPopUp()
+      return
+    }
     console.log("DELETE:", username);  // Log the username to delete
     const userToDelete = this.userCredentials.find(user => username === user.userName);
     console.log(userToDelete);  // Log the user object to delete
@@ -327,8 +333,9 @@ export class UserManagementComponent implements OnInit {
     this.deleteUserPopUp();
   }
 
-  getDeleteUser(userName: any) {
+  getDeleteUser(userName: any, userRole:any) {
     this.deleteUserName = userName
+    this.deleteUserRole = userRole
     console.log(this.deleteUserName)
     this.deleteUserPopUp()
   }

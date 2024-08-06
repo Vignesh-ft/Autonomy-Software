@@ -30,6 +30,7 @@ const routes: Routes = [
     path: 'app',
     title: 'Robot | ROBIS',
     component: SubappComponent,
+    canActivate:[AuthGuard],
     children: [
       {
         path: '',
