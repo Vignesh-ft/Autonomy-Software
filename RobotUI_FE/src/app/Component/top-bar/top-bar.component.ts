@@ -23,6 +23,7 @@ export class TopBarComponent {
   }
 
   logOut() {
+    this.router.navigate(['/login']);
     fetch('http://localhost:3000/auth/logout', {
       credentials: 'include',
     })
