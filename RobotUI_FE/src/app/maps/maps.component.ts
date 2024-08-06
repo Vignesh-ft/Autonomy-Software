@@ -80,9 +80,8 @@ export class MapsComponent implements OnInit  {
           const dateString = map.createdAt;
           console.log("Original Date from DB:", dateString);
 
-          // Parse the ISO date string into a Date object
-          const date = new Date(dateString);
-
+          // // Parse the ISO date string into a Date object
+          // const date = new Date(dateString);
 
           const [datePart, timePart] = dateString.split(' ');
 
