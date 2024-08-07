@@ -16,7 +16,6 @@ export class MapsComponent implements OnInit  {
   color = 'white'
   errorMessage = ""
   mapsId = -1
-
   deleteMapId = ""
 
   constructor(private router:Router, private cookieService: CookieService ){}
@@ -64,8 +63,6 @@ export class MapsComponent implements OnInit  {
   createMapsPopUpOC() {
     this.createMapsPopUpState = !this.createMapsPopUpState
     this.errorMessage = ""
-    this.mapsName = ""
-    this.defaultSite = this.siteName[0].nameTag
   }
 
   changeSiteName(order:number){
@@ -79,10 +76,9 @@ export class MapsComponent implements OnInit  {
         this.mapsData = maps.map(map => {
           const dateString = map.createdAt;
           console.log("Original Date from DB:", dateString);
-
-          // // Parse the ISO date string into a Date object
-          // const date = new Date(dateString);
-
+  
+         
+          // Split the dateString into date and time parts
           const [datePart, timePart] = dateString.split(' ');
 
           // Split the date part into day, month, and year
@@ -100,10 +96,10 @@ export class MapsComponent implements OnInit  {
           const formattedYear = date.getUTCFullYear();
           const formattedHours = String(date.getUTCHours()).padStart(2, '0');
           const formattedMinutes = String(date.getUTCMinutes()).padStart(2, '0');
-          const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear} ${formattedHours}:${formattedMinutes}`; // change the format if you want
-
+          const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear} ${formattedHours}:${formattedMinutes}`;
+  
           console.log("Formatted Date:", formattedDate);
-
+  
           return {
             mapId: map._id, // MongoDB _id field
             mapName: map.name,
@@ -118,13 +114,13 @@ export class MapsComponent implements OnInit  {
         console.error('Error fetching maps:', error);
       });
   }
-
+  
   createMaps() {
     if (this.mapsName) {
       // Fetch username from cookies
       const cookieValue = this.cookieService.get("_user");
       let user = "Unknown"; // Default to "Unknown" if cookie is not found
-
+  
       try {
         if (cookieValue) {
           const parsedCookie = JSON.parse(cookieValue);
@@ -133,15 +129,15 @@ export class MapsComponent implements OnInit  {
       } catch (e) {
         console.error('Error parsing cookie:', e);
       }
-
+  
       // Prepare the map data
-      let mapData = {
+      const mapData = {
         name: this.mapsName,
         site: this.defaultSite,
         createdBy: user, // Replace with actual user if applicable
         createdAt: new Date().toISOString() // Or use any other date format
       };
-
+  
       // Send POST request to backend
       fetch('http://localhost:3000/maps', {
         method: 'POST',
@@ -158,8 +154,12 @@ export class MapsComponent implements OnInit  {
         }
         return response.json();
       })
+    
+
       .then((newMap: any) => {
         // Update local state with the new map
+        console.log("Maps created successfully!");
+        this.fetchMaps();        
         this.mapsData = [...this.mapsData, {
           mapId: newMap._id, // MongoDB _id field
           mapName: newMap.name,
@@ -186,7 +186,7 @@ export class MapsComponent implements OnInit  {
       }, 5000);
     }
   }
-
+  
   siteMapOC() {
     this.siteMapDDstate = !this.siteMapDDstate
   }

@@ -177,8 +177,6 @@ export class TransitionComponent implements OnInit {
 }
 
   
-
-
 //creating the new transition
   createTransition() {
     // Validate cookieValue and set createdBy
@@ -259,6 +257,7 @@ export class TransitionComponent implements OnInit {
     })
     .then((newTransitionFromServer: any) => {
       // Update local transition data
+      this.fetchTransitions();
       this.transitionData = [...this.transitionData, {
         transitionId: newTransitionFromServer.transitionId,
         name: newTransitionFromServer.name,
