@@ -88,10 +88,10 @@
         <p class="w-[70%] flex items-center justify-start text-[14px]">Name</p>
       </span>
       <span class="grid grid-cols-5 w-[70%] items-center justify-between text-[14px]">
-        <p class="w-full flex items-center justify-center text-[14px]">Start Position</p>
-        <p class="w-full flex items-center justify-center text-[14px]">End Position</p>
-        <p class="w-full flex items-center justify-center text-[14px]">Created By</p>
-        <p class="w-full flex items-center justify-center text-[14px]">Created on</p>
+        <p class="w-full flex items-center justify-start text-[14px]">Start Position</p>
+        <p class="w-full flex items-center justify-start text-[14px]">End Position</p>
+        <p class="w-full flex items-center justify-start text-[14px]">Created By</p>
+        <p class="w-full flex items-center justify-start text-[14px]">Created on</p>
         <p class="w-full flex items-center justify-center text-[14px]">Functions</p>
       </span>
     </span>
@@ -105,10 +105,10 @@
             <p class="w-[70%] flex items-center justify-start text-[12px]">{{ tData.name }}</p>
           </span>
           <span class="grid grid-cols-5 w-[70%] items-center justify-between text-[14px]">
-            <p class="w-full flex items-center justify-center text-[12px]">{{ tData.startPosition }}</p>
-            <p class="w-full flex items-center justify-center text-[12px]">{{tData.endPosition}}</p>
-            <p class="w-full flex items-center justify-center text-[12px]">{{tData.createdBy}}</p>
-            <p class="w-full flex items-center justify-center text-[12px]">{{tData.createdOn}}</p>
+            <p class="w-full flex items-center justify-start text-[12px]">{{ tData.startPosition }}</p>
+            <p class="w-full flex items-center justify-start text-[12px]">{{tData.endPosition}}</p>
+            <p class="w-full flex items-center justify-start text-[12px] capitalize">{{tData.createdBy}}</p>
+            <p class="w-full flex items-center justify-start text-[12px]">{{tData.createdOn}}</p>
             <span class="w-full flex items-center justify-center gap-2">
 
               <svg (click)="getEditTransition(tData.transitionId)" class="cursor-pointer" width="28" height="28" viewBox="0 0 36 35" fill="none" xmlns="http://www.w3.org/2000/svg">
