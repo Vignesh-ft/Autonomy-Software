@@ -16,7 +16,6 @@ export class MapsComponent implements OnInit  {
   color = 'white'
   errorMessage = ""
   mapsId = -1
-
   deleteMapId = ""
 
   constructor(private router:Router, private cookieService: CookieService ){}
@@ -83,9 +82,8 @@ export class MapsComponent implements OnInit  {
           const dateString = map.createdAt;
           console.log("Original Date from DB:", dateString);
 
-          // // Parse the ISO date string into a Date object
-          // const date = new Date(dateString);
 
+          // Split the dateString into date and time parts
           const [datePart, timePart] = dateString.split(' ');
 
           // Split the date part into day, month, and year
@@ -103,7 +101,7 @@ export class MapsComponent implements OnInit  {
           const formattedYear = date.getUTCFullYear();
           const formattedHours = String(date.getUTCHours()).padStart(2, '0');
           const formattedMinutes = String(date.getUTCMinutes()).padStart(2, '0');
-          const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear} ${formattedHours}:${formattedMinutes}`; // change the format if you want
+          const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear} ${formattedHours}:${formattedMinutes}`;
 
           console.log("Formatted Date:", formattedDate);
 
@@ -138,7 +136,7 @@ export class MapsComponent implements OnInit  {
       }
 
       // Prepare the map data
-      let mapData = {
+      const mapData = {
         name: this.mapsName,
         site: this.defaultSite,
         createdBy: user, // Replace with actual user if applicable
@@ -161,8 +159,12 @@ export class MapsComponent implements OnInit  {
         }
         return response.json();
       })
+
+
       .then((newMap: any) => {
         // Update local state with the new map
+        console.log("Maps created successfully!");
+        this.fetchMaps();
         this.mapsData = [...this.mapsData, {
           mapId: newMap._id, // MongoDB _id field
           mapName: newMap.name,
