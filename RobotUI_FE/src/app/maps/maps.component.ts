@@ -66,6 +66,9 @@ export class MapsComponent implements OnInit  {
     this.errorMessage = ""
     this.mapsName = ""
     this.defaultSite = this.siteName[0].nameTag
+    if(this.siteMapDDstate === true) {
+      this.siteMapOC()
+    }
   }
 
   changeSiteName(order:number){

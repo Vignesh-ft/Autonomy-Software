@@ -197,15 +197,27 @@ export class UserManagementComponent implements OnInit {
     this.resetPassword()
     if (this.userName === '') {
       this.errorMessage = '*Username is not entered';
+      setTimeout(()=>{
+        this.errorMessage = ""
+      },4000)
       return;
     } else if (this.passWord === '') {
       this.errorMessage = '*Password is not entered';
+      setTimeout(()=>{
+        this.errorMessage = ""
+      },4000)
       return;
     } else if (this.confrimPassword === '') {
       this.errorMessage = '*Confirm password is not entered';
+      setTimeout(()=>{
+        this.errorMessage = ""
+      },4000)
       return;
     } else if (this.passWord !== this.confrimPassword) {
       this.errorMessage = '*Password mismatch';
+      setTimeout(()=>{
+        this.errorMessage = ""
+      },4000)
       return;
     }
 
@@ -365,6 +377,7 @@ export class UserManagementComponent implements OnInit {
   userCreatePopUpOpen() {
     this.userRoleOCstate =false
     this.userCreatePopUp = !this.userCreatePopUp;
+    this.errorMessage = ""
     this.userName = '';
     this.passWord = '';
     this.confrimPassword = '';
