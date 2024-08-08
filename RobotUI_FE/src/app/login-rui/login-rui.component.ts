@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../environments/environment.development';
 
 @Component({
   selector: 'app-login-rui',
@@ -78,7 +79,7 @@ export class LoginRUIComponent {
         "userRole" : this.defaultUser
       });
 
-      fetch('http://localhost:3000/auth/login', {
+      fetch(`http://${environment.API_URL}:3000/auth/login`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
