@@ -497,7 +497,7 @@ export class TransitionComponent implements OnInit {
   editPopup() {
     this.editPopupState = !this.editPopupState
     this.startPositionPopupOCstate = false
-    this.endPositionPopupOCstate = fals
+    this.endPositionPopupOCstate = false
   }
 
   deletePopup() {
