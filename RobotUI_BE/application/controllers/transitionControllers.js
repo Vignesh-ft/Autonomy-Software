@@ -16,7 +16,7 @@ exports.createTransition = async (req, res) => {
     }
     
     const formattedDate = moment.tz(createdOn, 'DD:MM:YYYY HH:mm', 'Asia/Kolkata').isValid()
-    ? moment.tz(createdAt, 'DD:MM:YYYY HH:mm', 'Asia/Kolkata').toDate()
+    ? moment.tz(createdOn, 'DD:MM:YYYY HH:mm', 'Asia/Kolkata').toDate()
     : new Date(); // Default to current date if invalid
 
 
