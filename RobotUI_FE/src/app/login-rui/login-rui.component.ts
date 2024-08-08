@@ -79,7 +79,7 @@ export class LoginRUIComponent {
         "userRole" : this.defaultUser
       });
 
-      fetch(`http://${environment.API_URL}:3000/auth/login`, {
+      fetch(`http://${environment.API_URL}:${environment.PORT}/auth/login`, {
         method: 'POST',
         headers: {
           Accept: 'application/json',
