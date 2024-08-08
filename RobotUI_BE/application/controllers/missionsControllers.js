@@ -1,28 +1,35 @@
 const moment = require('moment-timezone');
 const Mission = require('../models/missionModels');
+const Map = require('../models/mapModels'); // Assuming this is your Map model
 
 const formatDate = (date) => moment(date).tz('Asia/Kolkata').format('DD:MM:YYYY HH:mm');
 
-// Creating a new mission
 exports.createMission = async (req, res) => {
     try {
-        const { missionName, mapName, site, location, createdBy, createdOn } = req.body;
+        const { missionName, mapName, location, createdBy, createdOn } = req.body;
 
-        // Check if mission with the same name already exists
+        // Check if the mission already exists
         const existingMission = await Mission.findOne({ missionName });
         if (existingMission) {
             return res.status(400).json({ message: 'Mission with this name already exists' });
         }
 
+        // Check if the map exists in the Maps collection
+        const map = await Map.findOne({ name: mapName });
+        if (!map) {
+            return res.status(404).json({ message: `Map with the name '${mapName}' does not exist. Please provide a valid map name.` });
+        }
+
         // Format the createdOn date
         const formattedDate = moment.tz(createdOn, 'DD:MM:YYYY HH:mm', 'Asia/Kolkata').isValid()
             ? moment.tz(createdOn, 'DD:MM:YYYY HH:mm', 'Asia/Kolkata').toDate()
-            : new Date(); // Default to current date if invalid
+            : new Date();
 
+        // Create the new mission with site data from the map
         const newMission = new Mission({
             missionName,
             mapName,
-            site,
+            site: map.site, // Use the site from the Maps collection
             location,
             createdBy,
             createdOn: formattedDate,
