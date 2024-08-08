@@ -112,7 +112,7 @@ export class LoginRUIComponent {
       })
       .catch((err) => console.error(err));
 
-      // this.userName = ""; 
+      // this.userName = "";
       // this.passWord = "";
       this.defaultUser = this.users[0].userRole; // Reset to default user role
     }

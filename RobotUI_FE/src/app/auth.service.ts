@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  constructor(private cookieService:CookieService){}
+
+  clearCookies() {
+    this.cookieService.deleteAll()
+  }
   private readonly loggedInKey = 'loggedIn';
 
   private isCookieEmpty(): boolean {
@@ -12,13 +18,14 @@ export class AuthService {
 
   // Simulating user login
   login(user: string) {
-    if (this.isCookieEmpty()) document.cookie = user; console.log("Login Button User print:   ",user)
+    if (this.isCookieEmpty()) document.cookie = user;
   }
 
   // Simulating user logout
   logout() {
     if (!this.isCookieEmpty() ) {
-      document.cookie = ""
+      this.clearCookies()
+      window.location.reload()
       return;
     }
   }
