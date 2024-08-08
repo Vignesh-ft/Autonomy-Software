@@ -64,7 +64,7 @@
   <!-- table -->
   <div class="flex flex-col items-center justify-start gap-3 w-full">
     <!-- title -->
-    <span class="w-full py-6 text-white font-semibold rounded-[6px] bg-black flex items-center justify-between px-12">
+    <span class="w-full py-6 text-white font-semibold rounded-[6px] bg-black flex items-center justify-between px-12 pr-14">
       <p class="w-[10%] flex items-center justify-center">State</p>
       <span class="w-[80%] flex items-center">
         <p class="w-[40%] flex items-center justify-start">Module Name</p>
@@ -75,7 +75,7 @@
     <!-- rows -->
     <span class="flex h-[500px] flex-col w-full items-center justify-start gap-[5px] overflow-scroll scroll-smooth MinimalScrollCSS scrollCSS pb-3 ">
       @for (logData of systemLogData; track logData) {
-        <span class="w-full py-6 text-black font-semibold rounded-[6px] bg-white hover:shadow-[0_0_10px_#00000040] twoColors flex items-center justify-between px-12">
+        <span class="w-full py-6 text-black font-semibold rounded-[6px] bg-white hover:shadow-[0_0_10px_#00000040] twoColors flex items-center justify-between px-12 pr-10">
           <span class="w-[10%] flex items-center justify-center">
             <span [ngClass]="{'bg-green-500':logData.state === 'completed', 'bg-yellow-500': logData.state === 'partially', 'bg-red-500':logData.state === 'break'}" class="size-6 rounded-full"></span>
             <!-- state -->
