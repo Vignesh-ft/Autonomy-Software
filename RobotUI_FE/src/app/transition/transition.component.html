@@ -188,7 +188,7 @@
           <!-- Drop Down Options -->
           <span [ngClass]="{'hidden': !startPositionPopupOCstate}" class="absolute top-[calc(100%+5px)] h-[120px] overflow-scroll duration-200 flex flex-col w-full items-start justify-start gap-2 p-2 rounded-lg MinimalScrollCSS scrollCSS bg-white">
             @for (pts of startPositionPts; track pts) {
-              <p (click)="changeStartPos(pts.ptsId)" class="px-3 py-3 w-full text-[12px] duration-300 hover:duration-300 rounded-md bg-white hover:bg-[#c1c1c1]">{{pts.ptName}}</p>
+              <p (click)="$event.stopPropagation(); changeStartPos(pts.ptsId)" class="px-3 py-3 w-full text-[12px] duration-300 hover:duration-300 rounded-md bg-white hover:bg-[#c1c1c1]">{{pts.ptName}}</p>
             }
           </span>
         </span>
@@ -210,7 +210,7 @@
           <!-- Drop Down Options -->
           <span [ngClass]="{'hidden': !endPositionPopupOCstate}" class="absolute top-[calc(100%+5px)] h-[120px] overflow-scroll duration-200 flex flex-col w-full items-start justify-start gap-2 p-2 rounded-lg MinimalScrollCSS scrollCSS bg-white">
             @for (pts of endPositionPts; track pts) {
-              <p (click)="changeEndPos(pts.ptsId)" class="px-3 py-3 w-full text-[12px] duration-300 hover:duration-300 rounded-md bg-white hover:bg-[#c1c1c1]">{{pts.ptName}}</p>
+              <p (click)="$event.stopPropagation(); changeEndPos(pts.ptsId)" class="px-3 py-3 w-full text-[12px] duration-300 hover:duration-300 rounded-md bg-white hover:bg-[#c1c1c1]">{{pts.ptName}}</p>
             }
           </span>
         </span>
@@ -275,7 +275,7 @@
           Start Position
         </span>
         <!-- Start Position Drop Down -->
-        <span (click)="startPositionOC()" class="flex w-full flex-col items-start justify-center relative gap-1">
+        <span (click)="startPositionOC1()" class="flex w-full flex-col items-start justify-center relative gap-1">
           <span class="flex w-full items-center justify-between px-5 py-3 bg-white rounded-md" >
             <p class="font-medium">{{editStartPos}}</p>
             <svg [ngClass]="{'rotateArrow': startPositionPopupOCstate}" class="duration-300 shadow" width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -286,7 +286,7 @@
           <!-- Drop Down Options -->
           <span [ngClass]="{'hidden': !startPositionPopupOCstate}" class="absolute top-[calc(100%+5px)] h-[120px] overflow-scroll duration-200 flex flex-col w-full items-start justify-start gap-2 p-2 rounded-lg MinimalScrollCSS scrollCSS bg-white">
             @for (pts of startPositionPts; track pts) {
-              <p (click)="changeEditStartPos(pts.ptsId)" class="px-3 py-3 w-full text-[12px] duration-300 hover:duration-300 rounded-md bg-white hover:bg-[#c1c1c1]">{{pts.ptName}}</p>
+              <p (click)="$event.stopPropagation(); changeEditStartPos(pts.ptsId)" class="px-3 py-3 w-full text-[12px] duration-300 hover:duration-300 rounded-md bg-white hover:bg-[#c1c1c1]">{{pts.ptName}}</p>
             }
           </span>
         </span>
@@ -298,7 +298,7 @@
           End Position
         </span>
         <!-- End Position Drop Down -->
-        <span (click)="endPositionOC()" class="flex w-full flex-col items-start justify-center relative gap-1">
+        <span (click)="endPositionOC1()" class="flex w-full flex-col items-start justify-center relative gap-1">
           <span class="flex w-full items-center justify-between px-5 py-3 bg-white rounded-md" >
             <p class="font-medium">{{editEndPos}}</p>
             <svg [ngClass]="{'rotateArrow': endPositionPopupOCstate}" class="duration-300 shadow" width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -308,7 +308,7 @@
           <!-- Drop Down Options -->
           <span [ngClass]="{'hidden': !endPositionPopupOCstate}" class="absolute top-[calc(100%+5px)] h-[120px] overflow-scroll duration-200 flex flex-col w-full items-start justify-start gap-2 p-2 rounded-lg MinimalScrollCSS scrollCSS bg-white">
             @for (pts of endPositionPts; track pts) {
-              <p (click)="changeEditEndPos(pts.ptsId)" class="px-3 py-3 w-full text-[12px] duration-300 hover:duration-300 rounded-md bg-white hover:bg-[#c1c1c1]">{{pts.ptName}}</p>
+              <p (click)="$event.stopPropagation(); changeEditEndPos(pts.ptsId)" class="px-3 py-3 w-full text-[12px] duration-300 hover:duration-300 rounded-md bg-white hover:bg-[#c1c1c1]">{{pts.ptName}}</p>
             }
           </span>
         </span>
