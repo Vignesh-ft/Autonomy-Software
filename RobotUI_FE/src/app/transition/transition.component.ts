@@ -101,35 +101,50 @@ export class TransitionComponent implements OnInit {
     this.startPositionPopupOCstate = !this.startPositionPopupOCstate
   }
 
+  startPositionOC1() {
+    this.startPositionPopupOCstate = !this.startPositionPopupOCstate
+  }
+
   endPositionOC() {
     this.endPositionPopupOCstate = !this.endPositionPopupOCstate
+    console.log("IN:",this.endPositionPopupOCstate)
+  }
+
+  endPositionOC1() {
+    this.endPositionPopupOCstate = !this.endPositionPopupOCstate
+    console.log("IN:",this.endPositionPopupOCstate)
   }
 
   changeStartPos(order:any) {
     this.startPosition = this.startPositionPts[order].ptName
-    this.startPositionOC()
+    this.startPositionPopupOCstate = false
+   return
+
   }
 
   changeEndPos(order:any) {
     this.endPosition = this.endPositionPts[order].ptName
-    this.endPositionOC()
+    this.endPositionPopupOCstate = false
+    console.log("OUT:",this.endPositionPopupOCstate)
+    return
   }
 
   changeEditStartPos(order:any) {
     this.editStartPos = this.startPositionPts[order].ptName
-    this.startPositionOC()
+    this.startPositionPopupOCstate = false
   }
 
   changeEditEndPos(order:any) {
     this.editEndPos = this.endPositionPts[order].ptName
-    this.endPositionOC()
+    this.endPositionPopupOCstate = false
   }
 
 
   createPopup() {
     this.createPopupState = !this.createPopupState
     // Getting the value to default
-
+    this.startPositionPopupOCstate = false
+    this.endPositionPopupOCstate = false
     if(this.transitionName === ""){
       this.transitionName = ""
       this.startPosition = "No Position is Selected"
@@ -481,6 +496,8 @@ export class TransitionComponent implements OnInit {
     }
   editPopup() {
     this.editPopupState = !this.editPopupState
+    this.startPositionPopupOCstate = false
+    this.endPositionPopupOCstate = false
   }
 
   deletePopup() {

@@ -23,6 +23,7 @@ export class AuthService {
 
   // Simulating user logout
   logout() {
+    this.clearCookies()
     if (!this.isCookieEmpty() ) {
       this.clearCookies()
       window.location.reload()
