@@ -170,8 +170,9 @@
       </span>
 
       <span class="flex items-end justify-between w-full">
-        <!-- dropdown -->
-        '<span class="flex items-start gap-3 justify-center relative flex-col">
+        <span class="flex gap-5 w-full justify-start items-end">
+          <!-- dropdown -->
+          <span class="flex items-start gap-3 justify-center relative flex-col">
           <p class="text-[14px] font-semibold">Map Name</p>
           <span (click)="createPopupDD()"
             class="relative w-[200px] py-3 bg-white rounded-md px-5 flex items-center justify-between cursor-pointer">
@@ -192,10 +193,18 @@
             </p>
             }
           </span>
+          </span>
+
+          <span class="flex items-end gap-3 justify-center relative flex-col">
+            <a href="app/setup/maps" class="relative px-10 py-3 bg-[#d30000] rounded-md flex items-center font-medium text-white cursor-pointer">
+              Create Maps
+            </a>
+          </span>
         </span>
+
         <span class="flex items-center justify-center gap-5">
           <button (click)="createMission()"
-            class="px-3 flex items-center justify-center gap-2 py-[8px] text-[12px] rounded-md hover:bg-opacity-90 active:bg-opacity-80 bg-[#D30000] font-semibold text-white">
+            class="w-[140px] px-3 flex items-center justify-center gap-2 py-[8px] text-[12px] rounded-md hover:bg-opacity-90 active:bg-opacity-80 bg-[#D30000] font-semibold text-white">
             <svg width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path
                 d="M8.03063 0.5H5.9534L5.98535 5.44024H1V7.51195H5.98535V12.5H8.03063V7.51195H13L12.9521 5.44024H8.03063V0.5Z"
