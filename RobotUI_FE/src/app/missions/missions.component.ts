@@ -2,6 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 
+interface DropDownOption {
+  ddOrder: number;
+  title: string;
+}
+
 @Component({
   selector: 'app-missions',
   templateUrl: './missions.component.html',
@@ -14,8 +19,8 @@ export class MissionsComponent {
   navigateMission(id: any,name: any) {
     this.router.navigate(['/app/setup/missions/create-missions'],{queryParams: {id: id, name: name}})
   }
-
-
+  
+  
   errorMessage = ""
   missionName =""
   misisonId = 0
@@ -24,20 +29,34 @@ export class MissionsComponent {
   missionQueueState = false
   deleteMissionPopupState = false
 
-  dropDownOptions = [
-    {
-      ddOrder: 0,
-      title: "Urapakkam Shop Floor",
-    },
-    {
-      ddOrder: 1,
-      title: "Vallam Shop Floor",
-    },
-    {
-      ddOrder: 2,
-      title: "Urapakkam Testing Area"
-    }
-  ]
+  dropDownOptions: DropDownOption[] = [];
+  defaultSite = '';
+
+  ngOnInit(): void {
+    this.fetchMaps(); // Fetch map names when the component initializes
+  }
+
+  fetchMaps() {
+    fetch('http://localhost:3000/maps')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        this.dropDownOptions = data.map((map: any, index: number) => ({
+          ddOrder: index,
+          title: map.name,
+        }));
+        this.defaultSite = this.dropDownOptions.length > 0 ? this.dropDownOptions[0].title : '';
+      })
+      .catch(error => {
+        console.error('Error fetching maps:', error.message);
+        this.errorMessage = 'Failed to load maps data';
+      });
+  }
+  
 
   createPopup() {
     this.createMissionPopupState = !this.createMissionPopupState
@@ -47,7 +66,6 @@ export class MissionsComponent {
     this.createMissionDropDown = !this.createMissionDropDown
   }
 
-  defaultSite = this.dropDownOptions[0].title
 
   changeSiteName(order:any){
     this.defaultSite = this.dropDownOptions[order].title
