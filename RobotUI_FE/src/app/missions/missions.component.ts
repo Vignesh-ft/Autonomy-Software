@@ -38,7 +38,7 @@ export class MissionsComponent {
 
   ngOnInit(): void {
     this.fetchMaps(); // Fetch map names when the component initializes
-   // this.fetchMissions();
+    this.fetchMissions();
   }
 
   //fetching the map name from the map's collection
@@ -67,8 +67,43 @@ export class MissionsComponent {
         this.errorMessage = 'Failed to load maps data';
       });
   }
-
   
+  fetchMissions(): void {
+    fetch('http://localhost:3000/mission')
+      .then(response => response.json())
+      .then((missions: any[]) => {
+        this.missionData = missions.map(mission => {
+          const dateString = mission.createdOn;
+  
+          // Convert the ISO date string to a Date object
+          const date = new Date(dateString);
+  
+          // Extract date and time components
+          const formattedDay = String(date.getDate()).padStart(2, '0');
+          const formattedMonth = String(date.getMonth() + 1).padStart(2, '0');
+          const formattedYear = date.getFullYear();
+  
+          const formattedHours = String(date.getHours()).padStart(2, '0');
+          const formattedMinutes = String(date.getMinutes()).padStart(2, '0');
+         
+          // Format the date and time as DD/MM/YYYY HH:mm:ss
+          const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear} ${formattedHours}:${formattedMinutes}`;
+
+          return {
+            missionId: mission._id, // MongoDB `_id` field
+            missionName: mission.missionName,
+            mapName: mission.mapName,
+            site: mission.site,
+            location: mission.location,
+            createdBy: mission.createdBy,
+            createdOn: formattedDate // Use the formatted IST date
+          };
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching missions:', error);
+      });
+  }
   
   
   
@@ -118,7 +153,7 @@ export class MissionsComponent {
         site: this.selectedMap.site,
         location: "urapakkam",
         createdBy: user,
-        createdOn: new Date().toISOString(),
+        createdOn: new Date().toISOString()
       };
   
       // Post the new mission to the backend API
@@ -137,7 +172,8 @@ export class MissionsComponent {
           return response.json();
         })
         .then(data => {
-          console.log('Mission created successfully:', data);
+          console.log('Mission created successfully:');
+          this.fetchMissions();
           // Add the new mission to the missionData array
           this.missionData = [...this.missionData, newMission];
           this.createPopup();
