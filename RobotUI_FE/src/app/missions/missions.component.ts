@@ -36,6 +36,7 @@ export class MissionsComponent {
     this.fetchMaps(); // Fetch map names when the component initializes
   }
 
+  //fetching the map name from the map's collection
   fetchMaps() {
     fetch('http://localhost:3000/maps')
       .then(response => {
@@ -56,6 +57,8 @@ export class MissionsComponent {
         this.errorMessage = 'Failed to load maps data';
       });
   }
+
+  
   
 
   createPopup() {
