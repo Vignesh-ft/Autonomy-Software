@@ -108,7 +108,8 @@ export class MissionsComponent {
   //fetching the map name from the map's collection
   fetchMaps() {
     fetch('http://localhost:3000/maps')
-      .then(response => {
+      .then(response =>
+        {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
