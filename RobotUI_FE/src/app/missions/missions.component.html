@@ -54,7 +54,7 @@
         <p class="w-full flex justify-start items-center text-[14px] text-white">
           Site
         </p>
-        <p class="w-full flex justify-start items-center text-[14px] text-white">
+        <p class="w-full flex justify-start 1items-center t11ext-[14px] text-white">
           Location
         </p>
       </span>
@@ -73,7 +73,7 @@
 
     <!-- Table Rows -->
     <span
-      class="flex flex-col w-full items-center justify-center gap-[5px] overflow-scroll scroll-smooth scrollCSS h-full pb-3">
+      class="flex flex-col w-full items-center justify-center gap-[5px] overflow-y-scroll scroll-smooth scrollCSS h-full pb-3">
       <!-- Row - 1 -->
       @for (mData of missionData; track mData) {
       <span
@@ -224,14 +224,57 @@
 </div>
 
 <!-- Mission Queue -->
-<div [ngClass]="{ hidden: !missionQueueState }"
-  class="absolute flex items-center justify-center w-screen box-border min-h-screen bg-[#000000] bg-opacity-90 bg-blur top-0 left-0 z-50 overflow-hidden">
-  <div class="flex w-[60%] flex-col rounded-[20px] gap-10 shadow-[0_0_50px_#00000060] px-14 py-10 bg-[#D9D9D9]">
-    <p>There is an Doubt in this section</p>
-    <p (click)="missionQueuePopup()"
-      class="bg-red-700 cursor-pointer flex items-center py-2 rounded justify-center w-20 text-white">
-      Close
-    </p>
+<div [ngClass]="{ hidden: !missionQueueState }" class="absolute flex items-center justify-center w-screen box-border min-h-screen bg-[#000000] bg-opacity-90 bg-blur top-0 left-0 z-50 overflow-hidden">
+  <div class="flex flex-col w-[60%] rounded-[20px] gap-10 shadow-[0_0_50px_#00000060] px-14 py-10 bg-[#D9D9D9]">
+    <!-- Heading -->
+    <span class="flex w-full items-center justify-center">
+      <!-- Title -->
+    <span class="flex w-full items-start justify-center flex-col">
+      <p class="text-[32px] font-bold">Mission Queue</p>
+      <p class="text-[16px] font-medium text-[#7B7B7B]">Can view the mission in progress</p>
+    </span>
+    <!-- Close Button -->
+    <span class="flex h-full items-center justify-center">
+      <svg (click)="missionQueuePopup()" width="35" height="36" viewBox="0 0 35 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M8.27398 27.8546C8.85976 28.4404 9.80951 28.4404 10.3953 27.8546L17.1477 21.1022C17.343 20.9069 17.6596 20.9069 17.8549 21.1022L24.6073 27.8546C25.1931 28.4404 26.1428 28.4404 26.7286 27.8546L27.3561 27.2272C27.9419 26.6414 27.9419 25.6916 27.3561 25.1058L20.6036 18.3534C20.4084 18.1581 20.4084 17.8415 20.6036 17.6463L27.3561 10.8938C27.9419 10.308 27.9419 9.3583 27.3561 8.77251L26.7286 8.14506C26.1428 7.55927 25.1931 7.55927 24.6073 8.14506L17.8549 14.8975C17.6596 15.0928 17.343 15.0928 17.1477 14.8975L10.3953 8.14506C9.80951 7.55927 8.85976 7.55927 8.27398 8.14506L7.64652 8.77251C7.06074 9.3583 7.06074 10.308 7.64652 10.8938L14.399 17.6463C14.5942 17.8415 14.5942 18.1581 14.399 18.3534L7.64652 25.1058C7.06074 25.6916 7.06074 26.6414 7.64652 27.2272L8.27398 27.8546Z" fill="#911515" stroke="#911515"/>
+      </svg>
+    </span>
+    </span>
+
+    <!-- Table -->
+    <span class="flex flex-col items-start h-full justify-center gap-3">
+      <!-- Table Title -->
+       <span class="flex py-4 rounded-[6px] px-10 items-center justify-between w-full bg-black text-white">
+        <p class="w-full text-[13px]">Mission</p>
+        <span class="w-[80%] flex items-center justify-between text-white">
+          <p class="w-full text-[14px] flex items-center justify-start">Robot Type</p>
+          <p class="w-full text-[14px] flex items-center justify-center">Progress</p>
+          <p class="w-full text-[14px] flex items-center justify-center">Functions</p>
+        </span>
+       </span>
+
+       <span class="flex w-full flex-col scrollCSS MinimalScrollCSSslim overflow-y-scroll h-[300px] items-start justify-start gap-1">
+        @for (mqData of missionQueueData; track mqData) {
+          <span class="flex py-3 twoColors rounded-[6px] px-10 items-center justify-between w-full bg-white text-black">
+            <p class="w-full text-[13px]">{{mqData.missionName}}</p>
+            <span class="w-[80%] flex items-center justify-between text-black">
+              <p class="w-full text-[14px] flex items-center justify-start">{{mqData.robotType}}</p>
+              <span class="w-full flex items-center justify-center">
+                <span [ngClass]="{'bg-green-500':mqData.state === 'completed', 'bg-yellow-500': mqData.state === 'partially', 'bg-red-500':mqData.state === 'break'}" class="size-6 rounded-full"></span>
+                <!-- state -->
+              </span>
+              <span class="w-full text-[14px] flex items-center justify-center">
+                <svg (click)="deleteMissionQueuePopup()" width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M11.4375 7.71H11.25C11.3531 7.71 11.4375 7.6245 11.4375 7.52V7.71H18.5625V7.52C18.5625 7.6245 18.6469 7.71 18.75 7.71H18.5625V9.42H20.25V7.52C20.25 6.68163 19.5773 6 18.75 6H11.25C10.4227 6 9.75 6.68163 9.75 7.52V9.42H11.4375V7.71ZM23.25 9.42H6.75C6.33516 9.42 6 9.75962 6 10.18V10.94C6 11.0445 6.08437 11.13 6.1875 11.13H7.60312L8.18203 23.5513C8.21953 24.3611 8.88047 25 9.67969 25H20.3203C21.1219 25 21.7805 24.3635 21.818 23.5513L22.3969 11.13H23.8125C23.9156 11.13 24 11.0445 24 10.94V10.18C24 9.75962 23.6648 9.42 23.25 9.42ZM20.1398 23.29H9.86016L9.29297 11.13H20.707L20.1398 23.29Z" fill="black"/>
+                </svg>
+
+              </span>
+            </span>
+           </span>
+
+        }
+       </span>
+    </span>
   </div>
 </div>
 
@@ -277,4 +320,48 @@
       </span>
     </span>
   </div>
+</div>
+
+<!-- Delete Mission Queue -->
+<div [ngClass]="{ hidden: !deleteMissionQueuePopupState }"
+class="absolute flex items-center justify-center w-screen box-border h-screen bg-[#000000] bg-opacity-90 bg-blur top-0 left-0 z-50">
+<div
+  class="w-[600px] bg-white flex flex-col gap-5 rounded-[20px] shadow-[0_0_100px_#00000060] border-l-[22px] border-[#D30000] p-10">
+  <!-- Title -->
+  <span class="flex flex-col items-start justify-center">
+    <p class="text-[35px] text-black font-bold">Delete</p>
+    <p class="flex items-center justify-center gap-2 text-[14px] font-medium text-[#7B7B7B]">
+      Delete an mission queue
+      <svg width="20" height="20" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <g clip-path="url(#clip0_513_29001)">
+          <path
+            d="M12.4987 2.08301C6.75495 2.08301 2.08203 6.75592 2.08203 12.4997C2.08203 18.2434 6.75495 22.9163 12.4987 22.9163C18.2424 22.9163 22.9154 18.2434 22.9154 12.4997C22.9154 6.75592 18.2424 2.08301 12.4987 2.08301ZM13.5404 17.708H11.457V11.458H13.5404V17.708ZM13.5404 9.37467H11.457V7.29134H13.5404V9.37467Z"
+            fill="black" />
+        </g>
+        <defs>
+          <clipPath id="clip0_513_29001">
+            <rect width="25" height="25" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </p>
+  </span>
+
+  <p class="flex text-[16px] font-normal">
+    Are you sure to delete this Queue ?
+  </p>
+
+  <span class="flex w-full justify-end items-center mt-10">
+    <span class="flex justify-between items-center gap-5">
+      <p (click)="deleteMissionQueuePopup()"
+        class="cursor-pointer flex px-10 py-2.5 bg-[#D30000] text-white border-2 border-[#D30000] rounded-md">
+        Delete
+      </p>
+      <p (click)="deleteMissionQueuePopup()"
+        class="cursor-pointer flex px-10 py-2.5 border-2 rounded-md border-[#D30000] text-[#D30000]">
+        Cancel
+      </p>
+    </span>
+  </span>
+</div>
 </div>

@@ -23,6 +23,71 @@ export class MissionsComponent {
   createMissionDropDown = false
   missionQueueState = false
   deleteMissionPopupState = false
+  deleteMissionQueuePopupState = false
+
+
+  missionQueueData = [
+    {
+      queueOrder: 0,
+      missionName: 'Pickup the Container',
+      robotType: 'AMR',
+      state: 'partially'
+    },
+    {
+      queueOrder: 1,
+      missionName: 'Pickup the tray',
+      robotType: 'AMR',
+      state: 'partially'
+    },
+    {
+      queueOrder: 2,
+      missionName: 'Docking',
+      robotType: 'ASRS',
+      state: 'completed'
+    },
+    {
+      queueOrder: 3,
+      missionName: 'Pickup the Container',
+      robotType: 'AMR',
+      state: 'completed'
+    },
+    {
+      queueOrder: 4,
+      missionName: 'Pickup the Container',
+      robotType: 'AMR',
+      state: 'break'
+    },
+    {
+      queueOrder: 0,
+      missionName: 'Pickup the Container',
+      robotType: 'AMR',
+      state: 'partially'
+    },
+    {
+      queueOrder: 1,
+      missionName: 'Pickup the tray',
+      robotType: 'AMR',
+      state: 'partially'
+    },
+    {
+      queueOrder: 2,
+      missionName: 'Docking',
+      robotType: 'ASRS',
+      state: 'completed'
+    },
+    {
+      queueOrder: 3,
+      missionName: 'Pickup the Container',
+      robotType: 'AMR',
+      state: 'completed'
+    },
+    {
+      queueOrder: 4,
+      missionName: 'Pickup the Container',
+      robotType: 'AMR',
+      state: 'break'
+    },
+  ]
 
   dropDownOptions = [
     {
@@ -115,6 +180,10 @@ export class MissionsComponent {
 
   missionQueuePopup() {
     this.missionQueueState = !this.missionQueueState
+  }
+
+  deleteMissionQueuePopup() {
+    this.deleteMissionQueuePopupState = !this.deleteMissionQueuePopupState
   }
 
   deletePopup() {

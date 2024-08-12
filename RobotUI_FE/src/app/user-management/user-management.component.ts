@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { environment } from '../../environments/environment.development';
 
 @Component({
   selector: 'app-user-management',
@@ -132,7 +133,7 @@ export class UserManagementComponent implements OnInit {
 
   //fetch the user details from the database
   fetchUsers(): void {
-    fetch('http://localhost:3000/api/users')
+    fetch(`http://${environment.API_URL}:${environment.PORT}/api/users`)
       .then(response => response.json())
       .then((users: any[]) => {
         this.userCredentials = users.map(user => {
@@ -261,7 +262,7 @@ export class UserManagementComponent implements OnInit {
     console.log('Creating user with:', newUser);
 
     // Send POST request to backend
-    fetch('http://localhost:3000/api/users', {
+    fetch(`http://${environment.API_URL}:${environment.PORT}/api/users`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -318,9 +319,9 @@ export class UserManagementComponent implements OnInit {
       return;
     }
 
-    console.log(`Sending DELETE request to: http://localhost:3000/api/users/${username}`);
+    console.log(`Sending DELETE request to: http://${environment.API_URL}:${environment.PORT}/api/users/${username}`);
 
-    fetch(`http://localhost:3000/api/users/${username}`, {
+    fetch(`http://${environment.API_URL}:${environment.PORT}/api/users/${username}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json'
@@ -399,7 +400,7 @@ export class UserManagementComponent implements OnInit {
     }
   }
   fetchUserPermissions(username: string) {
-    fetch(`http://localhost:3000/api/users/${username}/permissions`)
+    fetch(`http://${environment.API_URL}:${environment.PORT}/api/users/${username}/permissions`)
       .then(response => {
         if (!response.ok) {
           throw new Error('Failed to fetch user permissions');
@@ -468,7 +469,7 @@ export class UserManagementComponent implements OnInit {
     };
 
     // Send the PUT request to update the user permissions
-    fetch(`http://localhost:3000/api/users/${this.user.userName}/permissions`, {
+    fetch(`http://${environment.API_URL}:${environment.PORT}/api/users/${this.user.userName}/permissions`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
