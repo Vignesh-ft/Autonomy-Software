@@ -1,9 +1,0 @@
-.percentageShow:hover .batteryPercentage {
-  opacity: 1;
-  transition: 200ms ease-in-out;
-}
-
-.rotateArrow {
-  rotate: 180deg;
-  transition: 300ms ease-in-out;
-}
