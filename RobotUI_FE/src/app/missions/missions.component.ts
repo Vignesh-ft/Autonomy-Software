@@ -22,8 +22,8 @@ export class MissionsComponent {
   navigateMission(id: any,name: any) {
     this.router.navigate(['/app/setup/missions/create-missions'],{queryParams: {id: id, name: name}})
   }
-  
-  
+
+
   errorMessage = ""
   missionName =""
   misisonId = 0
@@ -44,7 +44,8 @@ export class MissionsComponent {
   //fetching the map name from the map's collection
   fetchMaps() {
     fetch('http://localhost:3000/maps')
-      .then(response => {
+      .then(response =>
+        {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -67,25 +68,25 @@ export class MissionsComponent {
         this.errorMessage = 'Failed to load maps data';
       });
   }
-  
+
   fetchMissions(): void {
     fetch('http://localhost:3000/mission')
       .then(response => response.json())
       .then((missions: any[]) => {
         this.missionData = missions.map(mission => {
           const dateString = mission.createdOn;
-  
+
           // Convert the ISO date string to a Date object
           const date = new Date(dateString);
-  
+
           // Extract date and time components
           const formattedDay = String(date.getDate()).padStart(2, '0');
           const formattedMonth = String(date.getMonth() + 1).padStart(2, '0');
           const formattedYear = date.getFullYear();
-  
+
           const formattedHours = String(date.getHours()).padStart(2, '0');
           const formattedMinutes = String(date.getMinutes()).padStart(2, '0');
-         
+
           // Format the date and time as DD/MM/YYYY HH:mm:ss
           const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear} ${formattedHours}:${formattedMinutes}`;
 
@@ -104,10 +105,10 @@ export class MissionsComponent {
         console.error('Error fetching missions:', error);
       });
   }
-  
-  
-  
-  
+
+
+
+
   createPopup() {
     this.createMissionPopupState = !this.createMissionPopupState
   }
@@ -142,10 +143,10 @@ export class MissionsComponent {
       } catch (e) {
         console.error('Error parsing cookie:', e);
       }
-  
+
     if (this.selectedMap) {
       this.misisonId = this.missionData.length > 0 ? this.missionData[this.missionData.length - 1].missionId + 1 : 1;
-  
+
       const newMission = {
         missionId: this.misisonId,
         missionName: this.missionName,
@@ -155,7 +156,7 @@ export class MissionsComponent {
         createdBy: user,
         createdOn: new Date().toISOString()
       };
-  
+
       // Post the new mission to the backend API
       fetch('http://localhost:3000/mission', {
         method: 'POST',
@@ -186,10 +187,10 @@ export class MissionsComponent {
           console.error('Error creating mission:', error.message);
           this.errorMessage = 'Failed to create mission';
         });
-      
+
     }
   }
-  
+
 
   missionQueuePopup() {
     this.missionQueueState = !this.missionQueueState
