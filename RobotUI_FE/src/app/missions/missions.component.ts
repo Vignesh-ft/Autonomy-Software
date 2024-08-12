@@ -1,6 +1,14 @@
+import { formatDate } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+
+interface DropDownOption {
+  ddOrder: number;
+  title: string;
+  site: string;
+  location: string;
+}
 
 @Component({
   selector: 'app-missions',
@@ -23,86 +31,82 @@ export class MissionsComponent {
   createMissionDropDown = false
   missionQueueState = false
   deleteMissionPopupState = false
-  deleteMissionQueuePopupState = false
+  missionData: any[] = [];
+  dropDownOptions: DropDownOption[] = [];
+  defaultSite = '';
+  selectedMap: DropDownOption | null = null;
+
+  ngOnInit(): void {
+    this.fetchMaps(); // Fetch map names when the component initializes
+    this.fetchMissions();
+  }
+
+  //fetching the map name from the map's collection
+  fetchMaps() {
+    fetch('http://localhost:3000/maps')
+      .then(response => {
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then(data => {
+        this.dropDownOptions = data.map((map: any, index: number) => ({
+          ddOrder: index,
+          title: map.name,
+          site: map.site,
+          location: map.location,
+        }));
+        if (this.dropDownOptions.length > 0) {
+          this.defaultSite = this.dropDownOptions[0].title;
+          this.selectedMap = this.dropDownOptions[0];
+        }
+      })
+      .catch(error => {
+        console.error('Error fetching maps:', error.message);
+        this.errorMessage = 'Failed to load maps data';
+      });
+  }
+
+  fetchMissions(): void {
+    fetch('http://localhost:3000/mission')
+      .then(response => response.json())
+      .then((missions: any[]) => {
+        this.missionData = missions.map(mission => {
+          const dateString = mission.createdOn;
+
+          // Convert the ISO date string to a Date object
+          const date = new Date(dateString);
+
+          // Extract date and time components
+          const formattedDay = String(date.getDate()).padStart(2, '0');
+          const formattedMonth = String(date.getMonth() + 1).padStart(2, '0');
+          const formattedYear = date.getFullYear();
+
+          const formattedHours = String(date.getHours()).padStart(2, '0');
+          const formattedMinutes = String(date.getMinutes()).padStart(2, '0');
+
+          // Format the date and time as DD/MM/YYYY HH:mm:ss
+          const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear} ${formattedHours}:${formattedMinutes}`;
+
+          return {
+            missionId: mission._id, // MongoDB `_id` field
+            missionName: mission.missionName,
+            mapName: mission.mapName,
+            site: mission.site,
+            location: mission.location,
+            createdBy: mission.createdBy,
+            createdOn: formattedDate // Use the formatted IST date
+          };
+        });
+      })
+      .catch(error => {
+        console.error('Error fetching missions:', error);
+      });
+  }
 
 
-  missionQueueData = [
-    {
-      queueOrder: 0,
-      missionName: 'Pickup the Container',
-      robotType: 'AMR',
-      state: 'partially'
-    },
-    {
-      queueOrder: 1,
-      missionName: 'Pickup the tray',
-      robotType: 'AMR',
-      state: 'partially'
-    },
-    {
-      queueOrder: 2,
-      missionName: 'Docking',
-      robotType: 'ASRS',
-      state: 'completed'
-    },
-    {
-      queueOrder: 3,
-      missionName: 'Pickup the Container',
-      robotType: 'AMR',
-      state: 'completed'
-    },
-    {
-      queueOrder: 4,
-      missionName: 'Pickup the Container',
-      robotType: 'AMR',
-      state: 'break'
-    },
-    {
-      queueOrder: 0,
-      missionName: 'Pickup the Container',
-      robotType: 'AMR',
-      state: 'partially'
-    },
-    {
-      queueOrder: 1,
-      missionName: 'Pickup the tray',
-      robotType: 'AMR',
-      state: 'partially'
-    },
-    {
-      queueOrder: 2,
-      missionName: 'Docking',
-      robotType: 'ASRS',
-      state: 'completed'
-    },
-    {
-      queueOrder: 3,
-      missionName: 'Pickup the Container',
-      robotType: 'AMR',
-      state: 'completed'
-    },
-    {
-      queueOrder: 4,
-      missionName: 'Pickup the Container',
-      robotType: 'AMR',
-      state: 'break'
-    },
-  ]
 
-  dropDownOptions = [
-    {
-      ddOrder: 0,
-      title: "Urapakkam Shop Floor",
-    },
-    {
-      ddOrder: 1,
-      title: "Vallam Shop Floor",
-    },
-    {
-      ddOrder: 2,
-      title: "Urapakkam Testing Area"
-    }
-  ]
 
   createPopup() {
     this.createMissionPopupState = !this.createMissionPopupState
@@ -112,71 +116,80 @@ export class MissionsComponent {
     this.createMissionDropDown = !this.createMissionDropDown
   }
 
-  defaultSite = this.dropDownOptions[0].title
 
   changeSiteName(order:any){
     this.defaultSite = this.dropDownOptions[order].title
     this.createPopupDD()
   }
 
-  missionData = [
-    {
-      missionId: 0,
-      missionName: "First Row",
-      mapName: "Urapakkam Shop Floor",
-      site: "Urapakkam",
-      location: "MATE U1",
-      createdBy: "User",
-      createdOn: "DD/MM/YYYY HH:MM",
-      actions: [
-
-      ]
-    },
-    {
-      missionId: 1,
-      missionName: "Second Row",
-      mapName: "Urapakkam Shop Floor",
-      site: "Urapakkam",
-      location: "MATE U1",
-      createdBy: "Maintainer",
-      createdOn: "DD/MM/YYYY HH:MM"
-    },
-    {
-      missionId: 2,
-      missionName: "Third Row",
-      mapName: "Urapakkam Shop Floor",
-      site: "Urapakkam",
-      location: "MATE U1",
-      createdBy: "Adminsitrator",
-      createdOn: "DD/MM/YYYY HH:MM"
-    },
-  ]
-
-
+  //creating the new mission
   createMission() {
-    if(this.missionName === ""){
-      this.errorMessage = "Enter the Mission name"
+    if (this.missionName === "") {
+      this.errorMessage = "Enter the Mission name";
+      setTimeout(() => {
+        this.errorMessage = "";
+      }, 4000);
+      return;
     }
-    setTimeout(()=>{
-      this.errorMessage = ""
-    },4000)
+    const cookieValue = this.cookieService.get("_user");
+    let user = "Unknown"; // Default to "Unknown" if cookie is not found
 
-    if(this.missionName !== "") {
-      this.misisonId = this.missionData[this.missionData.length-1].missionId + 1
-      let schema = {
+      try {
+        if (cookieValue) {
+          const parsedCookie = JSON.parse(cookieValue);
+          user = parsedCookie.name || "Unknown"; // Use `name` for username
+        }
+      } catch (e) {
+        console.error('Error parsing cookie:', e);
+      }
+
+    if (this.selectedMap) {
+      this.misisonId = this.missionData.length > 0 ? this.missionData[this.missionData.length - 1].missionId + 1 : 1;
+
+      const newMission = {
         missionId: this.misisonId,
         missionName: this.missionName,
-        mapName: this.defaultSite,
-        site: "Urapakkam",
-        location: "MATE U1",
-        createdBy: "User",
-        createdOn: "DD/MM/YYYY HH:MM",
-      }
-      this.missionData = [...this.missionData, schema]
-      console.log(this.missionData)
-      this.createPopup()
+        mapName: this.selectedMap.title,
+        site: this.selectedMap.site,
+        location: "urapakkam",
+        createdBy: user,
+        createdOn: new Date().toISOString()
+      };
+
+      // Post the new mission to the backend API
+      fetch('http://localhost:3000/mission', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newMission),
+      })
+        .then(response => {
+          console.log('Response status:', response.status);
+          if (!response.ok) {
+            return response.text().then(text => { throw new Error(text) });
+          }
+          return response.json();
+        })
+        .then(data => {
+          console.log('Mission created successfully:');
+          this.fetchMissions();
+          // Add the new mission to the missionData array
+          this.missionData = [...this.missionData, newMission];
+          this.createPopup();
+          // Reset form fields after mission creation
+          this.missionName = '';
+          this.defaultSite = '';
+          this.selectedMap = null;
+        })
+        .catch(error => {
+          console.error('Error creating mission:', error.message);
+          this.errorMessage = 'Failed to create mission';
+        });
+
     }
   }
+
 
   missionQueuePopup() {
     this.missionQueueState = !this.missionQueueState
