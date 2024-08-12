@@ -31,10 +31,74 @@ export class MissionsComponent {
   createMissionDropDown = false
   missionQueueState = false
   deleteMissionPopupState = false
+  deleteMissionQueuePopupState  = false
   missionData: any[] = [];
   dropDownOptions: DropDownOption[] = [];
   defaultSite = '';
   selectedMap: DropDownOption | null = null;
+
+  missionQueueData = [
+    {
+      queueOrder: 0,
+      missionName: 'Pickup the Container',
+      robotType: 'AMR',
+      state: 'partially'
+    },
+    {
+      queueOrder: 1,
+      missionName: 'Pickup the tray',
+      robotType: 'AMR',
+      state: 'partially'
+    },
+    {
+      queueOrder: 2,
+      missionName: 'Docking',
+      robotType: 'ASRS',
+      state: 'completed'
+    },
+    {
+      queueOrder: 3,
+      missionName: 'Pickup the Container',
+      robotType: 'AMR',
+      state: 'completed'
+    },
+    {
+      queueOrder: 4,
+      missionName: 'Pickup the Container',
+      robotType: 'AMR',
+      state: 'break'
+    },
+    {
+      queueOrder: 0,
+      missionName: 'Pickup the Container',
+      robotType: 'AMR',
+      state: 'partially'
+    },
+    {
+      queueOrder: 1,
+      missionName: 'Pickup the tray',
+      robotType: 'AMR',
+      state: 'partially'
+    },
+    {
+      queueOrder: 2,
+      missionName: 'Docking',
+      robotType: 'ASRS',
+      state: 'completed'
+    },
+    {
+      queueOrder: 3,
+      missionName: 'Pickup the Container',
+      robotType: 'AMR',
+      state: 'completed'
+    },
+    {
+      queueOrder: 4,
+      missionName: 'Pickup the Container',
+      robotType: 'AMR',
+      state: 'break'
+    },
+  ]
 
   ngOnInit(): void {
     this.fetchMaps(); // Fetch map names when the component initializes
