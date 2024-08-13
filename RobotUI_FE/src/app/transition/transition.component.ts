@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+import { environment } from '../../environments/environment.development';
 
 @Component({
   selector: 'app-transition',
@@ -155,7 +156,7 @@ export class TransitionComponent implements OnInit {
 
 
  fetchTransitions(): void {
-  fetch('http://localhost:3000/transitions')
+  fetch(`http://${environment.API_URL}:${environment.PORT}/transitions`)
     .then(response => response.json())
     .then((transitions: any[]) => {
       this.transitionData = transitions.map(transition => {
@@ -258,7 +259,7 @@ export class TransitionComponent implements OnInit {
     };
 
     // Send POST request to backend
-    fetch('http://localhost:3000/transitions', {
+    fetch(`http://${environment.API_URL}:${environment.PORT}/transitions`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -414,7 +415,7 @@ export class TransitionComponent implements OnInit {
     console.log("Updating transition with ID:", transitionId);
     console.log("Data to be updated:", updatedTransition);
 
-    fetch(`http://localhost:3000/transitions/${transitionId}`, {
+    fetch(`http://${environment.API_URL}:${environment.PORT}/transitions/${transitionId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -466,7 +467,7 @@ export class TransitionComponent implements OnInit {
     deleteTransition() {
       const transitionId = this.deleteTransitionID;
 
-      fetch(`http://localhost:3000/transitions/${transitionId}`, {
+      fetch(`http://${environment.API_URL}:${environment.PORT}/transitions/${transitionId}`, {
         method: 'DELETE',
       })
       .then(response => {

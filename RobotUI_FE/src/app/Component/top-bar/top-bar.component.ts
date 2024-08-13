@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-top-bar',
   templateUrl: './top-bar.component.html',
   styleUrls: ['./top-bar.component.css']
 })
+
 export class TopBarComponent {
   pauseState = false;
   languageArrowState = false;
@@ -15,7 +17,7 @@ export class TopBarComponent {
   constructor(private router: Router, private authService: AuthService) {}
 
   pauseAndPlay() {
-    this.pauseState = !this.pauseState;
+    this.pauseState = !this.pauseState;   
   }
 
   languageChange() {
@@ -24,7 +26,7 @@ export class TopBarComponent {
 
   logOut() {
     this.router.navigate(['/login']);
-    fetch('http://localhost:3000/auth/logout', {
+    fetch(`http://${environment.API_URL}:${environment.PORT}/auth/logout`, {
       credentials: 'include',
     })
       .then((res) => res.json())

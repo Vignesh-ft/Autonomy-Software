@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { environment } from '../../environments/environment.development';
 
 @Component({
   selector: 'app-maps',
@@ -75,7 +76,7 @@ export class MapsComponent implements OnInit  {
   }
 
   fetchMaps(): void {
-    fetch('http://localhost:3000/maps')
+    fetch(`http://${environment.API_URL}:${environment.PORT}/maps`)
       .then(response => response.json())
       .then((maps: any[]) => {
         this.mapsData = maps.map(map => {
@@ -144,7 +145,7 @@ export class MapsComponent implements OnInit  {
       };
 
       // Send POST request to backend
-      fetch('http://localhost:3000/maps', {
+      fetch(`http://${environment.API_URL}:${environment.PORT}/maps`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -197,7 +198,7 @@ export class MapsComponent implements OnInit  {
   }
 
   deleteMaps(mapId: string) {
-    fetch(`http://localhost:3000/maps/${mapId}`, {
+    fetch(`http://${environment.API_URL}:${environment.PORT}/maps/${mapId}`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',

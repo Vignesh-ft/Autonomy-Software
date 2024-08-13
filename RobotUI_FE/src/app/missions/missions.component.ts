@@ -2,6 +2,7 @@ import { formatDate } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
+import { environment } from '../../environments/environment.development';
 
 interface DropDownOption {
   ddOrder: number;
@@ -107,7 +108,7 @@ export class MissionsComponent {
 
   //fetching the map name from the map's collection
   fetchMaps() {
-    fetch('http://localhost:3000/maps')
+    fetch(`http://${environment.API_URL}:${environment.PORT}/maps`)
       .then(response =>
         {
         if (!response.ok) {
@@ -134,7 +135,7 @@ export class MissionsComponent {
   }
 
   fetchMissions(): void {
-    fetch('http://localhost:3000/mission')
+    fetch(`http://${environment.API_URL}:${environment.PORT}/mission`)
       .then(response => response.json())
       .then((missions: any[]) => {
         this.missionData = missions.map(mission => {
@@ -222,7 +223,7 @@ export class MissionsComponent {
       };
 
       // Post the new mission to the backend API
-      fetch('http://localhost:3000/mission', {
+      fetch(`http://${environment.API_URL}:${environment.PORT}/mission`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from "@angular/common"
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-create-map',
@@ -189,7 +190,7 @@ export class CreateMapComponent {
     console.log(this.selectedPoint);
 
     if (this.selectedPoint) {
-      fetch(`http://localhost:3000/maps/${this.idParam}`, {
+      fetch(`http://${environment.API_URL}:${environment.PORT}/maps/${this.idParam}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

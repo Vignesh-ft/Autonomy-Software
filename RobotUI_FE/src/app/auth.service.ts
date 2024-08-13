@@ -8,6 +8,7 @@ export class AuthService {
   constructor(private cookieService:CookieService){}
 
   clearCookies() {
+    console.log("Cookies Cleared")
     this.cookieService.deleteAll()
   }
   private readonly loggedInKey = 'loggedIn';
@@ -24,6 +25,7 @@ export class AuthService {
   // Simulating user logout
   logout() {
     this.clearCookies()
+    window.location.reload()
     if (!this.isCookieEmpty() ) {
       this.clearCookies()
       window.location.reload()
