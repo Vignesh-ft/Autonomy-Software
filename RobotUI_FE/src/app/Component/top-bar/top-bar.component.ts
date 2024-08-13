@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../../auth.service';
 import { environment } from '../../../environments/environment.development';
+import { CookieService } from 'ngx-cookie-service';
 
 @Component({
   selector: 'app-top-bar',
@@ -14,10 +15,15 @@ export class TopBarComponent {
   languageArrowState = false;
   batteryPercentage = "%";
 
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService, private cookieService: CookieService) {}
+
+  clearCookies() {
+    console.log("Cookies Cleared")
+    this.cookieService.deleteAll()
+  }
 
   pauseAndPlay() {
-    this.pauseState = !this.pauseState;   
+    this.pauseState = !this.pauseState;
   }
 
   languageChange() {
@@ -25,6 +31,8 @@ export class TopBarComponent {
   }
 
   logOut() {
+    this.clearCookies()
+    window.location.reload()
     this.router.navigate(['/login']);
     fetch(`http://${environment.API_URL}:${environment.PORT}/auth/logout`, {
       credentials: 'include',
