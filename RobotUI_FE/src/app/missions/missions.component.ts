@@ -244,8 +244,8 @@ createMission() {
 }
 
 //deleting the particular mission
-deleteMissions( misisonId: string ) {
-  fetch(`http://${environment.API_URL}:${environment.PORT}/mission/${misisonId}`, {
+deleteMissions( missionId: string ) {
+  fetch(`http://${environment.API_URL}:${environment.PORT}/mission/${missionId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -253,7 +253,7 @@ deleteMissions( misisonId: string ) {
   })
   .then(response => {
     if (response.ok) {
-      this.missionData = this.missionData.filter((mission: any) => mission.missionId !== misisonId);
+      this.missionData = this.missionData.filter((mission: any) => mission.missionId !== missionId);
     } else {
       console.error('Error deleting map:', response.statusText);
     }
@@ -265,7 +265,26 @@ deleteMissions( misisonId: string ) {
   this.deletePopup()
 }
 
-
+updateMissions(missionId: string) {
+  fetch(`http://${environment.API_URL}:${environment.PORT}/mission/${missionId}`,{
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
+  .then(response => {
+    if (response.ok) {
+      this.missionData = this.missionData.filter((mission: any) => mission.missionId !== missionId);
+    } else {
+      console.error('Error deleting map:', response.statusText);
+    }
+  })
+  .catch(error => {
+    console.error('Error deleting map:', error);
+  });
+  this.editMissionId=""
+  this.editMissionPopup()
+}
 
   createPopup() {
     this.createMissionPopupState = !this.createMissionPopupState
@@ -286,30 +305,26 @@ deleteMissions( misisonId: string ) {
     this.createPopupDD()
   }
 
-
-
-
   missionQueuePopup() {
     this.missionQueueState = !this.missionQueueState
   }
 
   deleteMissionQueuePopup() {
     this.deleteMissionQueuePopupState = !this.deleteMissionQueuePopupState
-    console.log("dele");
 
   }
 
   deletePopup() {
     this.deleteMissionPopupState = !this.deleteMissionPopupState
-    console.log("deleting!");
   }
 
   getMissionId(missionId: string)
   {
     this.deleteMissionID = missionId
+    this.editMissionId = missionId
     this.deletePopup()
+    this.editMissionPopup()
     console.log("Id: ", missionId);
-
   }
 
   getEditMissionId(missionId:string) {
