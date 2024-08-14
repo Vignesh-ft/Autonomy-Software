@@ -38,6 +38,10 @@ export class MissionsComponent {
   defaultSite = '';
   selectedMap: DropDownOption | null = null;
   deleteMissionID = ""
+  editMissionPopupState = false
+  editMissionId = ""
+  editMissionName = ""
+  editMissionSite = ""
 
   missionQueueData = [
     {
@@ -277,7 +281,12 @@ deleteMissions( misisonId: string ) {
     this.createPopupDD()
   }
 
-  
+  changeEditSiteName(order:any){
+    this.editMissionSite = this.dropDownOptions[order].title
+    this.createPopupDD()
+  }
+
+
 
 
   missionQueuePopup() {
@@ -287,22 +296,32 @@ deleteMissions( misisonId: string ) {
   deleteMissionQueuePopup() {
     this.deleteMissionQueuePopupState = !this.deleteMissionQueuePopupState
     console.log("dele");
-    
+
   }
 
   deletePopup() {
     this.deleteMissionPopupState = !this.deleteMissionPopupState
-    console.log("deleting!");   
+    console.log("deleting!");
   }
 
   getMissionId(missionId: string)
   {
     this.deleteMissionID = missionId
-    this.deletePopup()  
+    this.deletePopup()
     console.log("Id: ", missionId);
 
   }
 
+  getEditMissionId(missionId:string) {
+    this.editMissionId = missionId
+    this.editMissionPopup()
 
+    // this.editMissionName = this.missionData[missionId].missionName
+  }
+
+  editMissionPopup() {
+    this.editMissionPopupState = !this.editMissionPopupState
+    this.createMissionDropDown = false
+  }
 
 }

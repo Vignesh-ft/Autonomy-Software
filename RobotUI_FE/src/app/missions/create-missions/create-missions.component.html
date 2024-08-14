@@ -1,4 +1,4 @@
-<div class=" w-full flex flex-col pr-10 pt-10 pl-10 items-center justify-center gap-10">
+<div class="w-[calc(100vw-100px)] h-[calc(100vh)] flex justify-between flex-col gap-10 px-[40px] py-[40px] pb-32">
   <!-- Title and Button -->
   <div class="flex w-full items-center justify-between">
     <!-- Title -->
@@ -20,18 +20,51 @@
     </span>
     <!-- Button -->
     <span class="flex gap-10 items-center">
-      <button class="flex items-center gap-3 px-10 py-3 text-[14px] rounded-md bg-[#D30000] font-semibold text-white">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <button (click)="goBack()" class="flex items-center gap-3 px-6 justify-center py-3 text-[14px] rounded-md bg-[#E8E8E8] font-semibold text-black">
+        <svg width="22" height="22" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M22.7493 11.9168H6.94778L12.6819 6.18271L11.15 4.65088L2.80078 13.0001L11.15 21.3494L12.6819 19.8175L6.94778 14.0835H22.7493V11.9168Z" fill="#911515"/>
         </svg>
         Go Back
       </button>
-      <button class="flex items-center gap-3 px-10 py-3 text-[14px] rounded-md bg-[#D30000] font-semibold text-white">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <button class="flex items-center gap-3 px-6 justify-center py-3 text-[14px] rounded-md bg-[#D30000] font-semibold text-white">
+        <svg width="22" height="22" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M9.14062 4.67188H8.9375C9.04922 4.67188 9.14062 4.58047 9.14062 4.46875V4.67188H16.8594V4.46875C16.8594 4.58047 16.9508 4.67188 17.0625 4.67188H16.8594V6.5H18.6875V4.46875C18.6875 3.57246 17.9588 2.84375 17.0625 2.84375H8.9375C8.04121 2.84375 7.3125 3.57246 7.3125 4.46875V6.5H9.14062V4.67188ZM21.9375 6.5H4.0625C3.61309 6.5 3.25 6.86309 3.25 7.3125V8.125C3.25 8.23672 3.34141 8.32812 3.45312 8.32812H4.98672L5.61387 21.6074C5.65449 22.4732 6.37051 23.1562 7.23633 23.1562H18.7637C19.632 23.1562 20.3455 22.4758 20.3861 21.6074L21.0133 8.32812H22.5469C22.6586 8.32812 22.75 8.23672 22.75 8.125V7.3125C22.75 6.86309 22.3869 6.5 21.9375 6.5ZM18.5682 21.3281H7.43184L6.81738 8.32812H19.1826L18.5682 21.3281Z" fill="white"/>
         </svg>
         Delete
       </button>
     </span>
   </div>
+
+  <div class="flex w-full h-full flex-col items-center justify-start gap-5 ">
+    <div class="flex items-center gap-10 w-full py-3 shadow-[0_0_40px_#00000029] rounded-lg px-10 relative">
+      @for (mOpt of mainOptions; track mOpt) {
+        <span (click)="functionCall(mOpt)" class="flex justify-between items-center gap-3 px-4 py-2 hover:scale-[1.01] cursor-pointer">
+          <span [(innerHTML)]="mOpt.icon"></span>
+          <p class="flex items-center text-[14px]">{{mOpt.nameTag}}</p>
+        </span>
+      }
+
+      <!-- Move Options -->
+      <div [ngClass]="{'hidden': !moveOptionsState}" class="w-[70%] flex flex-wrap py-5 px-3 border-l-[15px] gap-x-5 gap-y-7 border-[#D30000] absolute top-[calc(100%+1.25rem)] rounded-[10px] left-0 shadow-[0_0_20px_#00000040]">
+        @for (movOpt of moveOptions; track movOpt) {
+          <span class="flex items-center gap-3 px-4 py-2 cursor-pointer hover:scale-[1.01] ">
+            <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M0 7.83322H12V9.78194H0V7.83322ZM0 2.96143H16V4.91014H0V2.96143ZM0 14.6537H7.235V12.705H0V14.6537Z" fill="#911515"/>
+            </svg>
+            <p class="flex items-center text-[14px] font-medium">{{movOpt.nameTag}}</p>
+          </span>
+        }
+      </div>
+    </div>
+
+    <div class="w-full h-full shadow-[0_0_40px_#00000050] rounded-[10px] scrollCSS p-5">
+      @for (config of configuration; track config) {
+        <span class="flex w-full items-center py-5 px-5 gap-5 rounded-lg border-l-[10px] border-[#D30000] shadow-[0_0_20px_#00000030]">
+          <p class="text-[14px] font-semibold"></p>
+          <p class="py-1 px-5 text-[13px] text-black cursor-pointer rounded bg-[#b9b9b9]"></p>
+        </span>
+      }
+    </div>
+  </div>
+
 </div>
