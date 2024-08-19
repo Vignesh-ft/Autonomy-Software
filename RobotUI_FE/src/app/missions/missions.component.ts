@@ -40,6 +40,7 @@ export class MissionsComponent {
   selectedMap: DropDownOption | null = null;
   deleteMissionID = ""
   editMissionPopupState = false
+  editMissionCred:any
   editMissionId = ""
   editMissionName = ""
   editMissionSite = ""
@@ -134,8 +135,8 @@ export class MissionsComponent {
         this.errorMessage = 'Failed to load maps data';
       });
   }
-  
-  
+
+
   //fetching the missions to show in the table
   fetchMissions(): void {
     fetch(`http://${environment.API_URL}:${environment.PORT}/mission`)
@@ -373,13 +374,13 @@ updateMissions(missionId: string) {
     this.selectedMap = this.dropDownOptions[order]; // Update selected map
     this.createPopupDD();
   }
-  
+
   changeEditSiteName(order: any) {
     this.editMissionSite = this.dropDownOptions[order].title;
     this.editMapName = this.dropDownOptions[order].title; // Update map name
     this.createPopupDD();
   }
-  
+
 
   missionQueuePopup() {
     this.missionQueueState = !this.missionQueueState
@@ -401,11 +402,13 @@ updateMissions(missionId: string) {
     console.log("Id: ", missionId);
   }
 
- 
+
   editMissionPopup() {
     this.editMissionPopupState = !this.editMissionPopupState
     this.createMissionDropDown = false
     
   }
+
+
 
 }
