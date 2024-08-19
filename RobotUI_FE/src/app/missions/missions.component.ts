@@ -39,6 +39,7 @@ export class MissionsComponent {
   selectedMap: DropDownOption | null = null;
   deleteMissionID = ""
   editMissionPopupState = false
+  editMissionCred:any
   editMissionId = ""
   editMissionName = ""
   editMissionSite = ""
@@ -330,13 +331,22 @@ updateMissions(missionId: string) {
   getEditMissionId(missionId:string) {
     this.editMissionId = missionId
     this.editMissionPopup()
-
-    // this.editMissionName = this.missionData[missionId].missionName
+    this.editMissionCred = this.missionData.find((t:any)=> t.missionId === missionId)
+    console.log(this.editMissionCred)
+    this.editMissionName = this.editMissionCred.missionName
+    this.editMissionId = missionId
+    this.editMissionSite = this.editMissionCred.mapName
+    // console.log([this.editMissionName, this.editMissionId, this.editMissionSite])
   }
 
   editMissionPopup() {
     this.editMissionPopupState = !this.editMissionPopupState
     this.createMissionDropDown = false
+  }
+
+  editMission() {
+    
+    console.log([this.editMissionName, this.editMissionId, this.editMissionSite])
   }
 
 }

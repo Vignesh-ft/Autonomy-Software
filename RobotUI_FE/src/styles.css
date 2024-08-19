@@ -3,6 +3,7 @@
 @tailwind utilities;
 
 
+
 @font-face {
   font-family: 'Graphik';
   src: url("./assets/Fonts/GraphikMedium.otf") format("opentype");
