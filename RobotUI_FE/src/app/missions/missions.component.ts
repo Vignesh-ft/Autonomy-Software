@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { environment } from '../../environments/environment.development';
+import { isValidDate } from 'rxjs/internal/util/isDate';
 
 interface DropDownOption {
   ddOrder: number;
@@ -43,6 +44,7 @@ export class MissionsComponent {
   editMissionId = ""
   editMissionName = ""
   editMissionSite = ""
+  editMapName = ""
 
   missionQueueData = [
     {
@@ -112,11 +114,9 @@ export class MissionsComponent {
     this.fetchMissions();
   }
 
-  //fetching the map name from the map's collection
   fetchMaps() {
     fetch(`http://${environment.API_URL}:${environment.PORT}/maps`)
-      .then(response =>
-        {
+      .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
@@ -125,20 +125,18 @@ export class MissionsComponent {
       .then(data => {
         this.dropDownOptions = data.map((map: any, index: number) => ({
           ddOrder: index,
-          title: map.name,
+          title: map.name, // Ensure this is the map name
           site: map.site,
           location: map.location,
         }));
-        if (this.dropDownOptions.length > 0) {
-          this.defaultSite = this.dropDownOptions[0].title;
-          this.selectedMap = this.dropDownOptions[0];
-        }
       })
       .catch(error => {
         console.error('Error fetching maps:', error.message);
         this.errorMessage = 'Failed to load maps data';
       });
   }
+
+
   //fetching the missions to show in the table
   fetchMissions(): void {
     fetch(`http://${environment.API_URL}:${environment.PORT}/mission`)
@@ -266,26 +264,87 @@ deleteMissions( missionId: string ) {
   this.deletePopup()
 }
 
+editMission() {
+  if (this.editMissionName === "") {
+    this.errorMessage = "*Enter the Mission name!";
+    return;
+  }
+
+  this.updateMissions(this.editMissionId);
+  this.editMissionPopup();
+}
+
+getEditMissionId(missionId: string) {
+  const mission = this.missionData.find((m: any) => m.missionId === missionId);
+
+  if (mission) {
+    this.editMissionId = mission.missionId;
+    this.editMissionName = mission.missionName;
+
+    // Find the map from the dropdown options using mapName
+    const selectedMap = this.dropDownOptions.find((map: any) => map.title === mission.mapName);
+    this.editMapName = selectedMap ? selectedMap.title : ''; // Correctly set the map name
+
+    this.editMissionSite = mission.site; // Ensure site is correctly set
+
+    this.editMissionPopup();
+    console.log("Map Name:", this.editMapName);
+    console.log("Site:", this.editMissionSite);
+  } else {
+    console.error("Mission not found with ID:", missionId);
+  }
+}
+
 updateMissions(missionId: string) {
-  fetch(`http://${environment.API_URL}:${environment.PORT}/mission/${missionId}`,{
+  if (!missionId) {
+    console.error("No mission ID set for editing");
+    return;
+  }
+
+  const updatedMission = {
+    missionName: this.editMissionName,
+    mapName: this.editMapName, // Ensure this is correctly set
+    site: this.editMissionSite
+  };
+
+  fetch(`http://${environment.API_URL}:${environment.PORT}/mission/${missionId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
+      'Accept': 'application/json'
     },
+    body: JSON.stringify(updatedMission),
   })
-  .then(response => {
-    if (response.ok) {
-      this.missionData = this.missionData.filter((mission: any) => mission.missionId !== missionId);
-    } else {
-      console.error('Error deleting map:', response.statusText);
-    }
-  })
-  .catch(error => {
-    console.error('Error deleting map:', error);
-  });
-  this.editMissionId=""
-  this.editMissionPopup()
+    .then(response => {
+      if (!response.ok) {
+        return response.json().then(error => {
+          throw new Error(error.message || 'Failed to update mission');
+        });
+      }
+      return response.json();
+    })
+    .then((updatedMissionFromServer: any) => {
+      const index = this.missionData.findIndex((mission: any) => mission.missionId === missionId);
+      if (index !== -1) {
+        this.missionData[index] = {
+          ...this.missionData[index],
+          missionName: updatedMissionFromServer.missionName,
+          mapName: updatedMissionFromServer.mapName, // Update map name correctly
+          site: updatedMissionFromServer.site // Update site name correctly
+        };
+      }
+      this.editMissionPopup(); // Close the popup after successful update
+    })
+    .catch(error => {
+      console.error('Error updating mission:', error);
+      this.errorMessage = error.message;
+      setTimeout(() => {
+        this.errorMessage = "";
+      }, 5000);
+    });
 }
+
+
 
   createPopup() {
     this.createMissionPopupState = !this.createMissionPopupState
@@ -296,15 +355,18 @@ updateMissions(missionId: string) {
   }
 
 
-  changeSiteName(order:any){
-    this.defaultSite = this.dropDownOptions[order].title
-    this.createPopupDD()
+  changeSiteName(order: any) {
+    this.defaultSite = this.dropDownOptions[order].title;
+    this.selectedMap = this.dropDownOptions[order]; // Update selected map
+    this.createPopupDD();
   }
 
-  changeEditSiteName(order:any){
-    this.editMissionSite = this.dropDownOptions[order].title
-    this.createPopupDD()
+  changeEditSiteName(order: any) {
+    this.editMissionSite = this.dropDownOptions[order].title;
+    this.editMapName = this.dropDownOptions[order].title; // Update map name
+    this.createPopupDD();
   }
+
 
   missionQueuePopup() {
     this.missionQueueState = !this.missionQueueState
@@ -322,31 +384,16 @@ updateMissions(missionId: string) {
   getMissionId(missionId: string)
   {
     this.deleteMissionID = missionId
-    this.editMissionId = missionId
     this.deletePopup()
-    this.editMissionPopup()
     console.log("Id: ", missionId);
   }
 
-  getEditMissionId(missionId:string) {
-    this.editMissionId = missionId
-    this.editMissionPopup()
-    this.editMissionCred = this.missionData.find((t:any)=> t.missionId === missionId)
-    console.log(this.editMissionCred)
-    this.editMissionName = this.editMissionCred.missionName
-    this.editMissionId = missionId
-    this.editMissionSite = this.editMissionCred.mapName
-    // console.log([this.editMissionName, this.editMissionId, this.editMissionSite])
-  }
 
   editMissionPopup() {
     this.editMissionPopupState = !this.editMissionPopupState
     this.createMissionDropDown = false
   }
 
-  editMission() {
-    
-    console.log([this.editMissionName, this.editMissionId, this.editMissionSite])
-  }
+
 
 }
