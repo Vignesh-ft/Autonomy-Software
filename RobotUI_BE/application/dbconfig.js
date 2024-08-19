@@ -1,11 +1,13 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
 
-const connection = mongoose.createConnection(process.env.MONGO_MAP_URI, );
+const connection = mongoose.createConnection(process.env.MONGO_MAP_URI);
 
-const transConnection = mongoose.createConnection(process.env.MONGO_TRANSITION_URI,);
+const transConnection = mongoose.createConnection(process.env.MONGO_TRANSITION_URI);
 
-const missionConnection = mongoose.createConnection(process.env.MONGO_MISSION_URI)
+const missionConnection = mongoose.createConnection(process.env.MONGO_MISSION_URI);
+
+const systemLogsConnection = mongoose.createConnection(process.env.MONGO_SLOG_URI);
 
 connection.on('connected', () => {
   console.log('Connected to Maps DB');
@@ -34,4 +36,13 @@ missionConnection.on('error', (err) => {
   process.exit(1);
 })
 
-module.exports = { connection, transConnection, missionConnection };
+systemLogsConnection.on('connected', () => {
+  console.log('Connected to Systems Logs DB');
+});
+
+systemLogsConnection.on('error',(err) => {
+  console.log('Failed to connect to MongoDB', err);
+  process.exit(1);
+})
+
+module.exports = { connection, transConnection, missionConnection, systemLogsConnection };

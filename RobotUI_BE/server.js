@@ -7,6 +7,7 @@ const userRoutes = require('./common/routes/userRoutes')
 const mapRoutes = require('./application/routes/mapRoutes')
 const transitionRoutes = require('./application/routes/transitionRoutes')
 const missionRoutes = require('./application/routes/missionsRoutes')
+const systemLogRoutes = require('./application/routes/systemlogsRoutes')
 require('dotenv').config();
 
 
@@ -28,6 +29,7 @@ app.use('/auth', loginRoutes); // Use the new login route
 app.use('/maps', mapRoutes);
 app.use('/transitions',transitionRoutes);
 app.use('/mission',missionRoutes);
+app.use('/systemlogs', systemLogRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
