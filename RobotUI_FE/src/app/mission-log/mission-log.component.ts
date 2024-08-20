@@ -1,5 +1,5 @@
-import { booleanAttribute, Component, OnInit } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
+import { booleanAttribute, Component } from '@angular/core';
+import { environment } from '../../environments/environment.development';
 
 @Component({
   selector: 'app-mission-log',
@@ -13,9 +13,9 @@ export class MissionLogComponent {
   selectedUserLog: any;
   userName: string = '';
 
-  private apiUrl = 'http://localhost:3000/missionlogs';
+  private apiUrl = `http://${environment.API_URL}:${environment.PORT}/missionlogs`;
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.fetchMissionLogs();
   }
 
@@ -23,19 +23,23 @@ export class MissionLogComponent {
     this.missionActionState = !this.missionActionState
   }
 
-  async fetchMissionLogs() {
-    try {
-      const response = await fetch(this.apiUrl);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const data = await response.json();
-      console.log('Fetched Data:', data); // Log the data to verify the structure
-      this.missionLogData = data;
-    } catch (error) {
-      console.error('Error fetching mission logs:', error);
-    }
+  fetchMissionLogs(): void {
+    fetch(this.apiUrl)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log('Fetched Data:', data); // Log the data to verify the structure
+        this.missionLogData = data;
+      })
+      .catch(error => {
+        console.error('Error fetching mission logs:', error);
+      });
   }
+  
   viewLogs(missionId: string) {
     this.selectedUserLog = this.missionLogData.find((mission) => mission._id === missionId)?.logs || [];
     this.missionActionPopup();

@@ -2,20 +2,21 @@ const ErrorLog = require('../models/errorlogModels');
 const moment = require('moment-timezone');
 
 // Helper function to format date in DD:MM:YYYY HH:mm
-const formatDate = (date) => moment(date).tz('Asia/Kolkata').format('DD:MM:YYYY HH:mm');
+const formatDate = (date) => moment(date).tz('Asia/Kolkata').format('DD/MM/YYYY HH:mm');
 
 // Create a new error log (POST)
 exports.createErrorLog = async (req, res) => {
     try {
-        const { moduleName, description } = req.body;
+        const { moduleName, description,time } = req.body;
 
-        // Capture the current date and time in the 'Asia/Kolkata' timezone
-        const currentTime = moment().tz('Asia/Kolkata').toDate();
+        const formattedDate = moment.tz(time, 'DD:MM:YYYY HH:mm', 'Asia/Kolkata').isValid()
+        ? moment.tz(time, 'DD:MM:YYYY HH:mm', 'Asia/Kolkata').toDate()
+        : new Date(); // Default to current date if invalid
 
         const errorLog = new ErrorLog({
             moduleName,
             description,
-            time: currentTime
+            time: formattedDate
         });
 
         const savedErrorLog = await errorLog.save();

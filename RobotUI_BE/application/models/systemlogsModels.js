@@ -18,13 +18,7 @@ const SystemLogSchema = new mongoose.Schema({
   },
   time: {
     type: String,
-    required: true,
-    validate: {
-      validator: function (v) {
-        return /\b([01]?[0-9]|2[0-3]):[0-5][0-9]:[0-5][0-9]\b/.test(v); // Validates HH:MM:SS format
-      },
-      message: props => `${props.value} is not a valid time format (HH:MM:SS)!`
-    }
+    default: Date.now
   }
 }, {
   versionKey: false
