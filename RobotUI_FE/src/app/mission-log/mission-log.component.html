@@ -83,9 +83,9 @@
   <!-- Table Rows -->
   <span class="flex twoColors h-[400px] flex-col w-full items-start justify-start gap-[5px] overflow-scroll MinimalScrollCSS scroll-smooth scrollCSS pb-3 ">
    @for (logData of missionLogData; track logData) {
-    <span (click)="getUserName(logData.missionOrder)" class="w-full cursor-pointer py-6 text-black font-semibold rounded-[6px] twoColors flex items-center justify-between px-20">
+    <span (click)="viewLogs(logData._id)" class="w-full cursor-pointer py-6 text-black font-semibold rounded-[6px] twoColors flex items-center justify-between px-20">
       <span class="flex w-[30%] items-center justify-between pr-[1%]">
-        <p class="text-black text-[14px] font-semibold capitalize w-full flex items-center justify-start">{{logData.missionname}}</p>
+        <p class="text-black text-[14px] font-semibold capitalize w-full flex items-center justify-start">{{logData.missionName || 'No Mission name found'}}</p>
         <span class="w-full flex items-center justify-center">
           <span [ngClass]="{'bg-green-500':logData.state === 'completed', 'bg-yellow-500': logData.state === 'partially', 'bg-red-500':logData.state === 'break'}" class="size-6 rounded-full"></span>
           <!-- state -->

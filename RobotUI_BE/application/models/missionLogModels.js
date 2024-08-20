@@ -9,16 +9,16 @@ const MissionLogSchema = new mongoose.Schema({
       },
   state: {
     type: String,
-    enum: ['Green', 'Yellow', 'Red'], // Limit the state to these values
+    enum: ['completed', 'partially', 'break'], // Limit the state to these values
     required: true,
   },
   message: {
     type: [String], // Array of strings to list multiple errors
     required: true,
   },
-  startTime: {
+  startTime: { 
     type: Date,
-    required: true,
+    default: Date.now 
   },
   ranFor: {
     type: String, // You might want to store this as a string in HH:mm:ss format

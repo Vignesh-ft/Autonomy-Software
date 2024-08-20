@@ -5,7 +5,7 @@ const { systemLogsConnection } = require('../dbconfig');
 const SystemLogSchema = new mongoose.Schema({
   state: {
     type: String,
-    enum: ['Green', 'Red', 'Yellow'],  // Only allow these three values
+    enum: ['completed', 'partially', 'break'],  // Only allow these three values
     required: true
   },
   moduleName: {
