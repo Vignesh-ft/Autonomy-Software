@@ -11,6 +11,8 @@ const systemLogsConnection = mongoose.createConnection(process.env.MONGO_SLOG_UR
 
 const errorLogsConnection = mongoose.createConnection(process.env.MONGO_ELOG_URI);
 
+const missionLogsConnection = mongoose.createConnection(process.env.MONGO_MLOG_URI);
+
 connection.on('connected', () => {
   console.log('Connected to Maps DB');
 });
@@ -54,6 +56,15 @@ errorLogsConnection.on('connected', () => {
 errorLogsConnection.on('error',(err) => {
   console.log('Failed to connect to Error Log DB', err);
   process.exit(1);
-})
+});
 
-module.exports = { connection, transConnection, missionConnection, systemLogsConnection, errorLogsConnection };
+missionLogsConnection.on('connected', () => {
+  console.log('Connected to Mission Logs DB');
+});
+
+missionLogsConnection.on('error',(err) => {
+  console.log('Failed to connect to Error Log DB', err);
+  process.exit(1);
+});
+
+module.exports = { connection, transConnection, missionConnection, systemLogsConnection, errorLogsConnection, missionLogsConnection };

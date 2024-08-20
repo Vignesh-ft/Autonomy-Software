@@ -9,6 +9,7 @@ const transitionRoutes = require('./application/routes/transitionRoutes');
 const missionRoutes = require('./application/routes/missionsRoutes');
 const systemLogRoutes = require('./application/routes/systemlogsRoutes');
 const errorLogRoutes = require('./application/routes/errorlogRoutes');
+const missionLogRoutes = require('./application/routes/missionLogRoutes');
 require('dotenv').config();
 
 
@@ -31,7 +32,8 @@ app.use('/maps', mapRoutes);
 app.use('/transitions',transitionRoutes);
 app.use('/mission',missionRoutes);
 app.use('/systemlogs', systemLogRoutes);
-app.use('/errorlogs', errorLogRoutes)
+app.use('/errorlogs', errorLogRoutes);
+app.use('/missionlogs', missionLogRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
