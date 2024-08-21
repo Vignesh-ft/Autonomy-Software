@@ -2,15 +2,33 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from "@angular/common"
 
+interface Config {
+  order: number;
+  name: string;
+  position: any; // or the appropriate type
+  retries: any;
+  distanceThreshold: any;
+}
+
+
 @Component({
   selector: 'app-create-missions',
   templateUrl: './create-missions.component.html',
   styleUrl: './create-missions.component.css'
 })
+
+
 export class CreateMissionsComponent {
   idParam:any
   nameParam:any
   moveOptionsState = false
+  position:any = ""
+  retries:any = ""
+  distanceThreshold:any = ""
+  configuration:Array<Config>  =[]
+  addMovOptionsPopup = false
+  errorMessage = ""
+  MovNameVariable = ""
 
   constructor(private route: ActivatedRoute, private router:Router, private location:Location) { }
   ngOnInit(): void {
@@ -72,11 +90,70 @@ export class CreateMissionsComponent {
 
   moveOption() {
     this.moveOptionsState = !this.moveOptionsState
-    console.log(this.moveOptionsState);
   }
 
-  configuration = [
-  ]
+  getConfig(name:any){
+    this.addMovPopup()
+    this.MovNameVariable = name
+    this.moveOptionsState = false
+  }
+
+  addMovPopup(){
+    this.addMovOptionsPopup = !this.addMovOptionsPopup
+    this.position = ""
+    this.retries = ""
+    this.distanceThreshold = ""
+  }
+
+  timingFunction() {
+    setTimeout(()=> {
+      this.errorMessage = ""
+    },1400)
+  }
+
+  validateAndCloseMov(name:any){
+    if(this.position === "" && this.retries === "" && this.distanceThreshold === ""){
+      this.errorMessage = "Enter all the values"
+      this.timingFunction()
+      return
+    }
+
+    else if(this.position === ""){
+      this.errorMessage = "Position is Not Entered"
+      this.timingFunction()
+      return
+    }
+
+    else if(this.retries === "") {
+      this.errorMessage = "Retries are not Entered"
+      this.timingFunction()
+      return
+    }
+
+    else if(this.distanceThreshold === "") {
+      this.errorMessage = "Distance Threshold is not Entered"
+      this.timingFunction()
+      return
+    }
+
+    if(this.position != "" && this.retries != "" && this.distanceThreshold != "") {
+      let oldOrder = this.configuration.length !== 0 ? this.configuration[this.configuration.length-1]?.order : -1
+      let newConfig = {
+        order:oldOrder+1,
+        name: name,
+        position: this.position,
+        retries: this.retries,
+        distanceThreshold: this.distanceThreshold
+      }
+      this.moveOptionsState = false
+      console.log(this.moveOptionsState, newConfig);
+
+      this.configuration = [...this.configuration, newConfig]
+      console.log(this.configuration)
+      this.addMovPopup()
+     }
+  }
+
 
   moveOptions = [
     {

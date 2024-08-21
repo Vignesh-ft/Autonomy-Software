@@ -13,8 +13,8 @@
           @for (option of optionOne; track option) {
             <span class="flex w-full px-3 py-2 justify-between gap-3 items-center">
               <p class="text-[14px] font-medium">{{option.title}}</p>
-              <span [ngClass]="{'bg-[#d30001]': option.state}" (click)="option.clickFn()"  class="w-12 h-8 rounded-full bg-[#a4a4a4] relative flex items-center p-1">
-                <div [ngClass]="{'right-1': option.state}" class="size-6 bg-white rounded-full absolute"></div>
+              <span [ngClass]="{'bg-[#d30001]': option.state}" (click)="option.clickFn()"  class="w-12 h-8 duration-300 rounded-full bg-[#a4a4a4] relative flex items-center p-1">
+                <div [ngClass]="{'right-1 duration-300': option.state}" class="size-6 duration-300 bg-white rounded-full absolute"></div>
               </span>
             </span>
           }

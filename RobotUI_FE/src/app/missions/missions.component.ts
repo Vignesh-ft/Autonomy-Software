@@ -208,6 +208,9 @@ createMission() {
       createdOn: new Date().toISOString()
     };
 
+    console.log('selected',this.selectedMap);
+
+
     // Post the new mission to the backend API
     fetch(`http://${environment.API_URL}:${environment.PORT}/mission`, {
       method: 'POST',
@@ -269,9 +272,7 @@ editMission() {
     this.errorMessage = "*Enter the Mission name!";
     return;
   }
-
   this.updateMissions(this.editMissionId);
-  this.editMissionPopup();
 }
 
 getEditMissionId(missionId: string) {
@@ -292,6 +293,8 @@ getEditMissionId(missionId: string) {
 
     console.log("Map Name:", this.editMapName);
     console.log("Site:", this.editMissionSite);
+    console.log(this.dropDownOptions);
+
   } else {
     console.error("Mission not found with ID:", missionId);
   }
@@ -318,6 +321,8 @@ updateMissions(missionId: string) {
     mapName: selectedMap.title, // Ensure this is correctly set
     site: selectedMap.site // Update the site based on the selected map
   };
+
+  console.log('updated:', updatedMission)
 
   fetch(`http://${environment.API_URL}:${environment.PORT}/mission/${missionId}`, {
     method: 'PUT',
@@ -376,9 +381,10 @@ updateMissions(missionId: string) {
   }
 
   changeEditSiteName(order: any) {
-    this.editMissionSite = this.dropDownOptions[order].title;
+    // this.editMissionSite = this.dropDownOptions[order].title;
     this.editMapName = this.dropDownOptions[order].title; // Update map name
     this.createPopupDD();
+    console.log(this.editMapName)
   }
 
 
@@ -406,9 +412,6 @@ updateMissions(missionId: string) {
   editMissionPopup() {
     this.editMissionPopupState = !this.editMissionPopupState
     this.createMissionDropDown = false
-    
+
   }
-
-
-
 }
