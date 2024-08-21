@@ -81,8 +81,7 @@ export class MapsComponent implements OnInit  {
       .then((maps: any[]) => {
         this.mapsData = maps.map(map => {
           const dateString = map.createdAt;
-          console.log("Original Date from DB:", dateString);
-
+        
 
           // Split the dateString into date and time parts
           const [datePart, timePart] = dateString.split(' ');
@@ -104,7 +103,6 @@ export class MapsComponent implements OnInit  {
           const formattedMinutes = String(date.getUTCMinutes()).padStart(2, '0');
           const formattedDate = `${formattedDay}/${formattedMonth}/${formattedYear} ${formattedHours}:${formattedMinutes}`;
 
-          console.log("Formatted Date:", formattedDate);
 
           return {
             mapId: map._id, // MongoDB _id field

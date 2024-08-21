@@ -1,12 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const cookieParser = require('cookie-parser')
-const loginRoutes = require('./common/routes/loginRoutes')
-const userRoutes = require('./common/routes/userRoutes')
-const mapRoutes = require('./application/routes/mapRoutes')
-const transitionRoutes = require('./application/routes/transitionRoutes')
-const missionRoutes = require('./application/routes/missionsRoutes')
+const cookieParser = require('cookie-parser');
+const loginRoutes = require('./common/routes/loginRoutes');
+const userRoutes = require('./common/routes/userRoutes');
+const mapRoutes = require('./application/routes/mapRoutes');
+const transitionRoutes = require('./application/routes/transitionRoutes');
+const missionRoutes = require('./application/routes/missionsRoutes');
+const systemLogRoutes = require('./application/routes/systemlogsRoutes');
+const errorLogRoutes = require('./application/routes/errorlogRoutes');
+const missionLogRoutes = require('./application/routes/missionLogRoutes');
 require('dotenv').config();
 
 
@@ -28,6 +31,9 @@ app.use('/auth', loginRoutes); // Use the new login route
 app.use('/maps', mapRoutes);
 app.use('/transitions',transitionRoutes);
 app.use('/mission',missionRoutes);
+app.use('/systemlogs', systemLogRoutes);
+app.use('/errorlogs', errorLogRoutes);
+app.use('/missionlogs', missionLogRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);

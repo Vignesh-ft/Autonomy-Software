@@ -35,7 +35,7 @@ export class MissionsComponent {
   deleteMissionPopupState = false
   deleteMissionQueuePopupState  = false
   missionData: any[] = [];
-  dropDownOptions: DropDownOption[] = [];
+  dropDownOptions: DropDownOption[  ] = [];
   defaultSite = 'Select a Map';
   selectedMap: DropDownOption | null = null;
   deleteMissionID = ""
@@ -288,7 +288,9 @@ getEditMissionId(missionId: string) {
 
     this.editMissionSite = mission.site; // Ensure site is correctly set
 
+    // Open the edit popup with the populated data
     this.editMissionPopup();
+
     console.log("Map Name:", this.editMapName);
     console.log("Site:", this.editMissionSite);
     console.log(this.dropDownOptions);
@@ -298,16 +300,26 @@ getEditMissionId(missionId: string) {
   }
 }
 
+
 updateMissions(missionId: string) {
   if (!missionId) {
     console.error("No mission ID set for editing");
     return;
   }
 
+  // Find the map based on the selected map name to get the correct site
+  const selectedMap = this.dropDownOptions.find(map => map.title === this.editMapName);
+
+  if (!selectedMap) {
+    console.error("Selected map not found in the dropdown options");
+    this.errorMessage = "Selected map is invalid";
+    return;
+  }
+
   const updatedMission = {
     missionName: this.editMissionName,
-    mapName: this.editMapName, // Ensure this is correctly set
-    site: this.editMissionSite
+    mapName: selectedMap.title, // Ensure this is correctly set
+    site: selectedMap.site // Update the site based on the selected map
   };
 
   console.log('updated:', updatedMission)
@@ -334,11 +346,12 @@ updateMissions(missionId: string) {
         this.missionData[index] = {
           ...this.missionData[index],
           missionName: updatedMissionFromServer.missionName,
-          mapName: updatedMissionFromServer.mapName, // Update map name correctly
-          site: updatedMissionFromServer.site // Update site name correctly
+          mapName: updatedMissionFromServer.mapName,
+          site: updatedMissionFromServer.site
         };
       }
-      this.editMissionPopup(); // Close the popup after successful update
+      console.log("Update successful, closing popup...");
+      this.createPopupDD(); // Ensure this correctly closes the popup
     })
     .catch(error => {
       console.error('Error updating mission:', error);
@@ -348,6 +361,7 @@ updateMissions(missionId: string) {
       }, 5000);
     });
 }
+
 
 
 
@@ -398,5 +412,6 @@ updateMissions(missionId: string) {
   editMissionPopup() {
     this.editMissionPopupState = !this.editMissionPopupState
     this.createMissionDropDown = false
+
   }
 }
