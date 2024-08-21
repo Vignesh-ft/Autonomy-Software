@@ -1,34 +1,31 @@
 const SystemLog = require('../models/systemlogsModels');
 const moment = require('moment-timezone');
 
-// Helper function to format date in DD/MM/YYYY HH:mm in IST
-const formatDate = (date) => moment(date).tz('Asia/Kolkata').format('DD/MM/YYYY HH:mm');
+// Helper function to format time in HH:mm:ss in IST
+const formatTime = (time) => moment(time, 'HH:mm').tz('Asia/Kolkata').format('HH:mm');
 
 // POST - Create a new system log
 const createSystemLog = async (req, res) => {
   try {
     const { state, moduleName, message, time } = req.body;
 
-    
-    const formattedDate = moment.tz(time, 'DD:MM:YYYY HH:mm', 'Asia/Kolkata').isValid()
-        ? moment.tz(time, 'DD:MM:YYYY HH:mm', 'Asia/Kolkata').toDate()
-        : new Date(); // Default to current date if invalid
+    // Validate and format time or use the current time if invalid
+    const formattedTime = moment(time, 'HH:mm', true).isValid()
+      ? moment(time, 'HH:mm').tz('Asia/Kolkata').format('HH:mm')
+      : moment().tz('Asia/Kolkata').format('HH:mm');
 
     // Create a new system log entry
     const newSystemLog = new SystemLog({
       state,
       moduleName,
       message,
-      time: formattedDate
+      time: formattedTime
     });
 
     // Save to the database
     const savedSystemLog = await newSystemLog.save();
-    
-    res.status(201).json({ 
-      ...savedSystemLog.toObject(),
-      time: formattedDate(savedSystemLog.time)
-   });
+
+    res.status(201).json(savedSystemLog);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -39,10 +36,11 @@ const getSystemLogs = async (req, res) => {
   try {
     const logs = await SystemLog.find(); // Fetch all logs
 
-    const formattedSystemLogs = SystemLog.map(log => ({
+    const formattedSystemLogs = logs.map(log => ({
       ...log.toObject(),
-      time: formatDate(log.time)
+      time: formatTime(log.time)
     }));
+
     res.status(200).json(formattedSystemLogs);
   } catch (error) {
     res.status(500).json({ error: error.message });

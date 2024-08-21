@@ -18,6 +18,15 @@ const missionSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    position: {
+        type: String
+    },
+    retries: {
+        type: Number
+    },
+    distance: {
+        type: Number
+    },
     createdBy: {
         type: String,
         required: true
