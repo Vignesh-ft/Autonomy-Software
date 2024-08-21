@@ -45,9 +45,9 @@
       }
 
       <!-- Move Options -->
-      <div [ngClass]="{'hidden': !moveOptionsState}" class="w-[70%] flex flex-wrap py-5 px-3 border-l-[15px] gap-x-5 gap-y-7 border-[#D30000] absolute top-[calc(100%+1.25rem)] rounded-[10px] left-0 shadow-[0_0_20px_#00000040]">
+      <div [ngClass]="{'hidden': !moveOptionsState}" class="w-[70%] flex flex-wrap py-5 px-3 z-50 border-l-[15px] gap-x-5 gap-y-7 bg-white border-[#D30000] absolute top-[calc(100%+1.25rem)] rounded-[10px] left-0 shadow-[0_0_20px_#00000040]">
         @for (movOpt of moveOptions; track movOpt) {
-          <span class="flex items-center gap-3 px-4 py-2 cursor-pointer hover:scale-[1.01] ">
+          <span (click)="getConfig(movOpt.nameTag)" class="flex items-center gap-3 px-4 py-2 cursor-pointer hover:scale-[1.01] ">
             <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M0 7.83322H12V9.78194H0V7.83322ZM0 2.96143H16V4.91014H0V2.96143ZM0 14.6537H7.235V12.705H0V14.6537Z" fill="#911515"/>
             </svg>
@@ -57,14 +57,68 @@
       </div>
     </div>
 
-    <div class="w-full h-full shadow-[0_0_40px_#00000050] rounded-[10px] scrollCSS p-5">
+    <div class="w-full h-full shadow-[0_0_40px_#00000050] rounded-[10px] scrollCSS p-5 z-0 gap-2 overflow-scroll   flex flex-col">
       @for (config of configuration; track config) {
-        <span class="flex w-full items-center py-5 px-5 gap-5 rounded-lg border-l-[10px] border-[#D30000] shadow-[0_0_20px_#00000030]">
-          <p class="text-[14px] font-semibold"></p>
-          <p class="py-1 px-5 text-[13px] text-black cursor-pointer rounded bg-[#b9b9b9]"></p>
+        <span class="flex w-full items-center justify-between py-5 -z-30 pr-10 px-5 gap-5 rounded-lg border-l-[10px] border-[#D30000] shadow-[0_0_20px_#00000030]">
+          <span class="flex gap-5 items-center">
+            <p class="text-[14px] font-semibold">{{config.name}}</p>
+            <p class="py-1 px-5 text-[11px] font-semibold text-black cursor-pointer rounded bg-[#b9b9b9]">Pos</p>
+          </span>
+          <span class="flex items-center gap-5 justify-center">
+            <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 35 35" fill="none"
+            xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_1603_24752)">
+              <path
+                d="M7.375 23.4061V27.6248H11.5938L24.0362 15.1823L19.8175 10.9636L7.375 23.4061ZM27.2987 11.9198C27.403 11.8157 27.4858 11.6921 27.5422 11.556C27.5987 11.4199 27.6277 11.274 27.6277 11.1267C27.6277 10.9794 27.5987 10.8335 27.5422 10.6974C27.4858 10.5613 27.403 10.4376 27.2987 10.3336L24.6663 7.70107C24.5622 7.59678 24.4385 7.51404 24.3025 7.45758C24.1664 7.40113 24.0205 7.37207 23.8731 7.37207C23.7258 7.37207 23.5799 7.40113 23.4438 7.45758C23.3077 7.51404 23.1841 7.59678 23.08 7.70107L21.0212 9.75982L25.24 13.9786L27.2987 11.9198Z"
+                fill="black"/>
+            </g>
+            <defs>
+              <clipPath id="clip0_1603_24752">
+                <rect width="24" height="24" fill="white" transform="translate(4 4)" />
+              </clipPath>
+            </defs>
+          </svg>
+          </span>
         </span>
       }
     </div>
   </div>
-
 </div>
+
+<!-- Create Mission -> MOV Options Popup -->
+<div [ngClass]="{ hidden: !addMovOptionsPopup }"
+  class="absolute flex items-center justify-center w-screen box-border min-h-screen bg-[#000000] bg-opacity-90 bg-blur top-0 left-0 z-50 overflow-hidden">
+  <div class="flex w-[55%] flex-col rounded-[20px] gap-10 shadow-[0_0_50px_#00000060] px-14 py-10 bg-[#D9D9D9]">
+    <!-- Title -->
+     <span class="flex items-center justify-between">
+      <p class="flex font-bold text-[32px]">{{MovNameVariable}}</p>
+      <svg (click)="addMovPopup() " width="28" height="28" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.77152 20.1272L5.87398 20.2296C6.45976 20.8154 7.40951 20.8154 7.9953 20.2296L12.6477 15.5772C12.843 15.3819 13.1596 15.3819 13.3549 15.5772L18.0073 20.2296C18.5931 20.8154 19.5428 20.8154 20.1286 20.2296L20.2311 20.1272C20.8169 19.5414 20.8169 18.5916 20.2311 18.0058L15.5786 13.3534C15.3834 13.1581 15.3834 12.8415 15.5786 12.6463L20.2311 7.99383C20.8169 7.40804 20.8169 6.4583 20.2311 5.87251L20.1286 5.77006C19.5428 5.18427 18.5931 5.18427 18.0073 5.77006L13.3549 10.4225C13.1596 10.6178 12.843 10.6178 12.6477 10.4225L7.9953 5.77006C7.40951 5.18427 6.45976 5.18427 5.87398 5.77006L5.77152 5.87251C5.18574 6.4583 5.18574 7.40805 5.77152 7.99383L10.424 12.6463C10.6192 12.8415 10.6192 13.1581 10.424 13.3534L5.77152 18.0058C5.18574 18.5916 5.18574 19.5414 5.77152 20.1272Z" fill="#DA2127" stroke="#DA2127"/>
+        </svg>
+     </span>
+
+     <span class="w-full h-auto flex flex-col items-start justify-center gap-4">
+        <p class="flex text-[14px] font-medium">Position</p>
+        <input [(ngModel)]="position" type="text" placeholder="Enter the Position" class="flex px-n py-3 outline-none bg-transparent border-b-2 border-black w-full">
+     </span>
+
+     <span class="flex items-center w-full gap-10 justify-center relative">
+        <span class="w-full h-auto flex flex-col items-start justify-center gap-4">
+            <p class="flex text-[14px] font-medium">Retries (BlockPath)</p>
+            <input [(ngModel)]="retries" type="text" placeholder="Enter the Retries" class="flex px-n py-3 outline-none bg-transparent border-b-2 border-black w-full">
+        </span>
+        <span class="w-full h-auto flex flex-col items-start justify-center gap-4">
+          <p class="flex text-[14px] font-medium">Distance Threshold</p>
+          <input [(ngModel)]="distanceThreshold" type="text" placeholder="Enter the Distance" class="flex px-n py-3 outline-none bg-transparent border-b-2 border-black w-full">
+        </span>
+        <p class="text-red-500 text-[12px] font-medium absolute bottom-[-30px] left-0">{{ errorMessage }}</p>
+     </span>
+
+     <span class="flex items-center justify-start mt-14 gap-5">
+      <button (click)="validateAndCloseMov(MovNameVariable)" class="px-5 py-3 bg-[#4BB543] text-white rounded-md">Validate and Close</button>
+      <button class="px-5 py-3 bg-[#C4C4C4] text-BLACK rounded-md">Undo and Close</button>
+      <button class="px-5 py-3 bg-[#e43a31] text-white rounded-md">Remove Action</button>
+     </span>
+  </div>
+</div>
+
