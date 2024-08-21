@@ -2,7 +2,7 @@ const SystemLog = require('../models/systemlogsModels');
 const moment = require('moment-timezone');
 
 // Helper function to format time in HH:mm:ss in IST
-const formatTime = (time) => moment(time, 'HH:mm:ss').tz('Asia/Kolkata').format('HH:mm:ss');
+const formatTime = (time) => moment(time, 'HH:mm').tz('Asia/Kolkata').format('HH:mm');
 
 // POST - Create a new system log
 const createSystemLog = async (req, res) => {
@@ -10,9 +10,9 @@ const createSystemLog = async (req, res) => {
     const { state, moduleName, message, time } = req.body;
 
     // Validate and format time or use the current time if invalid
-    const formattedTime = moment(time, 'HH:mm:ss', true).isValid()
-      ? moment(time, 'HH:mm:ss').tz('Asia/Kolkata').format('HH:mm:ss')
-      : moment().tz('Asia/Kolkata').format('HH:mm:ss');
+    const formattedTime = moment(time, 'HH:mm', true).isValid()
+      ? moment(time, 'HH:mm').tz('Asia/Kolkata').format('HH:mm')
+      : moment().tz('Asia/Kolkata').format('HH:mm');
 
     // Create a new system log entry
     const newSystemLog = new SystemLog({

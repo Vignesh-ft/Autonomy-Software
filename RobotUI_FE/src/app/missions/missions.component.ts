@@ -362,9 +362,6 @@ updateMissions(missionId: string) {
     });
 }
 
-
-
-
   createPopup() {
     this.createMissionPopupState = !this.createMissionPopupState
   }

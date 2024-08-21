@@ -6,7 +6,7 @@ const formatDate = (date) => moment(date).tz('Asia/Kolkata').format('DD:MM:YYYY 
 
 exports.createMission = async (req, res) => {
     try {
-        const { missionName, mapName, location, createdBy, createdOn } = req.body;
+        const { missionName, mapName, location, createdBy, createdOn, position } = req.body;
 
         // Check if the mission already exists
         const existingMission = await Mission.findOne({ missionName });
@@ -33,6 +33,7 @@ exports.createMission = async (req, res) => {
             location,
             createdBy,
             createdOn: formattedDate,
+            position  // Include position only, not retries or distance
         });
 
         const savedMission = await newMission.save();
@@ -44,6 +45,7 @@ exports.createMission = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 // Viewing all missions
 exports.getMissions = async (req, res) => {
@@ -71,15 +73,25 @@ exports.deleteMission = async (req, res) => {
     }
 };
 
-// Updating a mission
 exports.updateMission = async (req, res) => {
     try {
         const { id } = req.params;
-        const { missionName, mapName, site, location, createdBy } = req.body;
+        const { missionName, mapName, site, location, createdBy, position, retries, distance } = req.body;
 
+        // Find the mission by ID and update it
         const updatedMission = await Mission.findByIdAndUpdate(
             id,
-            { missionName, mapName, site, location, createdBy, updatedOn: Date.now() },
+            {
+                missionName,
+                mapName,
+                site,
+                location,
+                createdBy,
+                position,
+                retries, // Include retries in the update
+                distance, // Include distance in the update
+                updatedOn: Date.now()
+            },
             { new: true }
         );
 
@@ -92,3 +104,4 @@ exports.updateMission = async (req, res) => {
         res.status(500).json({ error: 'Failed to update mission' });
     }
 };
+
