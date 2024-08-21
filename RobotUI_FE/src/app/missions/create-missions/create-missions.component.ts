@@ -29,6 +29,12 @@ export class CreateMissionsComponent {
   addMovOptionsPopup = false
   errorMessage = ""
   MovNameVariable = ""
+  deleteAllPopupState = false
+  editMovOptionsState = false
+  editOrder:any
+  editPosition:any
+  editRetries:any
+  editDistanceThreshold:any
 
   constructor(private route: ActivatedRoute, private router:Router, private location:Location) { }
   ngOnInit(): void {
@@ -111,32 +117,44 @@ export class CreateMissionsComponent {
     },1400)
   }
 
-  validateAndCloseMov(name:any){
-    if(this.position === "" && this.retries === "" && this.distanceThreshold === ""){
+  getCurrentActionID(order:any) {
+    this.editOrder = order
+    this.editMovOptionsState = !this.editMovOptionsState
+    let currentActionDetails = this.configuration.find((config)=> config.order === order)
+    this.editPosition = currentActionDetails?.position
+    this.editRetries = currentActionDetails?.retries
+    this.editDistanceThreshold = currentActionDetails?.distanceThreshold
+  }
+
+  validateAndCloseMov(order:any, name:any, position:any, retries:any, distanceThreshold:any){
+
+    if(position === ""  && retries === "" && distanceThreshold === ""){
       this.errorMessage = "Enter all the values"
       this.timingFunction()
       return
     }
 
-    else if(this.position === ""){
+    else if(position === ""){
       this.errorMessage = "Position is Not Entered"
       this.timingFunction()
       return
     }
 
-    else if(this.retries === "") {
+    else if(retries === "") {
       this.errorMessage = "Retries are not Entered"
       this.timingFunction()
       return
     }
 
-    else if(this.distanceThreshold === "") {
+    else if(distanceThreshold === "") {
       this.errorMessage = "Distance Threshold is not Entered"
       this.timingFunction()
       return
     }
 
-    if(this.position != "" && this.retries != "" && this.distanceThreshold != "") {
+    if(this.position && this.retries  && this.distanceThreshold) {
+     console.log("inside Create");
+
       let oldOrder = this.configuration.length !== 0 ? this.configuration[this.configuration.length-1]?.order : -1
       let newConfig = {
         order:oldOrder+1,
@@ -146,14 +164,27 @@ export class CreateMissionsComponent {
         distanceThreshold: this.distanceThreshold
       }
       this.moveOptionsState = false
-      console.log(this.moveOptionsState, newConfig);
-
       this.configuration = [...this.configuration, newConfig]
-      console.log(this.configuration)
       this.addMovPopup()
      }
+
+    if(this.editPosition && this.editRetries && this.editDistanceThreshold) {
+      // console.log("Inside the Array", [this.editPosition, this.editRetries, this.editDistanceThreshold])
+
+      // Write the Fetch code replace the array
+      this.editMovOptionsState = false
+      console.log("Order", order)
+    }
   }
 
+  deleteAll() {
+      this.configuration = []
+      this.deleteAllPopup()
+  }
+
+  deleteAllPopup() {
+    this.deleteAllPopupState = !this.deleteAllPopupState
+  }
 
   moveOptions = [
     {

@@ -26,7 +26,7 @@
         </svg>
         Go Back
       </button>
-      <button class="flex items-center gap-3 px-6 justify-center py-3 text-[14px] rounded-md bg-[#D30000] font-semibold text-white">
+      <button (click)="deleteAllPopup()" class="flex items-center gap-3 px-6 justify-center py-3 text-[14px] rounded-md bg-[#D30000] font-semibold text-white">
         <svg width="22" height="22" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M9.14062 4.67188H8.9375C9.04922 4.67188 9.14062 4.58047 9.14062 4.46875V4.67188H16.8594V4.46875C16.8594 4.58047 16.9508 4.67188 17.0625 4.67188H16.8594V6.5H18.6875V4.46875C18.6875 3.57246 17.9588 2.84375 17.0625 2.84375H8.9375C8.04121 2.84375 7.3125 3.57246 7.3125 4.46875V6.5H9.14062V4.67188ZM21.9375 6.5H4.0625C3.61309 6.5 3.25 6.86309 3.25 7.3125V8.125C3.25 8.23672 3.34141 8.32812 3.45312 8.32812H4.98672L5.61387 21.6074C5.65449 22.4732 6.37051 23.1562 7.23633 23.1562H18.7637C19.632 23.1562 20.3455 22.4758 20.3861 21.6074L21.0133 8.32812H22.5469C22.6586 8.32812 22.75 8.23672 22.75 8.125V7.3125C22.75 6.86309 22.3869 6.5 21.9375 6.5ZM18.5682 21.3281H7.43184L6.81738 8.32812H19.1826L18.5682 21.3281Z" fill="white"/>
         </svg>
@@ -57,7 +57,7 @@
       </div>
     </div>
 
-    <div class="w-full h-full shadow-[0_0_40px_#00000050] rounded-[10px] scrollCSS p-5 z-0 gap-2 overflow-scroll   flex flex-col">
+    <div class="w-full xl:h-[430px] 2xl:h-[800px] h-full shadow-[0_0_40px_#00000050] rounded-[10px] scrollCSS p-5 z-0 gap-2 overflow-scroll flex flex-col">
       @for (config of configuration; track config) {
         <span class="flex w-full items-center justify-between py-5 -z-30 pr-10 px-5 gap-5 rounded-lg border-l-[10px] border-[#D30000] shadow-[0_0_20px_#00000030]">
           <span class="flex gap-5 items-center">
@@ -65,7 +65,7 @@
             <p class="py-1 px-5 text-[11px] font-semibold text-black cursor-pointer rounded bg-[#b9b9b9]">Pos</p>
           </span>
           <span class="flex items-center gap-5 justify-center">
-            <svg class="cursor-pointer" width="24" height="24" viewBox="0 0 35 35" fill="none"
+            <svg (click)="getCurrentActionID(config.order)" class="cursor-pointer" width="24" height="24" viewBox="0 0 35 35" fill="none"
             xmlns="http://www.w3.org/2000/svg">
             <g clip-path="url(#clip0_1603_24752)">
               <path
@@ -115,10 +115,92 @@
      </span>
 
      <span class="flex items-center justify-start mt-14 gap-5">
-      <button (click)="validateAndCloseMov(MovNameVariable)" class="px-5 py-3 bg-[#4BB543] text-white rounded-md">Validate and Close</button>
+      <button (click)="validateAndCloseMov(0, MovNameVariable, position, retries, distanceThreshold)" class="px-5 py-3 bg-[#4BB543] text-white rounded-md">Validate and Close</button>
       <button class="px-5 py-3 bg-[#C4C4C4] text-BLACK rounded-md">Undo and Close</button>
       <button class="px-5 py-3 bg-[#e43a31] text-white rounded-md">Remove Action</button>
      </span>
+  </div>
+</div>
+
+<!-- Edit Mission -> MOV Options Popup -->
+<div [ngClass]="{ hidden: !editMovOptionsState }"
+  class="absolute flex items-center justify-center w-screen box-border min-h-screen bg-[#000000] bg-opacity-90 bg-blur top-0 left-0 z-50 overflow-hidden">
+  <div class="flex w-[55%] flex-col rounded-[20px] gap-10 shadow-[0_0_50px_#00000060] px-14 py-10 bg-[#D9D9D9]">
+    <!-- Title -->
+     <span class="flex items-center justify-between">
+      <p class="flex font-bold text-[32px]">Edit {{MovNameVariable}}</p>
+      <svg (click)="addMovPopup() " width="28" height="28" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M5.77152 20.1272L5.87398 20.2296C6.45976 20.8154 7.40951 20.8154 7.9953 20.2296L12.6477 15.5772C12.843 15.3819 13.1596 15.3819 13.3549 15.5772L18.0073 20.2296C18.5931 20.8154 19.5428 20.8154 20.1286 20.2296L20.2311 20.1272C20.8169 19.5414 20.8169 18.5916 20.2311 18.0058L15.5786 13.3534C15.3834 13.1581 15.3834 12.8415 15.5786 12.6463L20.2311 7.99383C20.8169 7.40804 20.8169 6.4583 20.2311 5.87251L20.1286 5.77006C19.5428 5.18427 18.5931 5.18427 18.0073 5.77006L13.3549 10.4225C13.1596 10.6178 12.843 10.6178 12.6477 10.4225L7.9953 5.77006C7.40951 5.18427 6.45976 5.18427 5.87398 5.77006L5.77152 5.87251C5.18574 6.4583 5.18574 7.40805 5.77152 7.99383L10.424 12.6463C10.6192 12.8415 10.6192 13.1581 10.424 13.3534L5.77152 18.0058C5.18574 18.5916 5.18574 19.5414 5.77152 20.1272Z" fill="#DA2127" stroke="#DA2127"/>
+        </svg>
+     </span>
+
+     <span class="w-full h-auto flex flex-col items-start justify-center gap-4">
+        <p class="flex text-[14px] font-medium">Position</p>
+        <input [(ngModel)]="editPosition" type="text" placeholder="Enter the Position" class="flex px-n py-3 outline-none bg-transparent border-b-2 border-black w-full">
+     </span>
+
+     <span class="flex items-center w-full gap-10 justify-center relative">
+        <span class="w-full h-auto flex flex-col items-start justify-center gap-4">
+            <p class="flex text-[14px] font-medium">Retries (BlockPath)</p>
+            <input [(ngModel)]="editRetries" type="text" placeholder="Enter the Retries" class="flex px-n py-3 outline-none bg-transparent border-b-2 border-black w-full">
+        </span>
+        <span class="w-full h-auto flex flex-col items-start justify-center gap-4">
+          <p class="flex text-[14px] font-medium">Distance Threshold</p>
+          <input [(ngModel)]="editDistanceThreshold" type="text" placeholder="Enter the Distance" class="flex px-n py-3 outline-none bg-transparent border-b-2 border-black w-full">
+        </span>
+        <p class="text-red-500 text-[12px] font-medium absolute bottom-[-30px] left-0">{{ errorMessage }}</p>
+     </span>
+
+     <span class="flex items-center justify-start mt-14 gap-5">
+      <button (click)="validateAndCloseMov(editOrder, MovNameVariable, editPosition, editRetries, editDistanceThreshold)" class="px-5 py-3 bg-[#4BB543] text-white rounded-md">Validate and Close</button>
+      <button class="px-5 py-3 bg-[#C4C4C4] text-BLACK rounded-md">Undo and Close</button>
+      <button class="px-5 py-3 bg-[#e43a31] text-white rounded-md">Remove Action</button>
+     </span>
+  </div>
+</div>
+
+
+<!-- delete Mission -->
+<div [ngClass]="{ hidden: !deleteAllPopupState }"
+  class="absolute flex items-center justify-center w-screen box-border h-screen bg-[#000000] bg-opacity-90 bg-blur top-0 left-0 z-50">
+  <div
+    class="w-[600px] bg-white flex flex-col gap-5 rounded-[20px] shadow-[0_0_100px_#00000060] border-l-[22px] border-[#D30000] p-10">
+    <!-- Title -->
+    <span class="flex flex-col items-start justify-center">
+      <p class="text-[35px] text-black font-bold">Delete</p>
+      <p class="flex items-center justify-center gap-2 text-[14px] font-medium text-[#7B7B7B]">
+        Delete All mission
+        <svg width="20" height="20" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_513_29001)">
+            <path
+              d="M12.4987 2.08301C6.75495 2.08301 2.08203 6.75592 2.08203 12.4997C2.08203 18.2434 6.75495 22.9163 12.4987 22.9163C18.2424 22.9163 22.9154 18.2434 22.9154 12.4997C22.9154 6.75592 18.2424 2.08301 12.4987 2.08301ZM13.5404 17.708H11.457V11.458H13.5404V17.708ZM13.5404 9.37467H11.457V7.29134H13.5404V9.37467Z"
+              fill="black" />
+          </g>
+          <defs>
+            <clipPath id="clip0_513_29001">
+              <rect width="25" height="25" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </p>
+    </span>
+
+    <p class="flex text-[16px] font-normal">
+      Are you sure to delete all the mission ?
+    </p>
+
+    <span class="flex w-full justify-end items-center mt-10">
+      <span class="flex justify-between items-center gap-5">
+        <p (click)="deleteAll()"
+          class="cursor-pointer flex px-10 py-2.5 bg-[#D30000] text-white border-2 border-[#D30000] rounded-md">
+          Delete
+        </p>
+        <p (click)="deleteAllPopup()"
+          class="cursor-pointer flex px-10 py-2.5 border-2 rounded-md border-[#D30000] text-[#D30000]">
+          Cancel
+        </p>
+      </span>
+    </span>
   </div>
 </div>
 
