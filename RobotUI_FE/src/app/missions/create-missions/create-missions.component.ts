@@ -3,12 +3,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from "@angular/common"
 
 interface Config {
+  id: string; // Assuming id is a number, change as per your actual data type
   order: number;
   name: string;
-  position: any; // or the appropriate type
+  position: any; 
   retries: any;
   distanceThreshold: any;
 }
+
 
 
 @Component({
@@ -126,56 +128,80 @@ export class CreateMissionsComponent {
     this.editDistanceThreshold = currentActionDetails?.distanceThreshold
   }
 
-  validateAndCloseMov(order:any, name:any, position:any, retries:any, distanceThreshold:any){
-
-    if(position === ""  && retries === "" && distanceThreshold === ""){
-      this.errorMessage = "Enter all the values"
-      this.timingFunction()
-      return
+  validateAndCloseMov(order: any, name: any, position: any, retries: any, distanceThreshold: any) {
+    if (position === "" && retries === "" && distanceThreshold === "") {
+      this.errorMessage = "Enter all the values";
+      this.timingFunction();
+      return;
     }
-
-    else if(position === ""){
-      this.errorMessage = "Position is Not Entered"
-      this.timingFunction()
-      return
+  
+    if (position === "") {
+      this.errorMessage = "Position is Not Entered";
+      this.timingFunction();
+      return;
     }
-
-    else if(retries === "") {
-      this.errorMessage = "Retries are not Entered"
-      this.timingFunction()
-      return
+  
+    if (retries === "") {
+      this.errorMessage = "Retries are not Entered";
+      this.timingFunction();
+      return;
     }
-
-    else if(distanceThreshold === "") {
-      this.errorMessage = "Distance Threshold is not Entered"
-      this.timingFunction()
-      return
+  
+    if (distanceThreshold === "") {
+      this.errorMessage = "Distance Threshold is not Entered";
+      this.timingFunction();
+      return;
     }
-
-    if(this.position && this.retries  && this.distanceThreshold) {
-     console.log("inside Create");
-
-      let oldOrder = this.configuration.length !== 0 ? this.configuration[this.configuration.length-1]?.order : -1
-      let newConfig = {
-        order:oldOrder+1,
-        name: name,
-        position: this.position,
-        retries: this.retries,
-        distanceThreshold: this.distanceThreshold
+  
+    // Ensure edit values are updated
+    this.editPosition = position;
+    this.editRetries = retries;
+    this.editDistanceThreshold = distanceThreshold;
+  
+    // Create the updated mission object
+    const updatedMission = {
+      id: this.idParam, // Assuming `idParam` is the id of the mission being updated
+      order: order, // Keep the same order
+      name: name, // Keep the same name
+      position: this.editPosition,
+      retries: this.editRetries,
+      distanceThreshold: this.editDistanceThreshold
+    };
+  
+    console.log("Data:", updatedMission);
+  
+    // Perform the update operation
+    fetch(`http://localhost:3000/mission/missions/${this.idParam}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(updatedMission)
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Update successful", data);
+      this.editMovOptionsState = false;
+      this.timingFunction(); // Clear the message after some time
+  
+      // Update the local configuration array
+      const index = this.configuration.findIndex(config => config.id === this.idParam);
+      if (index !== -1) {
+        this.configuration[index] = updatedMission; // Update the existing entry
+      } else {
+        this.configuration.push(updatedMission); // Add it if not found (safety check)
       }
-      this.moveOptionsState = false
-      this.configuration = [...this.configuration, newConfig]
-      this.addMovPopup()
-     }
-
-    if(this.editPosition && this.editRetries && this.editDistanceThreshold) {
-      // console.log("Inside the Array", [this.editPosition, this.editRetries, this.editDistanceThreshold])
-
-      // Write the Fetch code replace the array
-      this.editMovOptionsState = false
-      console.log("Order", order)
-    }
+      
+      this.moveOptionsState = false;
+      this.addMovPopup();
+    })
+    .catch(error => {
+      console.error("Error updating configuration:", error);
+      this.errorMessage = "Error updating configuration. Please try again.";
+      this.timingFunction(); // Clear the message after some time
+    });
   }
+  
 
   deleteAll() {
       this.configuration = []
