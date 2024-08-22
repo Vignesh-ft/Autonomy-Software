@@ -24,7 +24,7 @@ const missionSchema = new mongoose.Schema({
     retries: {
         type: Number
     },
-    distance: {
+    distanceThreshold: {
         type: Number
     },
     createdBy: {

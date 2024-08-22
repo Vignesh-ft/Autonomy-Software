@@ -73,10 +73,10 @@ exports.deleteMission = async (req, res) => {
     }
 };
 
-exports.updateMission = async (req, res) => {
+exports.updateMission_1 = async (req, res) => {
     try {
         const { id } = req.params;
-        const { missionName, mapName, site, location, createdBy, position, retries, distance } = req.body;
+        const { missionName, mapName, site, location, createdBy } = req.body;
 
         // Find the mission by ID and update it
         const updatedMission = await Mission.findByIdAndUpdate(
@@ -87,9 +87,6 @@ exports.updateMission = async (req, res) => {
                 site,
                 location,
                 createdBy,
-                position,
-                retries, // Include retries in the update
-                distance, // Include distance in the update
                 updatedOn: Date.now()
             },
             { new: true }
@@ -104,4 +101,32 @@ exports.updateMission = async (req, res) => {
         res.status(500).json({ error: 'Failed to update mission' });
     }
 };
+
+exports.updateMission_2 = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { position, retries, distanceThreshold } = req.body;
+
+        // Find the mission by ID and update the specified fields
+        const updatedMission = await Mission.findByIdAndUpdate(
+            id,
+            {
+                position,
+                retries,
+                distanceThreshold,
+                updatedOn: Date.now()  // Optionally track when the mission was last updated
+            },
+            { new: true }  // Return the updated document
+        );
+
+        if (!updatedMission) {
+            return res.status(404).json({ error: 'Mission not found' });
+        }
+
+        res.status(200).json(updatedMission);
+    } catch (error) {
+        res.status(500).json({ error: 'Failed to update mission' });
+    }
+};
+
 
