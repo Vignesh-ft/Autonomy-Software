@@ -182,8 +182,21 @@ export class CreateMissionsComponent {
       this.deleteAllPopup()
   }
 
+  closeEdit(order:any){
+    this.moveOptionsState = false
+  }
+
+  closePopup() {
+    this.addMovPopup()
+  }
+
   deleteAllPopup() {
     this.deleteAllPopupState = !this.deleteAllPopupState
+  }
+
+  removeAction(order:any) {
+    this.configuration = this.configuration.filter((config)=> config.order !== order)
+    this.editMovOptionsState = !this.editMovOptionsState
   }
 
   moveOptions = [
