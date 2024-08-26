@@ -146,12 +146,9 @@ export class TransitionComponent implements OnInit {
     // Getting the value to default
     this.startPositionPopupOCstate = false
     this.endPositionPopupOCstate = false
-    if(this.transitionName === ""){
-      this.transitionName = ""
-      this.startPosition = "No Position is Selected"
-      this.endPosition = "No Position is Selected"
-    }
-
+    this.transitionName = ""
+    this.startPosition = "No Position is Selected"
+    this.endPosition = "No Position is Selected"
   }
 
 
