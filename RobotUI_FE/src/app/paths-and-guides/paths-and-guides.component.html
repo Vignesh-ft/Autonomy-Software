@@ -1,1 +1,387 @@
-<p>paths-and-guides works!</p>
+<div class="w-[calc(100vw-100px)] h-[calc(100vh)] flex justify-between flex-col gap-10 px-[40px] py-[40px] pb-32">
+  <!-- Title and Button -->
+  <div class="flex w-full items-center justify-between">
+    <!-- Title -->
+    <span class="flex flex-col items-start justify-center">
+      <p class="text-[38px] font-bold ">Paths and Guides</p>
+      <p class="text-[16px] font-medium text-[#7B7B7B] flex items-center justify-center gap-2">
+        View Path Between Two Points
+        <svg width="20" height="20" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_513_29001)">
+          <path d="M12.4987 2.08301C6.75495 2.08301 2.08203 6.75592 2.08203 12.4997C2.08203 18.2434 6.75495 22.9163 12.4987 22.9163C18.2424 22.9163 22.9154 18.2434 22.9154 12.4997C22.9154 6.75592 18.2424 2.08301 12.4987 2.08301ZM13.5404 17.708H11.457V11.458H13.5404V17.708ZM13.5404 9.37467H11.457V7.29134H13.5404V9.37467Z" fill="black"/>
+          </g>
+          <defs>
+          <clipPath id="clip0_513_29001">
+          <rect width="25" height="25" fill="white"/>
+          </clipPath>
+          </defs>
+          </svg>
+      </p>
+    </span>
+    <!-- Button -->
+    <span class="flex gap-10 items-center">
+      <button (click)="openPointsPopup()" class="flex items-center gap-3 px-6 justify-center py-3 text-[14px] rounded-md bg-[#E8E8E8] font-semibold text-black">
+        <svg width="22" height="22" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M5.38281 18.521V21.9774H8.83913L19.033 11.7835L15.5767 8.3272L5.38281 18.521ZM21.7059 9.11063C21.7913 9.02536 21.8591 8.92408 21.9053 8.81258C21.9516 8.70108 21.9754 8.58155 21.9754 8.46084C21.9754 8.34013 21.9516 8.2206 21.9053 8.1091C21.8591 7.9976 21.7913 7.89632 21.7059 7.81105L19.5491 5.65431C19.4639 5.56886 19.3626 5.50108 19.2511 5.45482C19.1396 5.40857 19.02 5.38477 18.8993 5.38477C18.7786 5.38477 18.6591 5.40857 18.5476 5.45482C18.4361 5.50108 18.3348 5.56886 18.2495 5.65431L16.5629 7.34099L20.0192 10.7973L21.7059 9.11063Z" fill="#911515"/>
+        </svg>
+
+        Edit
+      </button>
+      <button (click)="openDeletePopup('deleteAll')" class="flex items-center gap-3 px-6 justify-center py-3 text-[14px] rounded-md bg-[#D30000] font-semibold text-white">
+        <svg width="22" height="22" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M9.14062 4.67188H8.9375C9.04922 4.67188 9.14062 4.58047 9.14062 4.46875V4.67188H16.8594V4.46875C16.8594 4.58047 16.9508 4.67188 17.0625 4.67188H16.8594V6.5H18.6875V4.46875C18.6875 3.57246 17.9588 2.84375 17.0625 2.84375H8.9375C8.04121 2.84375 7.3125 3.57246 7.3125 4.46875V6.5H9.14062V4.67188ZM21.9375 6.5H4.0625C3.61309 6.5 3.25 6.86309 3.25 7.3125V8.125C3.25 8.23672 3.34141 8.32812 3.45312 8.32812H4.98672L5.61387 21.6074C5.65449 22.4732 6.37051 23.1562 7.23633 23.1562H18.7637C19.632 23.1562 20.3455 22.4758 20.3861 21.6074L21.0133 8.32812H22.5469C22.6586 8.32812 22.75 8.23672 22.75 8.125V7.3125C22.75 6.86309 22.3869 6.5 21.9375 6.5ZM18.5682 21.3281H7.43184L6.81738 8.32812H19.1826L18.5682 21.3281Z" fill="white"/>
+        </svg>
+        Delete
+      </button>
+    </span>
+  </div>
+
+  <div class="w-full h-full bg-white shadow-[0_0_20px_#00000040] rounded-[15px]">
+
+  </div>
+</div>
+
+<div [ngClass]="{'hidden': !pointsPopupState}" class="absolute flex items-center justify-center w-screen box-border min-h-screen bg-[#000000] bg-opacity-90 bg-blur top-0 left-0 z-50 overflow-hidden">
+  <div class="w-[1000px] h-[500px] py-14 px-10 flex flex-col items-center bg-[#D9D9D9] rounded-[16px] ">
+    <span class="w-full flex justify-between items-start">
+      <span class="flex flex-col items-start justify-center">
+        <p class="text-[35px] text-black font-bold">Edit Path Guide Position</p>
+        <p class="flex items-center justify-center gap-2 text-[14px] font-medium text-[#7B7B7B]">
+          Edit Position of the Path Guide
+          <svg width="20" height="20" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g clip-path="url(#clip0_513_29001)">
+              <path
+                d="M12.4987 2.08301C6.75495 2.08301 2.08203 6.75592 2.08203 12.4997C2.08203 18.2434 6.75495 22.9163 12.4987 22.9163C18.2424 22.9163 22.9154 18.2434 22.9154 12.4997C22.9154 6.75592 18.2424 2.08301 12.4987 2.08301ZM13.5404 17.708H11.457V11.458H13.5404V17.708ZM13.5404 9.37467H11.457V7.29134H13.5404V9.37467Z"
+                fill="black"
+              />
+            </g>
+            <defs>
+              <clipPath id="clip0_513_29001">
+                <rect width="25" height="25" fill="white" />
+              </clipPath>
+            </defs>
+          </svg>
+        </p>
+      </span>
+
+      <svg (click)="openPointsPopup()" class="cursor-pointer" width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3.73438 5.59961L23.2126 25.0779M3.73438 25.0779L23.2126 5.59961" stroke="#D30000" stroke-width="5"/>
+      </svg>
+    </span>
+
+    <span class="grid grid-cols-3 gap-10 h-[300px] w-full mt-5">
+      <!-- Start Position -->
+      <span class="flex flex-col gap-10 items-center w-full py-2 px-1">
+        <span class="flex justify-between w-full items-center">
+          <p class="flex items-center text-[16px] font-semibold">Start Position</p>
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 24V8M8 16H24" stroke="black" stroke-width="2.66667"/>
+          </svg>
+        </span>
+
+        <span class="flex w-full overflow-scroll flex-col items-center">
+          <span class="flex items-center justify-between w-full py-2 px-3 bg-white rounded-md">
+            <p class="flex items-center font-medium text-[14px]">Start Position</p>
+            <svg (click)="openDeletePopup('start')" class="cursor-pointer" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 3L12.4348 13.4348M2 13.4348L12.4348 3" stroke="#DA2127" stroke-width="3"/>
+            </svg>
+          </span>
+        </span>
+      </span>
+
+      <!-- Way Points -->
+      <span class="flex overflow-scroll h-[360px] flex-col gap-10 items-center w-full py-2 px-1">
+        <span class="flex justify-between w-full items-center">
+          <p class="flex items-center text-[16px] font-semibold">Waypoints</p>
+          <svg (click)="addWayPoint()" class="cursor-pointer" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 24V8M8 16H24" stroke="black" stroke-width="2.66667"/>
+          </svg>
+        </span>
+
+        <span class="flex w-full h-[500px] overflow-scroll scrollCSS flex-col gap-3  items-center">
+          @for (wp of wayPoints; track wp) {
+            <span class="flex items-center justify-between w-full py-2 px-3 bg-white rounded-md">
+            <span class="flex items-center gap-3">
+              <svg width="23" height="23" viewBox="0 0 23 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11.1359 2.83357V8.79269H11.8517V2.83357H13.3404L11.5081 1L9.67578 2.83357H11.1359Z" fill="#D30000" stroke="#D30000" stroke-width="1"/>
+                <path d="M2.83232 11.9295H8.78737V11.2133H2.83232V9.72348L1 11.5571L2.83232 13.3906V11.9295Z" fill="#D30000" stroke="#D30000" stroke-width="1"/>
+                <path d="M20.2106 11.1848L14.2556 11.1848V11.901L20.2106 11.901V13.3908L22.043 11.5572L20.2106 9.72363V11.1848Z" fill="#D30000" stroke="#D30000" stroke-width="1"/>
+                <path d="M11.8797 20.2377V14.2786H11.164V20.2377H9.6752L11.5075 22.0713L13.3398 20.2377H11.8797Z" fill="#D30000" stroke="#D30000" stroke-width="1"/>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.78906 11.5427C8.78906 10.0326 10.0132 8.80664 11.5232 8.80664C13.0333 8.80664 14.2574 10.0326 14.2574 11.5427C14.2574 13.0527 13.0333 14.2787 11.5232 14.2787C10.0132 14.2787 8.78906 13.0527 8.78906 11.5427ZM11.5234 13.0328C12.3535 13.0328 13.0265 12.3593 13.0265 11.5286C13.0265 10.698 12.3535 10.0245 11.5234 10.0245C10.6933 10.0245 10.0203 10.698 10.0203 11.5286C10.0203 12.3593 10.6933 13.0328 11.5234 13.0328Z" fill="#D30000"/>
+              </svg>
+              <p class="flex items-center font-medium text-[14px]">{{wp.nameTag}}</p>
+            </span>
+            <svg (click)="openDeletePopup('wayPoint')" class="cursor-pointer" width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 3L12.4348 13.4348M2 13.4348L12.4348 3" stroke="#DA2127" stroke-width="3"/>
+            </svg>
+          </span>
+          }
+
+        </span>
+      </span>
+
+      <!-- End Position -->
+      <span class="flex flex-col gap-10 items-center w-full py-2 px-1">
+        <span class="flex justify-between w-full items-center">
+          <p class="flex items-center text-[16px] font-semibold">End Position</p>
+          <svg class="cursor-pointer"  width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 24V8M8 16H24" stroke="black" stroke-width="2.66667"/>
+          </svg>
+        </span>
+
+        <span class="flex w-full overflow-scroll flex-col items-center">
+          <span class="flex items-center justify-between w-full py-2 px-3 bg-white rounded-md">
+            <p class="flex items-center font-medium text-[14px]">End Position</p>
+            <svg (click)="openDeletePopup('end')" class="cursor-pointer"  width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2 3L12.4348 13.4348M2 13.4348L12.4348 3" stroke="#DA2127" stroke-width="3"/>
+            </svg>
+          </span>
+        </span>
+      </span>
+    </span>
+  </div>
+</div>
+
+<!-- Start Position Delete Popup -->
+<div
+[ngClass]="{ hidden: !startPosDeletePopupState }"
+class="absolute flex items-center justify-center w-screen box-border h-screen bg-[#000000] bg-opacity-90 bg-blur top-0 left-0 z-50"
+>
+<div
+  class="w-[600px] bg-white flex flex-col gap-5 rounded-[20px] shadow-[0_0_100px_#00000060] border-l-[22px] border-[#D30000] p-10"
+>
+  <!-- Title -->
+  <span class="flex flex-col items-start justify-center">
+    <p class="text-[35px] text-black font-bold">Delete</p>
+    <p
+      class="flex items-center justify-center gap-2 text-[14px] font-medium text-[#7B7B7B]"
+    >
+      Delete an point
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 25 25"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g clip-path="url(#clip0_513_29001)">
+          <path
+            d="M12.4987 2.08301C6.75495 2.08301 2.08203 6.75592 2.08203 12.4997C2.08203 18.2434 6.75495 22.9163 12.4987 22.9163C18.2424 22.9163 22.9154 18.2434 22.9154 12.4997C22.9154 6.75592 18.2424 2.08301 12.4987 2.08301ZM13.5404 17.708H11.457V11.458H13.5404V17.708ZM13.5404 9.37467H11.457V7.29134H13.5404V9.37467Z"
+            fill="black"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_513_29001">
+            <rect width="25" height="25" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </p>
+  </span>
+
+  <p class="flex text-[16px] font-normal">
+    Are you sure to delete the Start Position ?
+  </p>
+
+  <span class="flex w-full justify-end items-center mt-10">
+    <span class="flex justify-between items-center gap-5">
+      <p
+        (click)="openDeletePopup('start')"
+        class="cursor-pointer flex px-10 py-2.5 bg-[#D30000] text-white border-2 border-[#D30000] rounded-md"
+      >
+        Delete
+      </p>
+      <p
+      (click)="openDeletePopup('start')"
+        class="cursor-pointer flex px-10 py-2.5 border-2 rounded-md border-[#D30000] text-[#D30000]"
+      >
+        Cancel
+      </p>
+    </span>
+  </span>
+</div>
+</div>
+
+<div
+[ngClass]="{ hidden: !wayPointDeletePopup }"
+class="absolute flex items-center justify-center w-screen box-border h-screen bg-[#000000] bg-opacity-90 bg-blur top-0 left-0 z-50"
+>
+<div
+  class="w-[600px] bg-white flex flex-col gap-5 rounded-[20px] shadow-[0_0_100px_#00000060] border-l-[22px] border-[#D30000] p-10"
+>
+  <!-- Title -->
+  <span class="flex flex-col items-start justify-center">
+    <p class="text-[35px] text-black font-bold">Delete</p>
+    <p
+      class="flex items-center justify-center gap-2 text-[14px] font-medium text-[#7B7B7B]"
+    >
+      Delete an point
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 25 25"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g clip-path="url(#clip0_513_29001)">
+          <path
+            d="M12.4987 2.08301C6.75495 2.08301 2.08203 6.75592 2.08203 12.4997C2.08203 18.2434 6.75495 22.9163 12.4987 22.9163C18.2424 22.9163 22.9154 18.2434 22.9154 12.4997C22.9154 6.75592 18.2424 2.08301 12.4987 2.08301ZM13.5404 17.708H11.457V11.458H13.5404V17.708ZM13.5404 9.37467H11.457V7.29134H13.5404V9.37467Z"
+            fill="black"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_513_29001">
+            <rect width="25" height="25" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </p>
+  </span>
+
+  <p class="flex text-[16px] font-normal">
+    Are you sure to delete this Waypoint ?
+  </p>
+
+  <span class="flex w-full justify-end items-center mt-10">
+    <span class="flex justify-between items-center gap-5">
+      <p
+        (click)="openDeletePopup('wayPoint')"
+        class="cursor-pointer flex px-10 py-2.5 bg-[#D30000] text-white border-2 border-[#D30000] rounded-md"
+      >
+        Delete
+      </p>
+      <p
+      (click)="openDeletePopup('wayPoint')"
+        class="cursor-pointer flex px-10 py-2.5 border-2 rounded-md border-[#D30000] text-[#D30000]"
+      >
+        Cancel
+      </p>
+    </span>
+  </span>
+</div>
+</div>
+
+<!-- End Position Delete Popup -->
+<div
+[ngClass]="{ hidden: !endPosDeletePopupState }"
+class="absolute flex items-center justify-center w-screen box-border h-screen bg-[#000000] bg-opacity-90 bg-blur top-0 left-0 z-50"
+>
+<div
+  class="w-[600px] bg-white flex flex-col gap-5 rounded-[20px] shadow-[0_0_100px_#00000060] border-l-[22px] border-[#D30000] p-10"
+>
+  <!-- Title -->
+  <span class="flex flex-col items-start justify-center">
+    <p class="text-[35px] text-black font-bold">Delete</p>
+    <p
+      class="flex items-center justify-center gap-2 text-[14px] font-medium text-[#7B7B7B]"
+    >
+      Delete an point
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 25 25"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g clip-path="url(#clip0_513_29001)">
+          <path
+            d="M12.4987 2.08301C6.75495 2.08301 2.08203 6.75592 2.08203 12.4997C2.08203 18.2434 6.75495 22.9163 12.4987 22.9163C18.2424 22.9163 22.9154 18.2434 22.9154 12.4997C22.9154 6.75592 18.2424 2.08301 12.4987 2.08301ZM13.5404 17.708H11.457V11.458H13.5404V17.708ZM13.5404 9.37467H11.457V7.29134H13.5404V9.37467Z"
+            fill="black"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_513_29001">
+            <rect width="25" height="25" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </p>
+  </span>
+
+  <p class="flex text-[16px] font-normal">
+    Are you sure to delete the End Position ?
+  </p>
+
+  <span class="flex w-full justify-end items-center mt-10">
+    <span class="flex justify-between items-center gap-5">
+      <p
+        (click)="openDeletePopup('end')"
+        class="cursor-pointer flex px-10 py-2.5 bg-[#D30000] text-white border-2 border-[#D30000] rounded-md"
+      >
+        Delete
+      </p>
+      <p
+      (click)="openDeletePopup('end')"
+        class="cursor-pointer flex px-10 py-2.5 border-2 rounded-md border-[#D30000] text-[#D30000]"
+      >
+        Cancel
+      </p>
+    </span>
+  </span>
+</div>
+</div>
+
+<!-- Delete All Popup -->
+<div [ngClass]="{ hidden: !deleteAllState }" class="absolute flex items-center justify-center w-screen box-border h-screen bg-[#000000] bg-opacity-90 bg-blur top-0 left-0 z-50">
+  <div class="w-[800px] bg-white flex flex-col gap-5 rounded-[20px] shadow-[0_0_100px_#00000060] border-l-[22px] border-[#D30000] p-10">
+      <!-- Title -->
+  <span class="flex flex-col items-start justify-center">
+    <p class="text-[35px] text-black font-bold">Delete</p>
+    <p
+      class="flex items-center justify-center gap-2 text-[14px] font-medium text-[#7B7B7B]"
+    >
+      Delete an point
+      <svg
+        width="20"
+        height="20"
+        viewBox="0 0 25 25"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <g clip-path="url(#clip0_513_29001)">
+          <path
+            d="M12.4987 2.08301C6.75495 2.08301 2.08203 6.75592 2.08203 12.4997C2.08203 18.2434 6.75495 22.9163 12.4987 22.9163C18.2424 22.9163 22.9154 18.2434 22.9154 12.4997C22.9154 6.75592 18.2424 2.08301 12.4987 2.08301ZM13.5404 17.708H11.457V11.458H13.5404V17.708ZM13.5404 9.37467H11.457V7.29134H13.5404V9.37467Z"
+            fill="black"
+          />
+        </g>
+        <defs>
+          <clipPath id="clip0_513_29001">
+            <rect width="25" height="25" fill="white" />
+          </clipPath>
+        </defs>
+      </svg>
+    </p>
+  </span>
+
+  <span class=" w-full py-5 flex flex-col gap-4 items-center justify-center">
+    @for (del of deleteWayPoint; track del) {
+      <span class="flex items-center gap-5 justify-stretch w-full">
+        <span class="w-[30%] py-2 flex items-center gap-3 px-2 rounded bg-[#dfdfdf]">
+          <span [(innerHTML)]="del.icon"></span>
+          {{del.nameTag}}
+        </span>
+        <span class="w-[70%] h-full py-3.5 flex items-center rounded px-3 bg-[#dfdfdf]">
+          <p>{{del.value}}</p>
+        </span>
+      </span>
+    }
+  </span>
+
+  <span class="flex items-center gap-5 mt-5">
+    <p
+        (click)="openDeletePopup('deleteAll')"
+        class="cursor-pointer flex px-10 py-2.5 bg-[#D30000] text-white border-2 border-[#D30000] rounded-md"
+      >
+        Delete
+      </p>
+      <p
+      (click)="openDeletePopup('deleteAll')"
+        class="cursor-pointer flex px-10 py-2.5 border-2 rounded-md border-[#D30000] text-[#D30000]"
+      >
+        Cancel
+      </p>
+  </span>
+  </div>
+</div>
+
+

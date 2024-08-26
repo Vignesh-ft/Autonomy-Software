@@ -23,6 +23,7 @@ import { ErrorLogComponent } from './error-log/error-log.component';
 import { PathsAndGuidesComponent } from './paths-and-guides/paths-and-guides.component';
 import { MissionsComponent } from './missions/missions.component';
 import { CreateMissionsComponent } from './missions/create-missions/create-missions.component';
+import { AnalyticsComponent } from './analytics/analytics.component';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import { CreateMissionsComponent } from './missions/create-missions/create-missi
     PathsAndGuidesComponent,
     MissionsComponent,
     CreateMissionsComponent,
+    AnalyticsComponent,
   ],
   imports: [
     BrowserModule,

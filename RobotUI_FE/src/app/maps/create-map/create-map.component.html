@@ -2,7 +2,7 @@
   <div class="flex items-center justify-start gap-10 relative z-10">
       <span class="border-l-[15px] border-[#D30000] gap-8 rounded-lg bg-white shadow-[0_0_30px_#00000050] flex items-center justify-between px-5 py-3">
         @for (option of optionsOne; track option) {
-          <span  (click)="option.fn ? option.fn() : null"  class="w-full hover:shadow-[0_0_20px_#00000030] rounded-md h-full relative flex justify-center items-center icon">
+          <span  (click)="option.fn ? option.fn() : null"  class="w-full cursor-pointer rounded-md h-full relative flex justify-center items-center icon">
             <span [(innerHTML)]=option.iconComp></span>
             <p class="absolute top-[calc(100%+12px)] bg-white px-3 shadow-[0_0_10px_#00000030] rounded-md py-0.5 opacity-0 duration-200 iconNameTag z-50">{{option.nameTag}}</p>
           </span>
@@ -11,9 +11,9 @@
 
     <span class="gap-8 rounded-lg bg-white shadow-[0_0_30px_#00000050] flex items-center justify-between px-5 py-3">
       @for (option of optionsTwo; track option) {
-        <span class="w-full h-full relative flex justify-center items-center icon">
+        <span class="w-full h-full relative cursor-pointer flex justify-center items-center icon">
           <span [(innerHTML)]=option.iconComp></span>
-          <p class="absolute top-[calc(100%+12px)] bg-white px-3 shadow-[0_0_10px_#00000030] rounded-md py-0.5 opacity-0 duration-200 iconNameTag">{{option.nameTag}}</p>
+          <p class="absolute top-[calc(100%+12px)] text-nowrap bg-white px-3 shadow-[0_0_10px_#00000030] rounded-md py-0.5 opacity-0 duration-200 iconNameTag">{{option.nameTag}}</p>
         </span>
       }
     </span>
