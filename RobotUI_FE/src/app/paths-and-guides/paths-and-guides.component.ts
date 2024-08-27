@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
   styleUrl: './paths-and-guides.component.css'
 })
 export class PathsAndGuidesComponent {
-  pointsPopupState:boolean = true
+  pointsPopupState:boolean = false
   startPosDeletePopupState = false
   wayPointDeletePopup = false
   endPosDeletePopupState = false
