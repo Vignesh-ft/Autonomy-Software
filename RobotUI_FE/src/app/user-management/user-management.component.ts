@@ -305,7 +305,11 @@ export class UserManagementComponent implements OnInit {
 
   //Deleting the user credentials from the database
   deleteUser(username: any, userRole:any) {
-    if(this.userCredentials.length < 1 && userRole === "Administrator" || userRole === "Administrator" ){
+    let findingAdmin = this.userCredentials.filter((user)=> user.userRole === "Administrator")
+    console.log("Delete User =>>>",findingAdmin);
+
+
+    if(findingAdmin.length <= 1 && userRole === "Administrator"){
       alert("Should have atleast one admin")
       this.deleteUserPopUp()
       return

@@ -81,7 +81,7 @@ export class MapsComponent implements OnInit  {
       .then((maps: any[]) => {
         this.mapsData = maps.map(map => {
           const dateString = map.createdAt;
-        
+
 
           // Split the dateString into date and time parts
           const [datePart, timePart] = dateString.split(' ');
