@@ -1,1 +1,43 @@
-<p>analytics works!</p>
+<div class="w-full h-full flex flex-col pr-10 pt-10 pl-10 pb-7 items-center justify-center gap-10">
+  <!-- Title -->
+  <div class="flex w-full items-center justify-between">
+    <!-- Title -->
+    <span class="flex flex-col items-start justify-center">
+      <p class="text-[38px] font-bold">Analytics</p>
+      <p class="text-[16px] font-medium text-[#7B7B7B] flex items-center justify-center gap-2">
+        Watch charts and Statistics for Robot
+        <svg width="20" height="20" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_513_29001)">
+            <path
+              d="M12.4987 2.08301C6.75495 2.08301 2.08203 6.75592 2.08203 12.4997C2.08203 18.2434 6.75495 22.9163 12.4987 22.9163C18.2424 22.9163 22.9154 18.2434 22.9154 12.4997C22.9154 6.75592 18.2424 2.08301 12.4987 2.08301ZM13.5404 17.708H11.457V11.458H13.5404V17.708ZM13.5404 9.37467H11.457V7.29134H13.5404V9.37467Z"
+              fill="black" />
+          </g>
+          <defs>
+            <clipPath id="clip0_513_29001">
+              <rect width="25" height="25" fill="white" />
+            </clipPath>
+          </defs>
+        </svg>
+      </p>
+    </span>
+  </div>
+
+  <div class="flex w-full items-center gap-20 justify-between">
+    <div class="flex items-center justify-center gap-10">
+      <input [(ngModel)]="startDate" type="date" class="flex px-7 rounded-md py-4 text-[#D30000] shadow-[0_0_15px_#00000020] outline-none">
+      <input [(ngModel)]="endDate" type="date" class="flex px-7 rounded-md py-4 text-[#D30000] shadow-[0_0_15px_#00000020] outline-none">
+    </div>
+
+    <div class="flex items-center justify-normal gap-7">
+      <button class="px-5 py-4 bg-[#D9D9D9] rounded-md font-semibold text-black">Year</button>
+      <button class="px-5 py-4 bg-[#D9D9D9] rounded-md font-semibold text-black">6 Month</button>
+      <button class="px-5 py-4 bg-[#D9D9D9] rounded-md font-semibold text-black">Current Month</button>
+      <button class="px-5 py-4 bg-[#D9D9D9] rounded-md font-semibold text-black">Current Week</button>
+      <button class="px-5 py-4 bg-[#D9D9D9] rounded-md font-semibold text-black">Current Day</button>
+    </div>
+  </div>
+
+  <div class="w-full h-full rounded-[12px] shadow-[0_0_30px_#00000030] bg-white">
+
+  </div>
+</div>
